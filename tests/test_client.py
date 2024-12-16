@@ -20,12 +20,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from terminal import Terminal, AsyncTerminal, APIResponseValidationError
-from terminal._types import Omit
-from terminal._models import BaseModel, FinalRequestOptions
-from terminal._constants import RAW_RESPONSE_HEADER
-from terminal._exceptions import TerminalError, APIStatusError, APITimeoutError, APIResponseValidationError
-from terminal._base_client import (
+from terminal_sdk import Terminal, AsyncTerminal, APIResponseValidationError
+from terminal_sdk._types import Omit
+from terminal_sdk._models import BaseModel, FinalRequestOptions
+from terminal_sdk._constants import RAW_RESPONSE_HEADER
+from terminal_sdk._exceptions import TerminalError, APIStatusError, APITimeoutError, APIResponseValidationError
+from terminal_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -232,10 +232,10 @@ class TestTerminal:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "terminal/_legacy_response.py",
-                        "terminal/_response.py",
+                        "terminal_sdk/_legacy_response.py",
+                        "terminal_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "terminal/_compat.py",
+                        "terminal_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -746,28 +746,28 @@ class TestTerminal:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/products").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/product").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.get("/products", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}})
+            self.client.get("/product", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}})
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/products").mock(return_value=httpx.Response(500))
+        respx_mock.get("/product").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.get("/products", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}})
+            self.client.get("/product", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}})
 
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -790,15 +790,15 @@ class TestTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = client.products.with_raw_response.list()
+        response = client.product.with_raw_response.list()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: Terminal, failures_before_success: int, respx_mock: MockRouter
@@ -814,14 +814,14 @@ class TestTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = client.products.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.product.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Terminal, failures_before_success: int, respx_mock: MockRouter
@@ -837,9 +837,9 @@ class TestTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = client.products.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.product.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1022,10 +1022,10 @@ class TestAsyncTerminal:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "terminal/_legacy_response.py",
-                        "terminal/_response.py",
+                        "terminal_sdk/_legacy_response.py",
+                        "terminal_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "terminal/_compat.py",
+                        "terminal_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1540,32 +1540,32 @@ class TestAsyncTerminal:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/products").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.get("/product").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await self.client.get(
-                "/products", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+                "/product", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
             )
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
-        respx_mock.get("/products").mock(return_value=httpx.Response(500))
+        respx_mock.get("/product").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await self.client.get(
-                "/products", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
+                "/product", cast_to=httpx.Response, options={"headers": {RAW_RESPONSE_HEADER: "stream"}}
             )
 
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1589,15 +1589,15 @@ class TestAsyncTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = await client.products.with_raw_response.list()
+        response = await client.product.with_raw_response.list()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1614,14 +1614,14 @@ class TestAsyncTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = await client.products.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.product.with_raw_response.list(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("terminal._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("terminal_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
@@ -1638,9 +1638,9 @@ class TestAsyncTerminal:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.get("/products").mock(side_effect=retry_handler)
+        respx_mock.get("/product").mock(side_effect=retry_handler)
 
-        response = await client.products.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.product.with_raw_response.list(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1655,8 +1655,8 @@ class TestAsyncTerminal:
         import nest_asyncio
         import threading
 
-        from terminal._utils import asyncify
-        from terminal._base_client import get_platform 
+        from terminal_sdk._utils import asyncify
+        from terminal_sdk._base_client import get_platform 
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()

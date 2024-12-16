@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from terminal._utils import PropertyInfo
-from terminal._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
-from terminal._models import BaseModel, construct_type
+from terminal_sdk._utils import PropertyInfo
+from terminal_sdk._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
+from terminal_sdk._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

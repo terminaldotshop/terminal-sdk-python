@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from terminal._types import Base64FileInput
-from terminal._utils import (
+from terminal_sdk._types import Base64FileInput
+from terminal_sdk._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from terminal._compat import PYDANTIC_V2
-from terminal._models import BaseModel
+from terminal_sdk._compat import PYDANTIC_V2
+from terminal_sdk._models import BaseModel
 
 _T = TypeVar("_T")
 
