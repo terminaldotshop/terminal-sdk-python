@@ -8,8 +8,8 @@ from typing import Any, TypeVar, Iterator, cast
 from datetime import date, datetime
 from typing_extensions import Literal, get_args, get_origin, assert_type
 
-from terminal._types import Omit, NoneType
-from terminal._utils import (
+from terminal_sdk._types import Omit, NoneType
+from terminal_sdk._utils import (
     is_dict,
     is_list,
     is_list_type,
@@ -18,8 +18,8 @@ from terminal._utils import (
     is_annotated_type,
     is_type_alias_type,
 )
-from terminal._compat import PYDANTIC_V2, field_outer_type, get_model_fields
-from terminal._models import BaseModel
+from terminal_sdk._compat import PYDANTIC_V2, field_outer_type, get_model_fields
+from terminal_sdk._models import BaseModel
 
 BaseModelT = TypeVar("BaseModelT", bound=BaseModel)
 
