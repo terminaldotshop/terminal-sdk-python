@@ -16,6 +16,14 @@ from .cart import (
     CartResourceWithStreamingResponse,
     AsyncCartResourceWithStreamingResponse,
 )
+from .view import (
+    ViewResource,
+    AsyncViewResource,
+    ViewResourceWithRawResponse,
+    AsyncViewResourceWithRawResponse,
+    ViewResourceWithStreamingResponse,
+    AsyncViewResourceWithStreamingResponse,
+)
 from .email import (
     EmailResource,
     AsyncEmailResource,
@@ -114,4 +122,10 @@ __all__ = [
     "AsyncEmailResourceWithRawResponse",
     "EmailResourceWithStreamingResponse",
     "AsyncEmailResourceWithStreamingResponse",
+    "ViewResource",
+    "AsyncViewResource",
+    "ViewResourceWithRawResponse",
+    "AsyncViewResourceWithRawResponse",
+    "ViewResourceWithStreamingResponse",
+    "AsyncViewResourceWithStreamingResponse",
 ]
