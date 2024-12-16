@@ -1,8 +1,8 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 
+from .user import User
 from .._models import BaseModel
-from .shared.user import User
 
 __all__ = ["UserUpdateResponse"]
 

@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing_extensions import Literal
+
 import httpx
 
-from ..types import card_create_params
+from ..types import subscription_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -19,50 +21,64 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.card_list_response import CardListResponse
-from ..types.card_create_response import CardCreateResponse
-from ..types.card_delete_response import CardDeleteResponse
+from ..types.subscription_list_response import SubscriptionListResponse
+from ..types.subscription_create_response import SubscriptionCreateResponse
+from ..types.subscription_delete_response import SubscriptionDeleteResponse
 
-__all__ = ["CardResource", "AsyncCardResource"]
+__all__ = ["SubscriptionsResource", "AsyncSubscriptionsResource"]
 
 
-class CardResource(SyncAPIResource):
+class SubscriptionsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> CardResourceWithRawResponse:
+    def with_raw_response(self) -> SubscriptionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return CardResourceWithRawResponse(self)
+        return SubscriptionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> CardResourceWithStreamingResponse:
+    def with_streaming_response(self) -> SubscriptionsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return CardResourceWithStreamingResponse(self)
+        return SubscriptionsResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
-        token: str,
+        id: str,
+        address_id: str,
+        card_id: str,
+        frequency: Literal["fixed", "daily", "weekly", "monthly", "yearly"],
+        product_variant_id: str,
+        quantity: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardCreateResponse:
+    ) -> SubscriptionCreateResponse:
         """
-        Attach a credit card (tokenized via Stripe) to the current user.
+        Create a subscription for the current user.
 
         Args:
-          token: Stripe card token. Learn how to
-              [create one here](https://docs.stripe.com/api/tokens/create_card).
+          id: Unique object identifier. The format and length of IDs may change over time.
+
+          address_id: ID of the shipping address used for the subscription.
+
+          card_id: ID of the card used for the subscription.
+
+          frequency: Frequency of the subscription.
+
+          product_variant_id: ID of the product variant being subscribed to.
+
+          quantity: Quantity of the subscription.
 
           extra_headers: Send extra headers
 
@@ -72,13 +88,23 @@ class CardResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/card",
-            body=maybe_transform({"token": token}, card_create_params.CardCreateParams),
+        return self._put(
+            "/subscriptions",
+            body=maybe_transform(
+                {
+                    "id": id,
+                    "address_id": address_id,
+                    "card_id": card_id,
+                    "frequency": frequency,
+                    "product_variant_id": product_variant_id,
+                    "quantity": quantity,
+                },
+                subscription_create_params.SubscriptionCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardCreateResponse,
+            cast_to=SubscriptionCreateResponse,
         )
 
     def list(
@@ -90,14 +116,14 @@ class CardResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardListResponse:
-        """List the credit cards associated with the current user."""
+    ) -> SubscriptionListResponse:
+        """List the subscriptions associated with the current user."""
         return self._get(
-            "/card",
+            "/subscriptions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardListResponse,
+            cast_to=SubscriptionListResponse,
         )
 
     def delete(
@@ -110,12 +136,12 @@ class CardResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardDeleteResponse:
+    ) -> SubscriptionDeleteResponse:
         """
-        Delete a credit card associated with the current user.
+        Cancel a subscription for the current user.
 
         Args:
-          id: ID of the card to delete.
+          id: ID of the subscription to cancel.
 
           extra_headers: Send extra headers
 
@@ -128,51 +154,65 @@ class CardResource(SyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return self._delete(
-            f"/card/{id}",
+            f"/subscriptions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardDeleteResponse,
+            cast_to=SubscriptionDeleteResponse,
         )
 
 
-class AsyncCardResource(AsyncAPIResource):
+class AsyncSubscriptionsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncCardResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncSubscriptionsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncCardResourceWithRawResponse(self)
+        return AsyncSubscriptionsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncCardResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncSubscriptionsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AsyncCardResourceWithStreamingResponse(self)
+        return AsyncSubscriptionsResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
-        token: str,
+        id: str,
+        address_id: str,
+        card_id: str,
+        frequency: Literal["fixed", "daily", "weekly", "monthly", "yearly"],
+        product_variant_id: str,
+        quantity: int,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardCreateResponse:
+    ) -> SubscriptionCreateResponse:
         """
-        Attach a credit card (tokenized via Stripe) to the current user.
+        Create a subscription for the current user.
 
         Args:
-          token: Stripe card token. Learn how to
-              [create one here](https://docs.stripe.com/api/tokens/create_card).
+          id: Unique object identifier. The format and length of IDs may change over time.
+
+          address_id: ID of the shipping address used for the subscription.
+
+          card_id: ID of the card used for the subscription.
+
+          frequency: Frequency of the subscription.
+
+          product_variant_id: ID of the product variant being subscribed to.
+
+          quantity: Quantity of the subscription.
 
           extra_headers: Send extra headers
 
@@ -182,13 +222,23 @@ class AsyncCardResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/card",
-            body=await async_maybe_transform({"token": token}, card_create_params.CardCreateParams),
+        return await self._put(
+            "/subscriptions",
+            body=await async_maybe_transform(
+                {
+                    "id": id,
+                    "address_id": address_id,
+                    "card_id": card_id,
+                    "frequency": frequency,
+                    "product_variant_id": product_variant_id,
+                    "quantity": quantity,
+                },
+                subscription_create_params.SubscriptionCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardCreateResponse,
+            cast_to=SubscriptionCreateResponse,
         )
 
     async def list(
@@ -200,14 +250,14 @@ class AsyncCardResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardListResponse:
-        """List the credit cards associated with the current user."""
+    ) -> SubscriptionListResponse:
+        """List the subscriptions associated with the current user."""
         return await self._get(
-            "/card",
+            "/subscriptions",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardListResponse,
+            cast_to=SubscriptionListResponse,
         )
 
     async def delete(
@@ -220,12 +270,12 @@ class AsyncCardResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> CardDeleteResponse:
+    ) -> SubscriptionDeleteResponse:
         """
-        Delete a credit card associated with the current user.
+        Cancel a subscription for the current user.
 
         Args:
-          id: ID of the card to delete.
+          id: ID of the subscription to cancel.
 
           extra_headers: Send extra headers
 
@@ -238,69 +288,69 @@ class AsyncCardResource(AsyncAPIResource):
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
         return await self._delete(
-            f"/card/{id}",
+            f"/subscriptions/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=CardDeleteResponse,
+            cast_to=SubscriptionDeleteResponse,
         )
 
 
-class CardResourceWithRawResponse:
-    def __init__(self, card: CardResource) -> None:
-        self._card = card
+class SubscriptionsResourceWithRawResponse:
+    def __init__(self, subscriptions: SubscriptionsResource) -> None:
+        self._subscriptions = subscriptions
 
         self.create = to_raw_response_wrapper(
-            card.create,
+            subscriptions.create,
         )
         self.list = to_raw_response_wrapper(
-            card.list,
+            subscriptions.list,
         )
         self.delete = to_raw_response_wrapper(
-            card.delete,
+            subscriptions.delete,
         )
 
 
-class AsyncCardResourceWithRawResponse:
-    def __init__(self, card: AsyncCardResource) -> None:
-        self._card = card
+class AsyncSubscriptionsResourceWithRawResponse:
+    def __init__(self, subscriptions: AsyncSubscriptionsResource) -> None:
+        self._subscriptions = subscriptions
 
         self.create = async_to_raw_response_wrapper(
-            card.create,
+            subscriptions.create,
         )
         self.list = async_to_raw_response_wrapper(
-            card.list,
+            subscriptions.list,
         )
         self.delete = async_to_raw_response_wrapper(
-            card.delete,
+            subscriptions.delete,
         )
 
 
-class CardResourceWithStreamingResponse:
-    def __init__(self, card: CardResource) -> None:
-        self._card = card
+class SubscriptionsResourceWithStreamingResponse:
+    def __init__(self, subscriptions: SubscriptionsResource) -> None:
+        self._subscriptions = subscriptions
 
         self.create = to_streamed_response_wrapper(
-            card.create,
+            subscriptions.create,
         )
         self.list = to_streamed_response_wrapper(
-            card.list,
+            subscriptions.list,
         )
         self.delete = to_streamed_response_wrapper(
-            card.delete,
+            subscriptions.delete,
         )
 
 
-class AsyncCardResourceWithStreamingResponse:
-    def __init__(self, card: AsyncCardResource) -> None:
-        self._card = card
+class AsyncSubscriptionsResourceWithStreamingResponse:
+    def __init__(self, subscriptions: AsyncSubscriptionsResource) -> None:
+        self._subscriptions = subscriptions
 
         self.create = async_to_streamed_response_wrapper(
-            card.create,
+            subscriptions.create,
         )
         self.list = async_to_streamed_response_wrapper(
-            card.list,
+            subscriptions.list,
         )
         self.delete = async_to_streamed_response_wrapper(
-            card.delete,
+            subscriptions.delete,
         )

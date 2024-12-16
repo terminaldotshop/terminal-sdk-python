@@ -15,12 +15,9 @@ The REST API documentation can be found on [terminal.shop](https://terminal.shop
 ## Installation
 
 ```sh
-# install from the production repo
-pip install git+ssh://git@github.com/terminaldotshop/terminal-sdk-python.git
+# install from PyPI
+pip install --pre terminal
 ```
-
-> [!NOTE]
-> Once this package is [published to PyPI](https://app.stainlessapi.com/docs/guides/publish), this will become: `pip install --pre terminal`
 
 ## Usage
 
@@ -33,10 +30,10 @@ from terminal import Terminal
 client = Terminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="dev",
+    environment="sandbox",
 )
 
-product = client.product.list()
+product = client.products.list()
 print(product.data)
 ```
 
@@ -57,12 +54,12 @@ from terminal import AsyncTerminal
 client = AsyncTerminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="dev",
+    environment="sandbox",
 )
 
 
 async def main() -> None:
-    product = await client.product.list()
+    product = await client.products.list()
     print(product.data)
 
 
@@ -96,7 +93,7 @@ from terminal import Terminal
 client = Terminal()
 
 try:
-    client.product.list()
+    client.products.list()
 except terminal.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -139,7 +136,7 @@ client = Terminal(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).product.list()
+client.with_options(max_retries=5).products.list()
 ```
 
 ### Timeouts
@@ -162,7 +159,7 @@ client = Terminal(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).product.list()
+client.with_options(timeout=5.0).products.list()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -203,10 +200,10 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from terminal import Terminal
 
 client = Terminal()
-response = client.product.with_raw_response.list()
+response = client.products.with_raw_response.list()
 print(response.headers.get('X-My-Header'))
 
-product = response.parse()  # get the object that `product.list()` would have returned
+product = response.parse()  # get the object that `products.list()` would have returned
 print(product.data)
 ```
 
@@ -221,7 +218,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.product.with_streaming_response.list() as response:
+with client.products.with_streaming_response.list() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
