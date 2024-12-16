@@ -122,3 +122,15 @@ from terminal_sdk.types import EmailCreateResponse
 Methods:
 
 - <code title="post /email">client.email.<a href="./src/terminal_sdk/resources/email.py">create</a>(\*\*<a href="src/terminal_sdk/types/email_create_params.py">params</a>) -> <a href="./src/terminal_sdk/types/email_create_response.py">EmailCreateResponse</a></code>
+
+# View
+
+Types:
+
+```python
+from terminal_sdk.types import ViewInitResponse
+```
+
+Methods:
+
+- <code title="get /view/init">client.view.<a href="./src/terminal_sdk/resources/view.py">init</a>() -> <a href="./src/terminal_sdk/types/view_init_response.py">ViewInitResponse</a></code>

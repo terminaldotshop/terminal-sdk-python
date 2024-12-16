@@ -14,6 +14,7 @@ from .cart_get_response import CartGetResponse as CartGetResponse
 from .card_create_params import CardCreateParams as CardCreateParams
 from .card_list_response import CardListResponse as CardListResponse
 from .order_get_response import OrderGetResponse as OrderGetResponse
+from .view_init_response import ViewInitResponse as ViewInitResponse
 from .email_create_params import EmailCreateParams as EmailCreateParams
 from .order_list_response import OrderListResponse as OrderListResponse
 from .profile_me_response import ProfileMeResponse as ProfileMeResponse

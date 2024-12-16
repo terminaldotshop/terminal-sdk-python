@@ -24,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import card, cart, email, order, address, product, profile, subscription
+from .resources import card, cart, view, email, order, address, product, profile, subscription
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import TerminalError, APIStatusError
 from ._base_client import (
@@ -60,6 +60,7 @@ class Terminal(SyncAPIClient):
     order: order.OrderResource
     subscription: subscription.SubscriptionResource
     email: email.EmailResource
+    view: view.ViewResource
     with_raw_response: TerminalWithRawResponse
     with_streaming_response: TerminalWithStreamedResponse
 
@@ -149,6 +150,7 @@ class Terminal(SyncAPIClient):
         self.order = order.OrderResource(self)
         self.subscription = subscription.SubscriptionResource(self)
         self.email = email.EmailResource(self)
+        self.view = view.ViewResource(self)
         self.with_raw_response = TerminalWithRawResponse(self)
         self.with_streaming_response = TerminalWithStreamedResponse(self)
 
@@ -268,6 +270,7 @@ class AsyncTerminal(AsyncAPIClient):
     order: order.AsyncOrderResource
     subscription: subscription.AsyncSubscriptionResource
     email: email.AsyncEmailResource
+    view: view.AsyncViewResource
     with_raw_response: AsyncTerminalWithRawResponse
     with_streaming_response: AsyncTerminalWithStreamedResponse
 
@@ -357,6 +360,7 @@ class AsyncTerminal(AsyncAPIClient):
         self.order = order.AsyncOrderResource(self)
         self.subscription = subscription.AsyncSubscriptionResource(self)
         self.email = email.AsyncEmailResource(self)
+        self.view = view.AsyncViewResource(self)
         self.with_raw_response = AsyncTerminalWithRawResponse(self)
         self.with_streaming_response = AsyncTerminalWithStreamedResponse(self)
 
@@ -477,6 +481,7 @@ class TerminalWithRawResponse:
         self.order = order.OrderResourceWithRawResponse(client.order)
         self.subscription = subscription.SubscriptionResourceWithRawResponse(client.subscription)
         self.email = email.EmailResourceWithRawResponse(client.email)
+        self.view = view.ViewResourceWithRawResponse(client.view)
 
 
 class AsyncTerminalWithRawResponse:
@@ -489,6 +494,7 @@ class AsyncTerminalWithRawResponse:
         self.order = order.AsyncOrderResourceWithRawResponse(client.order)
         self.subscription = subscription.AsyncSubscriptionResourceWithRawResponse(client.subscription)
         self.email = email.AsyncEmailResourceWithRawResponse(client.email)
+        self.view = view.AsyncViewResourceWithRawResponse(client.view)
 
 
 class TerminalWithStreamedResponse:
@@ -501,6 +507,7 @@ class TerminalWithStreamedResponse:
         self.order = order.OrderResourceWithStreamingResponse(client.order)
         self.subscription = subscription.SubscriptionResourceWithStreamingResponse(client.subscription)
         self.email = email.EmailResourceWithStreamingResponse(client.email)
+        self.view = view.ViewResourceWithStreamingResponse(client.view)
 
 
 class AsyncTerminalWithStreamedResponse:
@@ -513,6 +520,7 @@ class AsyncTerminalWithStreamedResponse:
         self.order = order.AsyncOrderResourceWithStreamingResponse(client.order)
         self.subscription = subscription.AsyncSubscriptionResourceWithStreamingResponse(client.subscription)
         self.email = email.AsyncEmailResourceWithStreamingResponse(client.email)
+        self.view = view.AsyncViewResourceWithStreamingResponse(client.view)
 
 
 Client = Terminal
