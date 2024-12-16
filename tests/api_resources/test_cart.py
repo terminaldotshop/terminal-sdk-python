@@ -7,10 +7,11 @@ from typing import Any, cast
 
 import pytest
 
-from terminal import Terminal, AsyncTerminal
 from tests.utils import assert_matches_type
-from terminal.types import (
-    CartListResponse,
+from terminal_sdk import Terminal, AsyncTerminal
+from terminal_sdk.types import (
+    CartGetResponse,
+    CartConvertResponse,
     CartSetCardResponse,
     CartSetItemResponse,
     CartSetAddressResponse,
@@ -23,27 +24,52 @@ class TestCart:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    def test_method_list(self, client: Terminal) -> None:
-        cart = client.cart.list()
-        assert_matches_type(CartListResponse, cart, path=["response"])
+    def test_method_convert(self, client: Terminal) -> None:
+        cart = client.cart.convert()
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
-    def test_raw_response_list(self, client: Terminal) -> None:
-        response = client.cart.with_raw_response.list()
+    def test_raw_response_convert(self, client: Terminal) -> None:
+        response = client.cart.with_raw_response.convert()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         cart = response.parse()
-        assert_matches_type(CartListResponse, cart, path=["response"])
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
-    def test_streaming_response_list(self, client: Terminal) -> None:
-        with client.cart.with_streaming_response.list() as response:
+    def test_streaming_response_convert(self, client: Terminal) -> None:
+        with client.cart.with_streaming_response.convert() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             cart = response.parse()
-            assert_matches_type(CartListResponse, cart, path=["response"])
+            assert_matches_type(CartConvertResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_get(self, client: Terminal) -> None:
+        cart = client.cart.get()
+        assert_matches_type(CartGetResponse, cart, path=["response"])
+
+    @parametrize
+    def test_raw_response_get(self, client: Terminal) -> None:
+        response = client.cart.with_raw_response.get()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = response.parse()
+        assert_matches_type(CartGetResponse, cart, path=["response"])
+
+    @parametrize
+    def test_streaming_response_get(self, client: Terminal) -> None:
+        with client.cart.with_streaming_response.get() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = response.parse()
+            assert_matches_type(CartGetResponse, cart, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -148,27 +174,52 @@ class TestAsyncCart:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
-    async def test_method_list(self, async_client: AsyncTerminal) -> None:
-        cart = await async_client.cart.list()
-        assert_matches_type(CartListResponse, cart, path=["response"])
+    async def test_method_convert(self, async_client: AsyncTerminal) -> None:
+        cart = await async_client.cart.convert()
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
-    async def test_raw_response_list(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.cart.with_raw_response.list()
+    async def test_raw_response_convert(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.cart.with_raw_response.convert()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         cart = await response.parse()
-        assert_matches_type(CartListResponse, cart, path=["response"])
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncTerminal) -> None:
-        async with async_client.cart.with_streaming_response.list() as response:
+    async def test_streaming_response_convert(self, async_client: AsyncTerminal) -> None:
+        async with async_client.cart.with_streaming_response.convert() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             cart = await response.parse()
-            assert_matches_type(CartListResponse, cart, path=["response"])
+            assert_matches_type(CartConvertResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_get(self, async_client: AsyncTerminal) -> None:
+        cart = await async_client.cart.get()
+        assert_matches_type(CartGetResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.cart.with_raw_response.get()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = await response.parse()
+        assert_matches_type(CartGetResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncTerminal) -> None:
+        async with async_client.cart.with_streaming_response.get() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = await response.parse()
+            assert_matches_type(CartGetResponse, cart, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

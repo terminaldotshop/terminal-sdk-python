@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from terminal._types import FileTypes
-from terminal._utils import extract_files
+from terminal_sdk._types import FileTypes
+from terminal_sdk._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

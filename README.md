@@ -1,6 +1,6 @@
 # Terminal Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/terminal.svg)](https://pypi.org/project/terminal/)
+[![PyPI version](https://img.shields.io/pypi/v/terminal-sdk.svg)](https://pypi.org/project/terminal-sdk/)
 
 The Terminal Python library provides convenient access to the Terminal REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -16,7 +16,7 @@ The REST API documentation can be found on [terminal.shop](https://terminal.shop
 
 ```sh
 # install from PyPI
-pip install --pre terminal
+pip install --pre terminal-sdk
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from terminal import Terminal
+from terminal_sdk import Terminal
 
 client = Terminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
@@ -33,7 +33,7 @@ client = Terminal(
     environment="sandbox",
 )
 
-product = client.products.list()
+product = client.product.list()
 print(product.data)
 ```
 
@@ -49,7 +49,7 @@ Simply import `AsyncTerminal` instead of `Terminal` and use `await` with each AP
 ```python
 import os
 import asyncio
-from terminal import AsyncTerminal
+from terminal_sdk import AsyncTerminal
 
 client = AsyncTerminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
@@ -59,7 +59,7 @@ client = AsyncTerminal(
 
 
 async def main() -> None:
-    product = await client.products.list()
+    product = await client.product.list()
     print(product.data)
 
 
@@ -79,27 +79,27 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `terminal.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `terminal_sdk.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `terminal.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `terminal_sdk.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `terminal.APIError`.
+All errors inherit from `terminal_sdk.APIError`.
 
 ```python
-import terminal
-from terminal import Terminal
+import terminal_sdk
+from terminal_sdk import Terminal
 
 client = Terminal()
 
 try:
-    client.products.list()
-except terminal.APIConnectionError as e:
+    client.product.list()
+except terminal_sdk.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except terminal.RateLimitError as e:
+except terminal_sdk.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except terminal.APIStatusError as e:
+except terminal_sdk.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -127,7 +127,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from terminal import Terminal
+from terminal_sdk import Terminal
 
 # Configure the default for all requests:
 client = Terminal(
@@ -136,7 +136,7 @@ client = Terminal(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).products.list()
+client.with_options(max_retries=5).product.list()
 ```
 
 ### Timeouts
@@ -145,7 +145,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from terminal import Terminal
+from terminal_sdk import Terminal
 
 # Configure the default for all requests:
 client = Terminal(
@@ -159,7 +159,7 @@ client = Terminal(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).products.list()
+client.with_options(timeout=5.0).product.list()
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -197,19 +197,19 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from terminal import Terminal
+from terminal_sdk import Terminal
 
 client = Terminal()
-response = client.products.with_raw_response.list()
+response = client.product.with_raw_response.list()
 print(response.headers.get('X-My-Header'))
 
-product = response.parse()  # get the object that `products.list()` would have returned
+product = response.parse()  # get the object that `product.list()` would have returned
 print(product.data)
 ```
 
-These methods return an [`APIResponse`](https://github.com/terminaldotshop/terminal-sdk-python/tree/main/src/terminal/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/terminaldotshop/terminal-sdk-python/tree/main/src/terminal_sdk/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/terminaldotshop/terminal-sdk-python/tree/main/src/terminal/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/terminaldotshop/terminal-sdk-python/tree/main/src/terminal_sdk/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -218,7 +218,7 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.products.with_streaming_response.list() as response:
+with client.product.with_streaming_response.list() as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
@@ -272,7 +272,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from terminal import Terminal, DefaultHttpxClient
+from terminal_sdk import Terminal, DefaultHttpxClient
 
 client = Terminal(
     # Or use the `TERMINAL_BASE_URL` env var
@@ -313,8 +313,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import terminal
-print(terminal.__version__)
+import terminal_sdk
+print(terminal_sdk.__version__)
 ```
 
 ## Requirements
