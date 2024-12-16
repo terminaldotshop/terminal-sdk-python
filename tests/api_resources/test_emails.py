@@ -14,19 +14,19 @@ from terminal.types import EmailCreateResponse
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestEmail:
+class TestEmails:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     def test_method_create(self, client: Terminal) -> None:
-        email = client.email.create(
+        email = client.emails.create(
             email="john@example.com",
         )
         assert_matches_type(EmailCreateResponse, email, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Terminal) -> None:
-        response = client.email.with_raw_response.create(
+        response = client.emails.with_raw_response.create(
             email="john@example.com",
         )
 
@@ -37,7 +37,7 @@ class TestEmail:
 
     @parametrize
     def test_streaming_response_create(self, client: Terminal) -> None:
-        with client.email.with_streaming_response.create(
+        with client.emails.with_streaming_response.create(
             email="john@example.com",
         ) as response:
             assert not response.is_closed
@@ -49,19 +49,19 @@ class TestEmail:
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncEmail:
+class TestAsyncEmails:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     async def test_method_create(self, async_client: AsyncTerminal) -> None:
-        email = await async_client.email.create(
+        email = await async_client.emails.create(
             email="john@example.com",
         )
         assert_matches_type(EmailCreateResponse, email, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.email.with_raw_response.create(
+        response = await async_client.emails.with_raw_response.create(
             email="john@example.com",
         )
 
@@ -72,7 +72,7 @@ class TestAsyncEmail:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
-        async with async_client.email.with_streaming_response.create(
+        async with async_client.emails.with_streaming_response.create(
             email="john@example.com",
         ) as response:
             assert not response.is_closed

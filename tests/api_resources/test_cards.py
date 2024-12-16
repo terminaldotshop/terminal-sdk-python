@@ -14,19 +14,19 @@ from terminal.types import CardListResponse, CardCreateResponse, CardDeleteRespo
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestCard:
+class TestCards:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     def test_method_create(self, client: Terminal) -> None:
-        card = client.card.create(
+        card = client.cards.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         )
         assert_matches_type(CardCreateResponse, card, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Terminal) -> None:
-        response = client.card.with_raw_response.create(
+        response = client.cards.with_raw_response.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         )
 
@@ -37,7 +37,7 @@ class TestCard:
 
     @parametrize
     def test_streaming_response_create(self, client: Terminal) -> None:
-        with client.card.with_streaming_response.create(
+        with client.cards.with_streaming_response.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         ) as response:
             assert not response.is_closed
@@ -50,12 +50,12 @@ class TestCard:
 
     @parametrize
     def test_method_list(self, client: Terminal) -> None:
-        card = client.card.list()
+        card = client.cards.list()
         assert_matches_type(CardListResponse, card, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Terminal) -> None:
-        response = client.card.with_raw_response.list()
+        response = client.cards.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -64,7 +64,7 @@ class TestCard:
 
     @parametrize
     def test_streaming_response_list(self, client: Terminal) -> None:
-        with client.card.with_streaming_response.list() as response:
+        with client.cards.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -75,14 +75,14 @@ class TestCard:
 
     @parametrize
     def test_method_delete(self, client: Terminal) -> None:
-        card = client.card.delete(
+        card = client.cards.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
         assert_matches_type(CardDeleteResponse, card, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Terminal) -> None:
-        response = client.card.with_raw_response.delete(
+        response = client.cards.with_raw_response.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
 
@@ -93,7 +93,7 @@ class TestCard:
 
     @parametrize
     def test_streaming_response_delete(self, client: Terminal) -> None:
-        with client.card.with_streaming_response.delete(
+        with client.cards.with_streaming_response.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         ) as response:
             assert not response.is_closed
@@ -107,24 +107,24 @@ class TestCard:
     @parametrize
     def test_path_params_delete(self, client: Terminal) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.card.with_raw_response.delete(
+            client.cards.with_raw_response.delete(
                 "",
             )
 
 
-class TestAsyncCard:
+class TestAsyncCards:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     async def test_method_create(self, async_client: AsyncTerminal) -> None:
-        card = await async_client.card.create(
+        card = await async_client.cards.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         )
         assert_matches_type(CardCreateResponse, card, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.card.with_raw_response.create(
+        response = await async_client.cards.with_raw_response.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         )
 
@@ -135,7 +135,7 @@ class TestAsyncCard:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
-        async with async_client.card.with_streaming_response.create(
+        async with async_client.cards.with_streaming_response.create(
             token="tok_1N3T00LkdIwHu7ixt44h1F8k",
         ) as response:
             assert not response.is_closed
@@ -148,12 +148,12 @@ class TestAsyncCard:
 
     @parametrize
     async def test_method_list(self, async_client: AsyncTerminal) -> None:
-        card = await async_client.card.list()
+        card = await async_client.cards.list()
         assert_matches_type(CardListResponse, card, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.card.with_raw_response.list()
+        response = await async_client.cards.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -162,7 +162,7 @@ class TestAsyncCard:
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncTerminal) -> None:
-        async with async_client.card.with_streaming_response.list() as response:
+        async with async_client.cards.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -173,14 +173,14 @@ class TestAsyncCard:
 
     @parametrize
     async def test_method_delete(self, async_client: AsyncTerminal) -> None:
-        card = await async_client.card.delete(
+        card = await async_client.cards.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
         assert_matches_type(CardDeleteResponse, card, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.card.with_raw_response.delete(
+        response = await async_client.cards.with_raw_response.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
 
@@ -191,7 +191,7 @@ class TestAsyncCard:
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncTerminal) -> None:
-        async with async_client.card.with_streaming_response.delete(
+        async with async_client.cards.with_streaming_response.delete(
             "crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
         ) as response:
             assert not response.is_closed
@@ -205,6 +205,6 @@ class TestAsyncCard:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncTerminal) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.card.with_raw_response.delete(
+            await async_client.cards.with_raw_response.delete(
                 "",
             )

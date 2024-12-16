@@ -2,8 +2,8 @@
 
 from typing import List
 
+from .order import Order
 from .._models import BaseModel
-from .shared.order import Order
 
 __all__ = ["OrderListResponse"]
 

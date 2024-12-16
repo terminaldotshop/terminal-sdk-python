@@ -24,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import card, cart, user, email, order, address, product, subscription
+from .resources import cart, cards, users, emails, orders, products, addresses, subscriptions
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import TerminalError, APIStatusError
 from ._base_client import (
@@ -47,32 +47,32 @@ __all__ = [
 
 ENVIRONMENTS: Dict[str, str] = {
     "production": "https://api.terminal.shop/",
-    "dev": "https://api.dev.terminal.shop/",
+    "sandbox": "https://sandbox.terminal.shop/",
 }
 
 
 class Terminal(SyncAPIClient):
-    product: product.ProductResource
-    user: user.UserResource
-    address: address.AddressResource
-    card: card.CardResource
+    products: products.ProductsResource
+    users: users.UsersResource
+    addresses: addresses.AddressesResource
+    cards: cards.CardsResource
     cart: cart.CartResource
-    order: order.OrderResource
-    subscription: subscription.SubscriptionResource
-    email: email.EmailResource
+    orders: orders.OrdersResource
+    subscriptions: subscriptions.SubscriptionsResource
+    emails: emails.EmailsResource
     with_raw_response: TerminalWithRawResponse
     with_streaming_response: TerminalWithStreamedResponse
 
     # client options
     bearer_token: str
 
-    _environment: Literal["production", "dev"] | NotGiven
+    _environment: Literal["production", "sandbox"] | NotGiven
 
     def __init__(
         self,
         *,
         bearer_token: str | None = None,
-        environment: Literal["production", "dev"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "sandbox"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -141,14 +141,14 @@ class Terminal(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.product = product.ProductResource(self)
-        self.user = user.UserResource(self)
-        self.address = address.AddressResource(self)
-        self.card = card.CardResource(self)
+        self.products = products.ProductsResource(self)
+        self.users = users.UsersResource(self)
+        self.addresses = addresses.AddressesResource(self)
+        self.cards = cards.CardsResource(self)
         self.cart = cart.CartResource(self)
-        self.order = order.OrderResource(self)
-        self.subscription = subscription.SubscriptionResource(self)
-        self.email = email.EmailResource(self)
+        self.orders = orders.OrdersResource(self)
+        self.subscriptions = subscriptions.SubscriptionsResource(self)
+        self.emails = emails.EmailsResource(self)
         self.with_raw_response = TerminalWithRawResponse(self)
         self.with_streaming_response = TerminalWithStreamedResponse(self)
 
@@ -176,7 +176,7 @@ class Terminal(SyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
-        environment: Literal["production", "dev"] | None = None,
+        environment: Literal["production", "sandbox"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -260,27 +260,27 @@ class Terminal(SyncAPIClient):
 
 
 class AsyncTerminal(AsyncAPIClient):
-    product: product.AsyncProductResource
-    user: user.AsyncUserResource
-    address: address.AsyncAddressResource
-    card: card.AsyncCardResource
+    products: products.AsyncProductsResource
+    users: users.AsyncUsersResource
+    addresses: addresses.AsyncAddressesResource
+    cards: cards.AsyncCardsResource
     cart: cart.AsyncCartResource
-    order: order.AsyncOrderResource
-    subscription: subscription.AsyncSubscriptionResource
-    email: email.AsyncEmailResource
+    orders: orders.AsyncOrdersResource
+    subscriptions: subscriptions.AsyncSubscriptionsResource
+    emails: emails.AsyncEmailsResource
     with_raw_response: AsyncTerminalWithRawResponse
     with_streaming_response: AsyncTerminalWithStreamedResponse
 
     # client options
     bearer_token: str
 
-    _environment: Literal["production", "dev"] | NotGiven
+    _environment: Literal["production", "sandbox"] | NotGiven
 
     def __init__(
         self,
         *,
         bearer_token: str | None = None,
-        environment: Literal["production", "dev"] | NotGiven = NOT_GIVEN,
+        environment: Literal["production", "sandbox"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -349,14 +349,14 @@ class AsyncTerminal(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.product = product.AsyncProductResource(self)
-        self.user = user.AsyncUserResource(self)
-        self.address = address.AsyncAddressResource(self)
-        self.card = card.AsyncCardResource(self)
+        self.products = products.AsyncProductsResource(self)
+        self.users = users.AsyncUsersResource(self)
+        self.addresses = addresses.AsyncAddressesResource(self)
+        self.cards = cards.AsyncCardsResource(self)
         self.cart = cart.AsyncCartResource(self)
-        self.order = order.AsyncOrderResource(self)
-        self.subscription = subscription.AsyncSubscriptionResource(self)
-        self.email = email.AsyncEmailResource(self)
+        self.orders = orders.AsyncOrdersResource(self)
+        self.subscriptions = subscriptions.AsyncSubscriptionsResource(self)
+        self.emails = emails.AsyncEmailsResource(self)
         self.with_raw_response = AsyncTerminalWithRawResponse(self)
         self.with_streaming_response = AsyncTerminalWithStreamedResponse(self)
 
@@ -384,7 +384,7 @@ class AsyncTerminal(AsyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
-        environment: Literal["production", "dev"] | None = None,
+        environment: Literal["production", "sandbox"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -469,50 +469,50 @@ class AsyncTerminal(AsyncAPIClient):
 
 class TerminalWithRawResponse:
     def __init__(self, client: Terminal) -> None:
-        self.product = product.ProductResourceWithRawResponse(client.product)
-        self.user = user.UserResourceWithRawResponse(client.user)
-        self.address = address.AddressResourceWithRawResponse(client.address)
-        self.card = card.CardResourceWithRawResponse(client.card)
+        self.products = products.ProductsResourceWithRawResponse(client.products)
+        self.users = users.UsersResourceWithRawResponse(client.users)
+        self.addresses = addresses.AddressesResourceWithRawResponse(client.addresses)
+        self.cards = cards.CardsResourceWithRawResponse(client.cards)
         self.cart = cart.CartResourceWithRawResponse(client.cart)
-        self.order = order.OrderResourceWithRawResponse(client.order)
-        self.subscription = subscription.SubscriptionResourceWithRawResponse(client.subscription)
-        self.email = email.EmailResourceWithRawResponse(client.email)
+        self.orders = orders.OrdersResourceWithRawResponse(client.orders)
+        self.subscriptions = subscriptions.SubscriptionsResourceWithRawResponse(client.subscriptions)
+        self.emails = emails.EmailsResourceWithRawResponse(client.emails)
 
 
 class AsyncTerminalWithRawResponse:
     def __init__(self, client: AsyncTerminal) -> None:
-        self.product = product.AsyncProductResourceWithRawResponse(client.product)
-        self.user = user.AsyncUserResourceWithRawResponse(client.user)
-        self.address = address.AsyncAddressResourceWithRawResponse(client.address)
-        self.card = card.AsyncCardResourceWithRawResponse(client.card)
+        self.products = products.AsyncProductsResourceWithRawResponse(client.products)
+        self.users = users.AsyncUsersResourceWithRawResponse(client.users)
+        self.addresses = addresses.AsyncAddressesResourceWithRawResponse(client.addresses)
+        self.cards = cards.AsyncCardsResourceWithRawResponse(client.cards)
         self.cart = cart.AsyncCartResourceWithRawResponse(client.cart)
-        self.order = order.AsyncOrderResourceWithRawResponse(client.order)
-        self.subscription = subscription.AsyncSubscriptionResourceWithRawResponse(client.subscription)
-        self.email = email.AsyncEmailResourceWithRawResponse(client.email)
+        self.orders = orders.AsyncOrdersResourceWithRawResponse(client.orders)
+        self.subscriptions = subscriptions.AsyncSubscriptionsResourceWithRawResponse(client.subscriptions)
+        self.emails = emails.AsyncEmailsResourceWithRawResponse(client.emails)
 
 
 class TerminalWithStreamedResponse:
     def __init__(self, client: Terminal) -> None:
-        self.product = product.ProductResourceWithStreamingResponse(client.product)
-        self.user = user.UserResourceWithStreamingResponse(client.user)
-        self.address = address.AddressResourceWithStreamingResponse(client.address)
-        self.card = card.CardResourceWithStreamingResponse(client.card)
+        self.products = products.ProductsResourceWithStreamingResponse(client.products)
+        self.users = users.UsersResourceWithStreamingResponse(client.users)
+        self.addresses = addresses.AddressesResourceWithStreamingResponse(client.addresses)
+        self.cards = cards.CardsResourceWithStreamingResponse(client.cards)
         self.cart = cart.CartResourceWithStreamingResponse(client.cart)
-        self.order = order.OrderResourceWithStreamingResponse(client.order)
-        self.subscription = subscription.SubscriptionResourceWithStreamingResponse(client.subscription)
-        self.email = email.EmailResourceWithStreamingResponse(client.email)
+        self.orders = orders.OrdersResourceWithStreamingResponse(client.orders)
+        self.subscriptions = subscriptions.SubscriptionsResourceWithStreamingResponse(client.subscriptions)
+        self.emails = emails.EmailsResourceWithStreamingResponse(client.emails)
 
 
 class AsyncTerminalWithStreamedResponse:
     def __init__(self, client: AsyncTerminal) -> None:
-        self.product = product.AsyncProductResourceWithStreamingResponse(client.product)
-        self.user = user.AsyncUserResourceWithStreamingResponse(client.user)
-        self.address = address.AsyncAddressResourceWithStreamingResponse(client.address)
-        self.card = card.AsyncCardResourceWithStreamingResponse(client.card)
+        self.products = products.AsyncProductsResourceWithStreamingResponse(client.products)
+        self.users = users.AsyncUsersResourceWithStreamingResponse(client.users)
+        self.addresses = addresses.AsyncAddressesResourceWithStreamingResponse(client.addresses)
+        self.cards = cards.AsyncCardsResourceWithStreamingResponse(client.cards)
         self.cart = cart.AsyncCartResourceWithStreamingResponse(client.cart)
-        self.order = order.AsyncOrderResourceWithStreamingResponse(client.order)
-        self.subscription = subscription.AsyncSubscriptionResourceWithStreamingResponse(client.subscription)
-        self.email = email.AsyncEmailResourceWithStreamingResponse(client.email)
+        self.orders = orders.AsyncOrdersResourceWithStreamingResponse(client.orders)
+        self.subscriptions = subscriptions.AsyncSubscriptionsResourceWithStreamingResponse(client.subscriptions)
+        self.emails = emails.AsyncEmailsResourceWithStreamingResponse(client.emails)
 
 
 Client = Terminal

@@ -4,7 +4,12 @@ from __future__ import annotations
 
 import httpx
 
+from ..types import address_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import (
+    maybe_transform,
+    async_maybe_transform,
+)
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -14,50 +19,98 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.order_get_response import OrderGetResponse
-from ..types.order_list_response import OrderListResponse
-from ..types.order_create_response import OrderCreateResponse
+from ..types.address_list_response import AddressListResponse
+from ..types.address_create_response import AddressCreateResponse
+from ..types.address_delete_response import AddressDeleteResponse
 
-__all__ = ["OrderResource", "AsyncOrderResource"]
+__all__ = ["AddressesResource", "AsyncAddressesResource"]
 
 
-class OrderResource(SyncAPIResource):
+class AddressesResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> OrderResourceWithRawResponse:
+    def with_raw_response(self) -> AddressesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return OrderResourceWithRawResponse(self)
+        return AddressesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> OrderResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AddressesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return OrderResourceWithStreamingResponse(self)
+        return AddressesResourceWithStreamingResponse(self)
 
     def create(
         self,
         *,
+        city: str,
+        country: str,
+        name: str,
+        street1: str,
+        zip: str,
+        phone: str | NotGiven = NOT_GIVEN,
+        province: str | NotGiven = NOT_GIVEN,
+        street2: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderCreateResponse:
-        """Create an order from the current user's cart."""
+    ) -> AddressCreateResponse:
+        """
+        Create and add a shipping address to the current user.
+
+        Args:
+          city: City of the address.
+
+          country: ISO 3166-1 alpha-2 country code of the address.
+
+          name: The recipient's name.
+
+          street1: Street of the address.
+
+          zip: Zip code of the address.
+
+          phone: Phone number of the recipient.
+
+          province: Province or state of the address.
+
+          street2: Apartment, suite, etc. of the address.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._post(
-            "/order",
+            "/addresses",
+            body=maybe_transform(
+                {
+                    "city": city,
+                    "country": country,
+                    "name": name,
+                    "street1": street1,
+                    "zip": zip,
+                    "phone": phone,
+                    "province": province,
+                    "street2": street2,
+                },
+                address_create_params.AddressCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderCreateResponse,
+            cast_to=AddressCreateResponse,
         )
 
     def list(
@@ -69,17 +122,17 @@ class OrderResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderListResponse:
-        """List the orders associated with the current user."""
+    ) -> AddressListResponse:
+        """Get the shipping addresses associated with the current user."""
         return self._get(
-            "/order",
+            "/addresses",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderListResponse,
+            cast_to=AddressListResponse,
         )
 
-    def get(
+    def delete(
         self,
         id: str,
         *,
@@ -89,12 +142,12 @@ class OrderResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderGetResponse:
+    ) -> AddressDeleteResponse:
         """
-        Get the order with the given ID.
+        Delete a shipping address from the current user.
 
         Args:
-          id: ID of the order to get.
+          id: ID of the shipping address to delete.
 
           extra_headers: Send extra headers
 
@@ -106,52 +159,100 @@ class OrderResource(SyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._get(
-            f"/order/{id}",
+        return self._delete(
+            f"/addresses/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderGetResponse,
+            cast_to=AddressDeleteResponse,
         )
 
 
-class AsyncOrderResource(AsyncAPIResource):
+class AsyncAddressesResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncOrderResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncAddressesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncOrderResourceWithRawResponse(self)
+        return AsyncAddressesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncOrderResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncAddressesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AsyncOrderResourceWithStreamingResponse(self)
+        return AsyncAddressesResourceWithStreamingResponse(self)
 
     async def create(
         self,
         *,
+        city: str,
+        country: str,
+        name: str,
+        street1: str,
+        zip: str,
+        phone: str | NotGiven = NOT_GIVEN,
+        province: str | NotGiven = NOT_GIVEN,
+        street2: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderCreateResponse:
-        """Create an order from the current user's cart."""
+    ) -> AddressCreateResponse:
+        """
+        Create and add a shipping address to the current user.
+
+        Args:
+          city: City of the address.
+
+          country: ISO 3166-1 alpha-2 country code of the address.
+
+          name: The recipient's name.
+
+          street1: Street of the address.
+
+          zip: Zip code of the address.
+
+          phone: Phone number of the recipient.
+
+          province: Province or state of the address.
+
+          street2: Apartment, suite, etc. of the address.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._post(
-            "/order",
+            "/addresses",
+            body=await async_maybe_transform(
+                {
+                    "city": city,
+                    "country": country,
+                    "name": name,
+                    "street1": street1,
+                    "zip": zip,
+                    "phone": phone,
+                    "province": province,
+                    "street2": street2,
+                },
+                address_create_params.AddressCreateParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderCreateResponse,
+            cast_to=AddressCreateResponse,
         )
 
     async def list(
@@ -163,17 +264,17 @@ class AsyncOrderResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderListResponse:
-        """List the orders associated with the current user."""
+    ) -> AddressListResponse:
+        """Get the shipping addresses associated with the current user."""
         return await self._get(
-            "/order",
+            "/addresses",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderListResponse,
+            cast_to=AddressListResponse,
         )
 
-    async def get(
+    async def delete(
         self,
         id: str,
         *,
@@ -183,12 +284,12 @@ class AsyncOrderResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> OrderGetResponse:
+    ) -> AddressDeleteResponse:
         """
-        Get the order with the given ID.
+        Delete a shipping address from the current user.
 
         Args:
-          id: ID of the order to get.
+          id: ID of the shipping address to delete.
 
           extra_headers: Send extra headers
 
@@ -200,70 +301,70 @@ class AsyncOrderResource(AsyncAPIResource):
         """
         if not id:
             raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._get(
-            f"/order/{id}",
+        return await self._delete(
+            f"/addresses/{id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=OrderGetResponse,
+            cast_to=AddressDeleteResponse,
         )
 
 
-class OrderResourceWithRawResponse:
-    def __init__(self, order: OrderResource) -> None:
-        self._order = order
+class AddressesResourceWithRawResponse:
+    def __init__(self, addresses: AddressesResource) -> None:
+        self._addresses = addresses
 
         self.create = to_raw_response_wrapper(
-            order.create,
+            addresses.create,
         )
         self.list = to_raw_response_wrapper(
-            order.list,
+            addresses.list,
         )
-        self.get = to_raw_response_wrapper(
-            order.get,
+        self.delete = to_raw_response_wrapper(
+            addresses.delete,
         )
 
 
-class AsyncOrderResourceWithRawResponse:
-    def __init__(self, order: AsyncOrderResource) -> None:
-        self._order = order
+class AsyncAddressesResourceWithRawResponse:
+    def __init__(self, addresses: AsyncAddressesResource) -> None:
+        self._addresses = addresses
 
         self.create = async_to_raw_response_wrapper(
-            order.create,
+            addresses.create,
         )
         self.list = async_to_raw_response_wrapper(
-            order.list,
+            addresses.list,
         )
-        self.get = async_to_raw_response_wrapper(
-            order.get,
+        self.delete = async_to_raw_response_wrapper(
+            addresses.delete,
         )
 
 
-class OrderResourceWithStreamingResponse:
-    def __init__(self, order: OrderResource) -> None:
-        self._order = order
+class AddressesResourceWithStreamingResponse:
+    def __init__(self, addresses: AddressesResource) -> None:
+        self._addresses = addresses
 
         self.create = to_streamed_response_wrapper(
-            order.create,
+            addresses.create,
         )
         self.list = to_streamed_response_wrapper(
-            order.list,
+            addresses.list,
         )
-        self.get = to_streamed_response_wrapper(
-            order.get,
+        self.delete = to_streamed_response_wrapper(
+            addresses.delete,
         )
 
 
-class AsyncOrderResourceWithStreamingResponse:
-    def __init__(self, order: AsyncOrderResource) -> None:
-        self._order = order
+class AsyncAddressesResourceWithStreamingResponse:
+    def __init__(self, addresses: AsyncAddressesResource) -> None:
+        self._addresses = addresses
 
         self.create = async_to_streamed_response_wrapper(
-            order.create,
+            addresses.create,
         )
         self.list = async_to_streamed_response_wrapper(
-            order.list,
+            addresses.list,
         )
-        self.get = async_to_streamed_response_wrapper(
-            order.get,
+        self.delete = async_to_streamed_response_wrapper(
+            addresses.delete,
         )

@@ -2,14 +2,14 @@
 
 from typing import List
 
+from .card import Card
+from .cart import Cart
+from .user import User
+from .order import Order
+from .address import Address
+from .product import Product
 from .._models import BaseModel
-from .shared.card import Card
-from .shared.cart import Cart
-from .shared.user import User
-from .shared.order import Order
-from .shared.address import Address
-from .shared.product import Product
-from .shared.subscription import Subscription
+from .subscription import Subscription
 
 __all__ = ["UserInitResponse", "Data"]
 

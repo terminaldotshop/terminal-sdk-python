@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 import httpx
 
-from ..types import address_create_params
+from ..types import user_update_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -19,70 +21,52 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.address_list_response import AddressListResponse
-from ..types.address_create_response import AddressCreateResponse
-from ..types.address_delete_response import AddressDeleteResponse
+from ..types.user_me_response import UserMeResponse
+from ..types.user_init_response import UserInitResponse
+from ..types.user_update_response import UserUpdateResponse
 
-__all__ = ["AddressResource", "AsyncAddressResource"]
+__all__ = ["UsersResource", "AsyncUsersResource"]
 
 
-class AddressResource(SyncAPIResource):
+class UsersResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AddressResourceWithRawResponse:
+    def with_raw_response(self) -> UsersResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AddressResourceWithRawResponse(self)
+        return UsersResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AddressResourceWithStreamingResponse:
+    def with_streaming_response(self) -> UsersResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AddressResourceWithStreamingResponse(self)
+        return UsersResourceWithStreamingResponse(self)
 
-    def create(
+    def update(
         self,
         *,
-        city: str,
-        country: str,
-        name: str,
-        street1: str,
-        zip: str,
-        phone: str | NotGiven = NOT_GIVEN,
-        province: str | NotGiven = NOT_GIVEN,
-        street2: str | NotGiven = NOT_GIVEN,
+        email: Optional[str] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressCreateResponse:
+    ) -> UserUpdateResponse:
         """
-        Create and add a shipping address to the current user.
+        Update the current user.
 
         Args:
-          city: City of the address.
+          email: Email address of the user.
 
-          country: ISO 3166-1 alpha-2 country code of the address.
-
-          name: The recipient's name.
-
-          street1: Street of the address.
-
-          zip: Zip code of the address.
-
-          phone: Phone number of the recipient.
-
-          province: Province or state of the address.
-
-          street2: Apartment, suite, etc. of the address.
+          name: Name of the user.
 
           extra_headers: Send extra headers
 
@@ -92,28 +76,22 @@ class AddressResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._post(
-            "/address",
+        return self._put(
+            "/users/me",
             body=maybe_transform(
                 {
-                    "city": city,
-                    "country": country,
+                    "email": email,
                     "name": name,
-                    "street1": street1,
-                    "zip": zip,
-                    "phone": phone,
-                    "province": province,
-                    "street2": street2,
                 },
-                address_create_params.AddressCreateParams,
+                user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressCreateResponse,
+            cast_to=UserUpdateResponse,
         )
 
-    def list(
+    def init(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -122,19 +100,21 @@ class AddressResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressListResponse:
-        """Get the shipping addresses associated with the current user."""
+    ) -> UserInitResponse:
+        """
+        Get initial app data, including user, products, cart, addresses, cards,
+        subscriptions, and orders.
+        """
         return self._get(
-            "/address",
+            "/users/init",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressListResponse,
+            cast_to=UserInitResponse,
         )
 
-    def delete(
+    def me(
         self,
-        id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -142,89 +122,56 @@ class AddressResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressDeleteResponse:
-        """
-        Delete a shipping address from the current user.
-
-        Args:
-          id: ID of the shipping address to delete.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return self._delete(
-            f"/address/{id}",
+    ) -> UserMeResponse:
+        """Get the current user."""
+        return self._get(
+            "/users/me",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressDeleteResponse,
+            cast_to=UserMeResponse,
         )
 
 
-class AsyncAddressResource(AsyncAPIResource):
+class AsyncUsersResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncAddressResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncUsersResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncAddressResourceWithRawResponse(self)
+        return AsyncUsersResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncAddressResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncUsersResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AsyncAddressResourceWithStreamingResponse(self)
+        return AsyncUsersResourceWithStreamingResponse(self)
 
-    async def create(
+    async def update(
         self,
         *,
-        city: str,
-        country: str,
-        name: str,
-        street1: str,
-        zip: str,
-        phone: str | NotGiven = NOT_GIVEN,
-        province: str | NotGiven = NOT_GIVEN,
-        street2: str | NotGiven = NOT_GIVEN,
+        email: Optional[str] | NotGiven = NOT_GIVEN,
+        name: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressCreateResponse:
+    ) -> UserUpdateResponse:
         """
-        Create and add a shipping address to the current user.
+        Update the current user.
 
         Args:
-          city: City of the address.
+          email: Email address of the user.
 
-          country: ISO 3166-1 alpha-2 country code of the address.
-
-          name: The recipient's name.
-
-          street1: Street of the address.
-
-          zip: Zip code of the address.
-
-          phone: Phone number of the recipient.
-
-          province: Province or state of the address.
-
-          street2: Apartment, suite, etc. of the address.
+          name: Name of the user.
 
           extra_headers: Send extra headers
 
@@ -234,28 +181,22 @@ class AsyncAddressResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._post(
-            "/address",
+        return await self._put(
+            "/users/me",
             body=await async_maybe_transform(
                 {
-                    "city": city,
-                    "country": country,
+                    "email": email,
                     "name": name,
-                    "street1": street1,
-                    "zip": zip,
-                    "phone": phone,
-                    "province": province,
-                    "street2": street2,
                 },
-                address_create_params.AddressCreateParams,
+                user_update_params.UserUpdateParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressCreateResponse,
+            cast_to=UserUpdateResponse,
         )
 
-    async def list(
+    async def init(
         self,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -264,19 +205,21 @@ class AsyncAddressResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressListResponse:
-        """Get the shipping addresses associated with the current user."""
+    ) -> UserInitResponse:
+        """
+        Get initial app data, including user, products, cart, addresses, cards,
+        subscriptions, and orders.
+        """
         return await self._get(
-            "/address",
+            "/users/init",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressListResponse,
+            cast_to=UserInitResponse,
         )
 
-    async def delete(
+    async def me(
         self,
-        id: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -284,87 +227,72 @@ class AsyncAddressResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AddressDeleteResponse:
-        """
-        Delete a shipping address from the current user.
-
-        Args:
-          id: ID of the shipping address to delete.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not id:
-            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
-        return await self._delete(
-            f"/address/{id}",
+    ) -> UserMeResponse:
+        """Get the current user."""
+        return await self._get(
+            "/users/me",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AddressDeleteResponse,
+            cast_to=UserMeResponse,
         )
 
 
-class AddressResourceWithRawResponse:
-    def __init__(self, address: AddressResource) -> None:
-        self._address = address
+class UsersResourceWithRawResponse:
+    def __init__(self, users: UsersResource) -> None:
+        self._users = users
 
-        self.create = to_raw_response_wrapper(
-            address.create,
+        self.update = to_raw_response_wrapper(
+            users.update,
         )
-        self.list = to_raw_response_wrapper(
-            address.list,
+        self.init = to_raw_response_wrapper(
+            users.init,
         )
-        self.delete = to_raw_response_wrapper(
-            address.delete,
-        )
-
-
-class AsyncAddressResourceWithRawResponse:
-    def __init__(self, address: AsyncAddressResource) -> None:
-        self._address = address
-
-        self.create = async_to_raw_response_wrapper(
-            address.create,
-        )
-        self.list = async_to_raw_response_wrapper(
-            address.list,
-        )
-        self.delete = async_to_raw_response_wrapper(
-            address.delete,
+        self.me = to_raw_response_wrapper(
+            users.me,
         )
 
 
-class AddressResourceWithStreamingResponse:
-    def __init__(self, address: AddressResource) -> None:
-        self._address = address
+class AsyncUsersResourceWithRawResponse:
+    def __init__(self, users: AsyncUsersResource) -> None:
+        self._users = users
 
-        self.create = to_streamed_response_wrapper(
-            address.create,
+        self.update = async_to_raw_response_wrapper(
+            users.update,
         )
-        self.list = to_streamed_response_wrapper(
-            address.list,
+        self.init = async_to_raw_response_wrapper(
+            users.init,
         )
-        self.delete = to_streamed_response_wrapper(
-            address.delete,
+        self.me = async_to_raw_response_wrapper(
+            users.me,
         )
 
 
-class AsyncAddressResourceWithStreamingResponse:
-    def __init__(self, address: AsyncAddressResource) -> None:
-        self._address = address
+class UsersResourceWithStreamingResponse:
+    def __init__(self, users: UsersResource) -> None:
+        self._users = users
 
-        self.create = async_to_streamed_response_wrapper(
-            address.create,
+        self.update = to_streamed_response_wrapper(
+            users.update,
         )
-        self.list = async_to_streamed_response_wrapper(
-            address.list,
+        self.init = to_streamed_response_wrapper(
+            users.init,
         )
-        self.delete = async_to_streamed_response_wrapper(
-            address.delete,
+        self.me = to_streamed_response_wrapper(
+            users.me,
+        )
+
+
+class AsyncUsersResourceWithStreamingResponse:
+    def __init__(self, users: AsyncUsersResource) -> None:
+        self._users = users
+
+        self.update = async_to_streamed_response_wrapper(
+            users.update,
+        )
+        self.init = async_to_streamed_response_wrapper(
+            users.init,
+        )
+        self.me = async_to_streamed_response_wrapper(
+            users.me,
         )

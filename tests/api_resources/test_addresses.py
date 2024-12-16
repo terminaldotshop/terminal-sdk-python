@@ -14,12 +14,12 @@ from terminal.types import AddressListResponse, AddressCreateResponse, AddressDe
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestAddress:
+class TestAddresses:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     def test_method_create(self, client: Terminal) -> None:
-        address = client.address.create(
+        address = client.addresses.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -30,7 +30,7 @@ class TestAddress:
 
     @parametrize
     def test_method_create_with_all_params(self, client: Terminal) -> None:
-        address = client.address.create(
+        address = client.addresses.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -44,7 +44,7 @@ class TestAddress:
 
     @parametrize
     def test_raw_response_create(self, client: Terminal) -> None:
-        response = client.address.with_raw_response.create(
+        response = client.addresses.with_raw_response.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -59,7 +59,7 @@ class TestAddress:
 
     @parametrize
     def test_streaming_response_create(self, client: Terminal) -> None:
-        with client.address.with_streaming_response.create(
+        with client.addresses.with_streaming_response.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -76,12 +76,12 @@ class TestAddress:
 
     @parametrize
     def test_method_list(self, client: Terminal) -> None:
-        address = client.address.list()
+        address = client.addresses.list()
         assert_matches_type(AddressListResponse, address, path=["response"])
 
     @parametrize
     def test_raw_response_list(self, client: Terminal) -> None:
-        response = client.address.with_raw_response.list()
+        response = client.addresses.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -90,7 +90,7 @@ class TestAddress:
 
     @parametrize
     def test_streaming_response_list(self, client: Terminal) -> None:
-        with client.address.with_streaming_response.list() as response:
+        with client.addresses.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -101,14 +101,14 @@ class TestAddress:
 
     @parametrize
     def test_method_delete(self, client: Terminal) -> None:
-        address = client.address.delete(
+        address = client.addresses.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
         assert_matches_type(AddressDeleteResponse, address, path=["response"])
 
     @parametrize
     def test_raw_response_delete(self, client: Terminal) -> None:
-        response = client.address.with_raw_response.delete(
+        response = client.addresses.with_raw_response.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
 
@@ -119,7 +119,7 @@ class TestAddress:
 
     @parametrize
     def test_streaming_response_delete(self, client: Terminal) -> None:
-        with client.address.with_streaming_response.delete(
+        with client.addresses.with_streaming_response.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         ) as response:
             assert not response.is_closed
@@ -133,17 +133,17 @@ class TestAddress:
     @parametrize
     def test_path_params_delete(self, client: Terminal) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            client.address.with_raw_response.delete(
+            client.addresses.with_raw_response.delete(
                 "",
             )
 
 
-class TestAsyncAddress:
+class TestAsyncAddresses:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @parametrize
     async def test_method_create(self, async_client: AsyncTerminal) -> None:
-        address = await async_client.address.create(
+        address = await async_client.addresses.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -154,7 +154,7 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncTerminal) -> None:
-        address = await async_client.address.create(
+        address = await async_client.addresses.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -168,7 +168,7 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.address.with_raw_response.create(
+        response = await async_client.addresses.with_raw_response.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -183,7 +183,7 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
-        async with async_client.address.with_streaming_response.create(
+        async with async_client.addresses.with_streaming_response.create(
             city="Anytown",
             country="US",
             name="John Doe",
@@ -200,12 +200,12 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_method_list(self, async_client: AsyncTerminal) -> None:
-        address = await async_client.address.list()
+        address = await async_client.addresses.list()
         assert_matches_type(AddressListResponse, address, path=["response"])
 
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.address.with_raw_response.list()
+        response = await async_client.addresses.with_raw_response.list()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -214,7 +214,7 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncTerminal) -> None:
-        async with async_client.address.with_streaming_response.list() as response:
+        async with async_client.addresses.with_streaming_response.list() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -225,14 +225,14 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_method_delete(self, async_client: AsyncTerminal) -> None:
-        address = await async_client.address.delete(
+        address = await async_client.addresses.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
         assert_matches_type(AddressDeleteResponse, address, path=["response"])
 
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.address.with_raw_response.delete(
+        response = await async_client.addresses.with_raw_response.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         )
 
@@ -243,7 +243,7 @@ class TestAsyncAddress:
 
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncTerminal) -> None:
-        async with async_client.address.with_streaming_response.delete(
+        async with async_client.addresses.with_streaming_response.delete(
             "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
         ) as response:
             assert not response.is_closed
@@ -257,6 +257,6 @@ class TestAsyncAddress:
     @parametrize
     async def test_path_params_delete(self, async_client: AsyncTerminal) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
-            await async_client.address.with_raw_response.delete(
+            await async_client.addresses.with_raw_response.delete(
                 "",
             )

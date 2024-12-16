@@ -2,8 +2,8 @@
 
 from typing import List
 
+from .address import Address
 from .._models import BaseModel
-from .shared.address import Address
 
 __all__ = ["AddressListResponse"]
 
