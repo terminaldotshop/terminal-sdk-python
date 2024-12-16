@@ -16,28 +16,28 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.product_list_response import ProductListResponse
 
-__all__ = ["ProductResource", "AsyncProductResource"]
+__all__ = ["ProductsResource", "AsyncProductsResource"]
 
 
-class ProductResource(SyncAPIResource):
+class ProductsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> ProductResourceWithRawResponse:
+    def with_raw_response(self) -> ProductsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return ProductResourceWithRawResponse(self)
+        return ProductsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> ProductResourceWithStreamingResponse:
+    def with_streaming_response(self) -> ProductsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return ProductResourceWithStreamingResponse(self)
+        return ProductsResourceWithStreamingResponse(self)
 
     def list(
         self,
@@ -51,7 +51,7 @@ class ProductResource(SyncAPIResource):
     ) -> ProductListResponse:
         """List all products for sale in the Terminal shop."""
         return self._get(
-            "/product",
+            "/products",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -59,25 +59,25 @@ class ProductResource(SyncAPIResource):
         )
 
 
-class AsyncProductResource(AsyncAPIResource):
+class AsyncProductsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncProductResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncProductsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncProductResourceWithRawResponse(self)
+        return AsyncProductsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncProductResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncProductsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AsyncProductResourceWithStreamingResponse(self)
+        return AsyncProductsResourceWithStreamingResponse(self)
 
     async def list(
         self,
@@ -91,7 +91,7 @@ class AsyncProductResource(AsyncAPIResource):
     ) -> ProductListResponse:
         """List all products for sale in the Terminal shop."""
         return await self._get(
-            "/product",
+            "/products",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -99,37 +99,37 @@ class AsyncProductResource(AsyncAPIResource):
         )
 
 
-class ProductResourceWithRawResponse:
-    def __init__(self, product: ProductResource) -> None:
-        self._product = product
+class ProductsResourceWithRawResponse:
+    def __init__(self, products: ProductsResource) -> None:
+        self._products = products
 
         self.list = to_raw_response_wrapper(
-            product.list,
+            products.list,
         )
 
 
-class AsyncProductResourceWithRawResponse:
-    def __init__(self, product: AsyncProductResource) -> None:
-        self._product = product
+class AsyncProductsResourceWithRawResponse:
+    def __init__(self, products: AsyncProductsResource) -> None:
+        self._products = products
 
         self.list = async_to_raw_response_wrapper(
-            product.list,
+            products.list,
         )
 
 
-class ProductResourceWithStreamingResponse:
-    def __init__(self, product: ProductResource) -> None:
-        self._product = product
+class ProductsResourceWithStreamingResponse:
+    def __init__(self, products: ProductsResource) -> None:
+        self._products = products
 
         self.list = to_streamed_response_wrapper(
-            product.list,
+            products.list,
         )
 
 
-class AsyncProductResourceWithStreamingResponse:
-    def __init__(self, product: AsyncProductResource) -> None:
-        self._product = product
+class AsyncProductsResourceWithStreamingResponse:
+    def __init__(self, products: AsyncProductsResource) -> None:
+        self._products = products
 
         self.list = async_to_streamed_response_wrapper(
-            product.list,
+            products.list,
         )

@@ -2,8 +2,8 @@
 
 from typing import List
 
+from .product import Product
 from .._models import BaseModel
-from .shared.product import Product
 
 __all__ = ["ProductListResponse"]
 

@@ -2,8 +2,8 @@
 
 from typing import List
 
+from .card import Card
 from .._models import BaseModel
-from .shared.card import Card
 
 __all__ = ["CardListResponse"]
 

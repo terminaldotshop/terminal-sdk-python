@@ -3,7 +3,7 @@
 from typing import List
 
 from .._models import BaseModel
-from .shared.subscription import Subscription
+from .subscription import Subscription
 
 __all__ = ["SubscriptionListResponse"]
 
