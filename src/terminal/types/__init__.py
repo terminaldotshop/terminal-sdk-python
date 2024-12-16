@@ -2,16 +2,14 @@
 
 from __future__ import annotations
 
-from .shared import (
-    Card as Card,
-    Cart as Cart,
-    User as User,
-    Order as Order,
-    Address as Address,
-    Product as Product,
-    Subscription as Subscription,
-    ProductVariant as ProductVariant,
-)
+from .card import Card as Card
+from .cart import Cart as Cart
+from .user import User as User
+from .order import Order as Order
+from .address import Address as Address
+from .product import Product as Product
+from .subscription import Subscription as Subscription
+from .product_variant import ProductVariant as ProductVariant
 from .user_me_response import UserMeResponse as UserMeResponse
 from .card_create_params import CardCreateParams as CardCreateParams
 from .card_list_response import CardListResponse as CardListResponse

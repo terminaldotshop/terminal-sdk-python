@@ -21,28 +21,28 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.email_create_response import EmailCreateResponse
 
-__all__ = ["EmailResource", "AsyncEmailResource"]
+__all__ = ["EmailsResource", "AsyncEmailsResource"]
 
 
-class EmailResource(SyncAPIResource):
+class EmailsResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> EmailResourceWithRawResponse:
+    def with_raw_response(self) -> EmailsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return EmailResourceWithRawResponse(self)
+        return EmailsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> EmailResourceWithStreamingResponse:
+    def with_streaming_response(self) -> EmailsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return EmailResourceWithStreamingResponse(self)
+        return EmailsResourceWithStreamingResponse(self)
 
     def create(
         self,
@@ -70,7 +70,7 @@ class EmailResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/email/subscription",
+            "/emails",
             body=maybe_transform({"email": email}, email_create_params.EmailCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -79,25 +79,25 @@ class EmailResource(SyncAPIResource):
         )
 
 
-class AsyncEmailResource(AsyncAPIResource):
+class AsyncEmailsResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncEmailResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncEmailsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return the
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncEmailResourceWithRawResponse(self)
+        return AsyncEmailsResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncEmailResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncEmailsResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
-        return AsyncEmailResourceWithStreamingResponse(self)
+        return AsyncEmailsResourceWithStreamingResponse(self)
 
     async def create(
         self,
@@ -125,7 +125,7 @@ class AsyncEmailResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/email/subscription",
+            "/emails",
             body=await async_maybe_transform({"email": email}, email_create_params.EmailCreateParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
@@ -134,37 +134,37 @@ class AsyncEmailResource(AsyncAPIResource):
         )
 
 
-class EmailResourceWithRawResponse:
-    def __init__(self, email: EmailResource) -> None:
-        self._email = email
+class EmailsResourceWithRawResponse:
+    def __init__(self, emails: EmailsResource) -> None:
+        self._emails = emails
 
         self.create = to_raw_response_wrapper(
-            email.create,
+            emails.create,
         )
 
 
-class AsyncEmailResourceWithRawResponse:
-    def __init__(self, email: AsyncEmailResource) -> None:
-        self._email = email
+class AsyncEmailsResourceWithRawResponse:
+    def __init__(self, emails: AsyncEmailsResource) -> None:
+        self._emails = emails
 
         self.create = async_to_raw_response_wrapper(
-            email.create,
+            emails.create,
         )
 
 
-class EmailResourceWithStreamingResponse:
-    def __init__(self, email: EmailResource) -> None:
-        self._email = email
+class EmailsResourceWithStreamingResponse:
+    def __init__(self, emails: EmailsResource) -> None:
+        self._emails = emails
 
         self.create = to_streamed_response_wrapper(
-            email.create,
+            emails.create,
         )
 
 
-class AsyncEmailResourceWithStreamingResponse:
-    def __init__(self, email: AsyncEmailResource) -> None:
-        self._email = email
+class AsyncEmailsResourceWithStreamingResponse:
+    def __init__(self, emails: AsyncEmailsResource) -> None:
+        self._emails = emails
 
         self.create = async_to_streamed_response_wrapper(
-            email.create,
+            emails.create,
         )
