@@ -8,8 +8,8 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from terminal_sdk import Terminal, AsyncTerminal
-from terminal_sdk.types import (
+from terminal_shop import Terminal, AsyncTerminal
+from terminal_shop.types import (
     SubscriptionListResponse,
     SubscriptionCreateResponse,
     SubscriptionDeleteResponse,

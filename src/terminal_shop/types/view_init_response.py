@@ -2,9 +2,11 @@
 
 from typing import List
 
+from .app import App
 from .card import Card
 from .cart import Cart
 from .order import Order
+from .token import Token
 from .address import Address
 from .product import Product
 from .profile import Profile
@@ -16,6 +18,8 @@ __all__ = ["ViewInitResponse", "Data"]
 
 class Data(BaseModel):
     addresses: List[Address]
+
+    apps: List[App]
 
     cards: List[Card]
 
@@ -30,6 +34,8 @@ class Data(BaseModel):
     """A Terminal shop user's profile. (We have users, btw.)"""
 
     subscriptions: List[Subscription]
+
+    tokens: List[Token]
 
 
 class ViewInitResponse(BaseModel):
