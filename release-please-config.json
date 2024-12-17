@@ -61,6 +61,6 @@
   ],
   "release-type": "python",
   "extra-files": [
-    "src/terminal_sdk/_version.py"
+    "src/terminal_shop/_version.py"
   ]
 }
