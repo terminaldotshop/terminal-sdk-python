@@ -88,7 +88,7 @@ class SubscriptionResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._put(
+        return self._post(
             "/subscription",
             body=maybe_transform(
                 {
@@ -222,7 +222,7 @@ class AsyncSubscriptionResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._put(
+        return await self._post(
             "/subscription",
             body=await async_maybe_transform(
                 {
