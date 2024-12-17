@@ -4,7 +4,12 @@ from __future__ import annotations
 
 import httpx
 
+from ..types import app_create_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._utils import (
+    maybe_transform,
+    async_maybe_transform,
+)
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -16,6 +21,7 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.app_get_response import AppGetResponse
 from ..types.app_list_response import AppListResponse
+from ..types.app_create_response import AppCreateResponse
 from ..types.app_delete_response import AppDeleteResponse
 
 __all__ = ["AppResource", "AsyncAppResource"]
@@ -40,6 +46,54 @@ class AppResource(SyncAPIResource):
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
         return AppResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        id: str,
+        name: str,
+        redirect_uri: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AppCreateResponse:
+        """Create an app.
+
+        Args:
+          id: Unique object identifier.
+
+        The format and length of IDs may change over time.
+
+          name: Name of the app.
+
+          redirect_uri: Redirect URI of the app.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/app",
+            body=maybe_transform(
+                {
+                    "id": id,
+                    "name": name,
+                    "redirect_uri": redirect_uri,
+                },
+                app_create_params.AppCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AppCreateResponse,
+        )
 
     def list(
         self,
@@ -151,6 +205,54 @@ class AsyncAppResource(AsyncAPIResource):
         """
         return AsyncAppResourceWithStreamingResponse(self)
 
+    async def create(
+        self,
+        *,
+        id: str,
+        name: str,
+        redirect_uri: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AppCreateResponse:
+        """Create an app.
+
+        Args:
+          id: Unique object identifier.
+
+        The format and length of IDs may change over time.
+
+          name: Name of the app.
+
+          redirect_uri: Redirect URI of the app.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/app",
+            body=await async_maybe_transform(
+                {
+                    "id": id,
+                    "name": name,
+                    "redirect_uri": redirect_uri,
+                },
+                app_create_params.AppCreateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AppCreateResponse,
+        )
+
     async def list(
         self,
         *,
@@ -245,6 +347,9 @@ class AppResourceWithRawResponse:
     def __init__(self, app: AppResource) -> None:
         self._app = app
 
+        self.create = to_raw_response_wrapper(
+            app.create,
+        )
         self.list = to_raw_response_wrapper(
             app.list,
         )
@@ -260,6 +365,9 @@ class AsyncAppResourceWithRawResponse:
     def __init__(self, app: AsyncAppResource) -> None:
         self._app = app
 
+        self.create = async_to_raw_response_wrapper(
+            app.create,
+        )
         self.list = async_to_raw_response_wrapper(
             app.list,
         )
@@ -275,6 +383,9 @@ class AppResourceWithStreamingResponse:
     def __init__(self, app: AppResource) -> None:
         self._app = app
 
+        self.create = to_streamed_response_wrapper(
+            app.create,
+        )
         self.list = to_streamed_response_wrapper(
             app.list,
         )
@@ -290,6 +401,9 @@ class AsyncAppResourceWithStreamingResponse:
     def __init__(self, app: AsyncAppResource) -> None:
         self._app = app
 
+        self.create = async_to_streamed_response_wrapper(
+            app.create,
+        )
         self.list = async_to_streamed_response_wrapper(
             app.list,
         )

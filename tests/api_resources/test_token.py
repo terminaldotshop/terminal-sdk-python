@@ -9,13 +9,38 @@ import pytest
 
 from tests.utils import assert_matches_type
 from terminal_sdk import Terminal, AsyncTerminal
-from terminal_sdk.types import TokenGetResponse, TokenListResponse, TokenDeleteResponse
+from terminal_sdk.types import TokenGetResponse, TokenListResponse, TokenCreateResponse, TokenDeleteResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
 class TestToken:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    def test_method_create(self, client: Terminal) -> None:
+        token = client.token.create()
+        assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+    @parametrize
+    def test_raw_response_create(self, client: Terminal) -> None:
+        response = client.token.with_raw_response.create()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        token = response.parse()
+        assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+    @parametrize
+    def test_streaming_response_create(self, client: Terminal) -> None:
+        with client.token.with_streaming_response.create() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            token = response.parse()
+            assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_list(self, client: Terminal) -> None:
@@ -121,6 +146,31 @@ class TestToken:
 
 class TestAsyncToken:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    async def test_method_create(self, async_client: AsyncTerminal) -> None:
+        token = await async_client.token.create()
+        assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.token.with_raw_response.create()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        token = await response.parse()
+        assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
+        async with async_client.token.with_streaming_response.create() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            token = await response.parse()
+            assert_matches_type(TokenCreateResponse, token, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_list(self, async_client: AsyncTerminal) -> None:
