@@ -9,13 +9,50 @@ import pytest
 
 from tests.utils import assert_matches_type
 from terminal_sdk import Terminal, AsyncTerminal
-from terminal_sdk.types import AppGetResponse, AppListResponse, AppDeleteResponse
+from terminal_sdk.types import AppGetResponse, AppListResponse, AppCreateResponse, AppDeleteResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
 class TestApp:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    def test_method_create(self, client: Terminal) -> None:
+        app = client.app.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        )
+        assert_matches_type(AppCreateResponse, app, path=["response"])
+
+    @parametrize
+    def test_raw_response_create(self, client: Terminal) -> None:
+        response = client.app.with_raw_response.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        app = response.parse()
+        assert_matches_type(AppCreateResponse, app, path=["response"])
+
+    @parametrize
+    def test_streaming_response_create(self, client: Terminal) -> None:
+        with client.app.with_streaming_response.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            app = response.parse()
+            assert_matches_type(AppCreateResponse, app, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     def test_method_list(self, client: Terminal) -> None:
@@ -121,6 +158,43 @@ class TestApp:
 
 class TestAsyncApp:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+
+    @parametrize
+    async def test_method_create(self, async_client: AsyncTerminal) -> None:
+        app = await async_client.app.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        )
+        assert_matches_type(AppCreateResponse, app, path=["response"])
+
+    @parametrize
+    async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.app.with_raw_response.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        app = await response.parse()
+        assert_matches_type(AppCreateResponse, app, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
+        async with async_client.app.with_streaming_response.create(
+            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            name="Example App",
+            redirect_uri="https://example.com/callback",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            app = await response.parse()
+            assert_matches_type(AppCreateResponse, app, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @parametrize
     async def test_method_list(self, async_client: AsyncTerminal) -> None:

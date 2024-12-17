@@ -16,6 +16,7 @@ from .._response import (
 from .._base_client import make_request_options
 from ..types.token_get_response import TokenGetResponse
 from ..types.token_list_response import TokenListResponse
+from ..types.token_create_response import TokenCreateResponse
 from ..types.token_delete_response import TokenDeleteResponse
 
 __all__ = ["TokenResource", "AsyncTokenResource"]
@@ -40,6 +41,25 @@ class TokenResource(SyncAPIResource):
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
         return TokenResourceWithStreamingResponse(self)
+
+    def create(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> TokenCreateResponse:
+        """Create a personal access token."""
+        return self._post(
+            "/token",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TokenCreateResponse,
+        )
 
     def list(
         self,
@@ -151,6 +171,25 @@ class AsyncTokenResource(AsyncAPIResource):
         """
         return AsyncTokenResourceWithStreamingResponse(self)
 
+    async def create(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> TokenCreateResponse:
+        """Create a personal access token."""
+        return await self._post(
+            "/token",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=TokenCreateResponse,
+        )
+
     async def list(
         self,
         *,
@@ -245,6 +284,9 @@ class TokenResourceWithRawResponse:
     def __init__(self, token: TokenResource) -> None:
         self._token = token
 
+        self.create = to_raw_response_wrapper(
+            token.create,
+        )
         self.list = to_raw_response_wrapper(
             token.list,
         )
@@ -260,6 +302,9 @@ class AsyncTokenResourceWithRawResponse:
     def __init__(self, token: AsyncTokenResource) -> None:
         self._token = token
 
+        self.create = async_to_raw_response_wrapper(
+            token.create,
+        )
         self.list = async_to_raw_response_wrapper(
             token.list,
         )
@@ -275,6 +320,9 @@ class TokenResourceWithStreamingResponse:
     def __init__(self, token: TokenResource) -> None:
         self._token = token
 
+        self.create = to_streamed_response_wrapper(
+            token.create,
+        )
         self.list = to_streamed_response_wrapper(
             token.list,
         )
@@ -290,6 +338,9 @@ class AsyncTokenResourceWithStreamingResponse:
     def __init__(self, token: AsyncTokenResource) -> None:
         self._token = token
 
+        self.create = async_to_streamed_response_wrapper(
+            token.create,
+        )
         self.list = async_to_streamed_response_wrapper(
             token.list,
         )
