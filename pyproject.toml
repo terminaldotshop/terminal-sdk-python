@@ -1,5 +1,5 @@
 [project]
-name = "terminal-sdk"
+name = "terminal-shop"
 version = "0.0.1-alpha.0"
 description = "The official Python library for the terminal API"
 dynamic = ["readme"]
@@ -76,14 +76,14 @@ format = { chain = [
 "check:ruff" = "ruff check ."
 "fix:ruff" = "ruff check --fix ."
 
-"check:importable" = "python -c 'import terminal_sdk'"
+"check:importable" = "python -c 'import terminal_shop'"
 
 typecheck = { chain = [
   "typecheck:pyright",
   "typecheck:mypy"
 ]}
 "typecheck:pyright" = "pyright"
-"typecheck:verify-types" = "pyright --verifytypes terminal_sdk --ignoreexternal"
+"typecheck:verify-types" = "pyright --verifytypes terminal_shop --ignoreexternal"
 "typecheck:mypy" = "mypy ."
 
 [build-system]
@@ -96,7 +96,7 @@ include = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/terminal_sdk"]
+packages = ["src/terminal_shop"]
 
 [tool.hatch.build.targets.sdist]
 # Basically everything except hidden files/directories (such as .github, .devcontainers, .python-version, etc)
@@ -198,7 +198,7 @@ length-sort = true
 length-sort-straight = true
 combine-as-imports = true
 extra-standard-library = ["typing_extensions"]
-known-first-party = ["terminal_sdk", "tests"]
+known-first-party = ["terminal_shop", "tests"]
 
 [tool.ruff.lint.per-file-ignores]
 "bin/**.py" = ["T201", "T203"]

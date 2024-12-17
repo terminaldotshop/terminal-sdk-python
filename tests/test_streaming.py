@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from terminal_sdk import Terminal, AsyncTerminal
-from terminal_sdk._streaming import Stream, AsyncStream, ServerSentEvent
+from terminal_shop import Terminal, AsyncTerminal
+from terminal_shop._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

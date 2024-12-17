@@ -8,8 +8,8 @@ from typing import Any, cast
 import pytest
 
 from tests.utils import assert_matches_type
-from terminal_sdk import Terminal, AsyncTerminal
-from terminal_sdk.types import ProductListResponse
+from terminal_shop import Terminal, AsyncTerminal
+from terminal_shop.types import ProductListResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
