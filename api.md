@@ -111,6 +111,34 @@ Methods:
 - <code title="get /subscription">client.subscription.<a href="./src/terminal_sdk/resources/subscription.py">list</a>() -> <a href="./src/terminal_sdk/types/subscription_list_response.py">SubscriptionListResponse</a></code>
 - <code title="delete /subscription/{id}">client.subscription.<a href="./src/terminal_sdk/resources/subscription.py">delete</a>(id) -> <a href="./src/terminal_sdk/types/subscription_delete_response.py">SubscriptionDeleteResponse</a></code>
 
+# Token
+
+Types:
+
+```python
+from terminal_sdk.types import Token, TokenListResponse, TokenDeleteResponse, TokenGetResponse
+```
+
+Methods:
+
+- <code title="get /token">client.token.<a href="./src/terminal_sdk/resources/token.py">list</a>() -> <a href="./src/terminal_sdk/types/token_list_response.py">TokenListResponse</a></code>
+- <code title="delete /token/{id}">client.token.<a href="./src/terminal_sdk/resources/token.py">delete</a>(id) -> <a href="./src/terminal_sdk/types/token_delete_response.py">TokenDeleteResponse</a></code>
+- <code title="get /token/{id}">client.token.<a href="./src/terminal_sdk/resources/token.py">get</a>(id) -> <a href="./src/terminal_sdk/types/token_get_response.py">TokenGetResponse</a></code>
+
+# App
+
+Types:
+
+```python
+from terminal_sdk.types import App, AppListResponse, AppDeleteResponse, AppGetResponse
+```
+
+Methods:
+
+- <code title="get /app">client.app.<a href="./src/terminal_sdk/resources/app.py">list</a>() -> <a href="./src/terminal_sdk/types/app_list_response.py">AppListResponse</a></code>
+- <code title="delete /app/{id}">client.app.<a href="./src/terminal_sdk/resources/app.py">delete</a>(id) -> <a href="./src/terminal_sdk/types/app_delete_response.py">AppDeleteResponse</a></code>
+- <code title="get /app/{id}">client.app.<a href="./src/terminal_sdk/resources/app.py">get</a>(id) -> <a href="./src/terminal_sdk/types/app_get_response.py">AppGetResponse</a></code>
+
 # Email
 
 Types:
