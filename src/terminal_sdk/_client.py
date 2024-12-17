@@ -24,7 +24,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import card, cart, view, email, order, address, product, profile, subscription
+from .resources import app, card, cart, view, email, order, token, address, product, profile, subscription
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import TerminalError, APIStatusError
 from ._base_client import (
@@ -59,6 +59,8 @@ class Terminal(SyncAPIClient):
     cart: cart.CartResource
     order: order.OrderResource
     subscription: subscription.SubscriptionResource
+    token: token.TokenResource
+    app: app.AppResource
     email: email.EmailResource
     view: view.ViewResource
     with_raw_response: TerminalWithRawResponse
@@ -149,6 +151,8 @@ class Terminal(SyncAPIClient):
         self.cart = cart.CartResource(self)
         self.order = order.OrderResource(self)
         self.subscription = subscription.SubscriptionResource(self)
+        self.token = token.TokenResource(self)
+        self.app = app.AppResource(self)
         self.email = email.EmailResource(self)
         self.view = view.ViewResource(self)
         self.with_raw_response = TerminalWithRawResponse(self)
@@ -269,6 +273,8 @@ class AsyncTerminal(AsyncAPIClient):
     cart: cart.AsyncCartResource
     order: order.AsyncOrderResource
     subscription: subscription.AsyncSubscriptionResource
+    token: token.AsyncTokenResource
+    app: app.AsyncAppResource
     email: email.AsyncEmailResource
     view: view.AsyncViewResource
     with_raw_response: AsyncTerminalWithRawResponse
@@ -359,6 +365,8 @@ class AsyncTerminal(AsyncAPIClient):
         self.cart = cart.AsyncCartResource(self)
         self.order = order.AsyncOrderResource(self)
         self.subscription = subscription.AsyncSubscriptionResource(self)
+        self.token = token.AsyncTokenResource(self)
+        self.app = app.AsyncAppResource(self)
         self.email = email.AsyncEmailResource(self)
         self.view = view.AsyncViewResource(self)
         self.with_raw_response = AsyncTerminalWithRawResponse(self)
@@ -480,6 +488,8 @@ class TerminalWithRawResponse:
         self.cart = cart.CartResourceWithRawResponse(client.cart)
         self.order = order.OrderResourceWithRawResponse(client.order)
         self.subscription = subscription.SubscriptionResourceWithRawResponse(client.subscription)
+        self.token = token.TokenResourceWithRawResponse(client.token)
+        self.app = app.AppResourceWithRawResponse(client.app)
         self.email = email.EmailResourceWithRawResponse(client.email)
         self.view = view.ViewResourceWithRawResponse(client.view)
 
@@ -493,6 +503,8 @@ class AsyncTerminalWithRawResponse:
         self.cart = cart.AsyncCartResourceWithRawResponse(client.cart)
         self.order = order.AsyncOrderResourceWithRawResponse(client.order)
         self.subscription = subscription.AsyncSubscriptionResourceWithRawResponse(client.subscription)
+        self.token = token.AsyncTokenResourceWithRawResponse(client.token)
+        self.app = app.AsyncAppResourceWithRawResponse(client.app)
         self.email = email.AsyncEmailResourceWithRawResponse(client.email)
         self.view = view.AsyncViewResourceWithRawResponse(client.view)
 
@@ -506,6 +518,8 @@ class TerminalWithStreamedResponse:
         self.cart = cart.CartResourceWithStreamingResponse(client.cart)
         self.order = order.OrderResourceWithStreamingResponse(client.order)
         self.subscription = subscription.SubscriptionResourceWithStreamingResponse(client.subscription)
+        self.token = token.TokenResourceWithStreamingResponse(client.token)
+        self.app = app.AppResourceWithStreamingResponse(client.app)
         self.email = email.EmailResourceWithStreamingResponse(client.email)
         self.view = view.ViewResourceWithStreamingResponse(client.view)
 
@@ -519,6 +533,8 @@ class AsyncTerminalWithStreamedResponse:
         self.cart = cart.AsyncCartResourceWithStreamingResponse(client.cart)
         self.order = order.AsyncOrderResourceWithStreamingResponse(client.order)
         self.subscription = subscription.AsyncSubscriptionResourceWithStreamingResponse(client.subscription)
+        self.token = token.AsyncTokenResourceWithStreamingResponse(client.token)
+        self.app = app.AsyncAppResourceWithStreamingResponse(client.app)
         self.email = email.AsyncEmailResourceWithStreamingResponse(client.email)
         self.view = view.AsyncViewResourceWithStreamingResponse(client.view)
 
