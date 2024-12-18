@@ -127,7 +127,7 @@ class TokenResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> TokenGetResponse:
         """
-        Get the personal token with the given ID.
+        Get the personal access token with the given ID.
 
         Args:
           id: ID of the personal token to get.
@@ -256,7 +256,7 @@ class AsyncTokenResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> TokenGetResponse:
         """
-        Get the personal token with the given ID.
+        Get the personal access token with the given ID.
 
         Args:
           id: ID of the personal token to get.
