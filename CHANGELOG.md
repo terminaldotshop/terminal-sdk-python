@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2025-02-06)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* **api:** manual updates ([#36](https://github.com/terminaldotshop/terminal-sdk-python/issues/36)) ([28cbd5c](https://github.com/terminaldotshop/terminal-sdk-python/commit/28cbd5c3ef0152a8e44fe8b2dd7503e166cbc3f6))
+* **client:** send `X-Stainless-Read-Timeout` header ([#35](https://github.com/terminaldotshop/terminal-sdk-python/issues/35)) ([0813596](https://github.com/terminaldotshop/terminal-sdk-python/commit/081359648af17a00df4c9c8dc940ad7f83fbd9c7))
+
+
+### Chores
+
+* **internal:** bummp ruff dependency ([#33](https://github.com/terminaldotshop/terminal-sdk-python/issues/33)) ([be260e9](https://github.com/terminaldotshop/terminal-sdk-python/commit/be260e9e9ec19b9f6b308d15a6f601360de68858))
+* **internal:** change default timeout to an int ([#32](https://github.com/terminaldotshop/terminal-sdk-python/issues/32)) ([dd77511](https://github.com/terminaldotshop/terminal-sdk-python/commit/dd7751104d7be4702bff7fc9b20055b94c6b689d))
+
 ## 0.1.0-alpha.2 (2025-01-24)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
