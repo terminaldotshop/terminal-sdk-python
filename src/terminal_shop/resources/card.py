@@ -22,6 +22,7 @@ from .._base_client import make_request_options
 from ..types.card_list_response import CardListResponse
 from ..types.card_create_response import CardCreateResponse
 from ..types.card_delete_response import CardDeleteResponse
+from ..types.card_collect_response import CardCollectResponse
 
 __all__ = ["CardResource", "AsyncCardResource"]
 
@@ -135,6 +136,28 @@ class CardResource(SyncAPIResource):
             cast_to=CardDeleteResponse,
         )
 
+    def collect(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CardCollectResponse:
+        """
+        Create a temporary URL for collecting credit card information for the current
+        user.
+        """
+        return self._post(
+            "/card/collect",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CardCollectResponse,
+        )
+
 
 class AsyncCardResource(AsyncAPIResource):
     @cached_property
@@ -245,6 +268,28 @@ class AsyncCardResource(AsyncAPIResource):
             cast_to=CardDeleteResponse,
         )
 
+    async def collect(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CardCollectResponse:
+        """
+        Create a temporary URL for collecting credit card information for the current
+        user.
+        """
+        return await self._post(
+            "/card/collect",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CardCollectResponse,
+        )
+
 
 class CardResourceWithRawResponse:
     def __init__(self, card: CardResource) -> None:
@@ -258,6 +303,9 @@ class CardResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             card.delete,
+        )
+        self.collect = to_raw_response_wrapper(
+            card.collect,
         )
 
 
@@ -274,6 +322,9 @@ class AsyncCardResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             card.delete,
         )
+        self.collect = async_to_raw_response_wrapper(
+            card.collect,
+        )
 
 
 class CardResourceWithStreamingResponse:
@@ -289,6 +340,9 @@ class CardResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             card.delete,
         )
+        self.collect = to_streamed_response_wrapper(
+            card.collect,
+        )
 
 
 class AsyncCardResourceWithStreamingResponse:
@@ -303,4 +357,7 @@ class AsyncCardResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             card.delete,
+        )
+        self.collect = async_to_streamed_response_wrapper(
+            card.collect,
         )

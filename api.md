@@ -47,7 +47,13 @@ Methods:
 Types:
 
 ```python
-from terminal_shop.types import Card, CardCreateResponse, CardListResponse, CardDeleteResponse
+from terminal_shop.types import (
+    Card,
+    CardCreateResponse,
+    CardListResponse,
+    CardDeleteResponse,
+    CardCollectResponse,
+)
 ```
 
 Methods:
@@ -55,6 +61,7 @@ Methods:
 - <code title="post /card">client.card.<a href="./src/terminal_shop/resources/card.py">create</a>(\*\*<a href="src/terminal_shop/types/card_create_params.py">params</a>) -> <a href="./src/terminal_shop/types/card_create_response.py">CardCreateResponse</a></code>
 - <code title="get /card">client.card.<a href="./src/terminal_shop/resources/card.py">list</a>() -> <a href="./src/terminal_shop/types/card_list_response.py">CardListResponse</a></code>
 - <code title="delete /card/{id}">client.card.<a href="./src/terminal_shop/resources/card.py">delete</a>(id) -> <a href="./src/terminal_shop/types/card_delete_response.py">CardDeleteResponse</a></code>
+- <code title="post /card/collect">client.card.<a href="./src/terminal_shop/resources/card.py">collect</a>() -> <a href="./src/terminal_shop/types/card_collect_response.py">CardCollectResponse</a></code>
 
 # Cart
 

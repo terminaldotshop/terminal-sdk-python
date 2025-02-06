@@ -16,6 +16,8 @@ class Product(BaseModel):
     description: str
     """Description of the product."""
 
+    filters: List[Literal["eu", "na"]]
+
     name: str
     """Name of the product."""
 

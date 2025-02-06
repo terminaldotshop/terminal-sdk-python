@@ -9,7 +9,12 @@ import pytest
 
 from tests.utils import assert_matches_type
 from terminal_shop import Terminal, AsyncTerminal
-from terminal_shop.types import CardListResponse, CardCreateResponse, CardDeleteResponse
+from terminal_shop.types import (
+    CardListResponse,
+    CardCreateResponse,
+    CardDeleteResponse,
+    CardCollectResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -111,6 +116,31 @@ class TestCard:
                 "",
             )
 
+    @parametrize
+    def test_method_collect(self, client: Terminal) -> None:
+        card = client.card.collect()
+        assert_matches_type(CardCollectResponse, card, path=["response"])
+
+    @parametrize
+    def test_raw_response_collect(self, client: Terminal) -> None:
+        response = client.card.with_raw_response.collect()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        card = response.parse()
+        assert_matches_type(CardCollectResponse, card, path=["response"])
+
+    @parametrize
+    def test_streaming_response_collect(self, client: Terminal) -> None:
+        with client.card.with_streaming_response.collect() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            card = response.parse()
+            assert_matches_type(CardCollectResponse, card, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
 
 class TestAsyncCard:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
@@ -208,3 +238,28 @@ class TestAsyncCard:
             await async_client.card.with_raw_response.delete(
                 "",
             )
+
+    @parametrize
+    async def test_method_collect(self, async_client: AsyncTerminal) -> None:
+        card = await async_client.card.collect()
+        assert_matches_type(CardCollectResponse, card, path=["response"])
+
+    @parametrize
+    async def test_raw_response_collect(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.card.with_raw_response.collect()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        card = await response.parse()
+        assert_matches_type(CardCollectResponse, card, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_collect(self, async_client: AsyncTerminal) -> None:
+        async with async_client.card.with_streaming_response.collect() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            card = await response.parse()
+            assert_matches_type(CardCollectResponse, card, path=["response"])
+
+        assert cast(Any, response.is_closed) is True

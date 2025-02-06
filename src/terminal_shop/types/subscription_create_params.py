@@ -27,3 +27,6 @@ class SubscriptionCreateParams(TypedDict, total=False):
 
     quantity: Required[int]
     """Quantity of the subscription."""
+
+    next: str
+    """Next shipment and billing date for the subscription."""
