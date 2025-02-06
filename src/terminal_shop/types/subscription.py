@@ -1,5 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from typing import Optional
 from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
@@ -27,3 +28,6 @@ class Subscription(BaseModel):
 
     quantity: int
     """Quantity of the subscription."""
+
+    next: Optional[str] = None
+    """Next shipment and billing date for the subscription."""
