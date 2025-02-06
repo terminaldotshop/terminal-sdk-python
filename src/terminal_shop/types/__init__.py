@@ -33,6 +33,7 @@ from .cart_set_card_params import CartSetCardParams as CartSetCardParams
 from .cart_set_item_params import CartSetItemParams as CartSetItemParams
 from .address_create_params import AddressCreateParams as AddressCreateParams
 from .address_list_response import AddressListResponse as AddressListResponse
+from .card_collect_response import CardCollectResponse as CardCollectResponse
 from .cart_convert_response import CartConvertResponse as CartConvertResponse
 from .email_create_response import EmailCreateResponse as EmailCreateResponse
 from .product_list_response import ProductListResponse as ProductListResponse
