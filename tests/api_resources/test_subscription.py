@@ -34,6 +34,19 @@ class TestSubscription:
         assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 
     @parametrize
+    def test_method_create_with_all_params(self, client: Terminal) -> None:
+        subscription = client.subscription.create(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            frequency="fixed",
+            product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            quantity=1,
+            next="2025-02-01T19:36:19.000Z",
+        )
+        assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
+
+    @parametrize
     def test_raw_response_create(self, client: Terminal) -> None:
         response = client.subscription.with_raw_response.create(
             id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
@@ -143,6 +156,19 @@ class TestAsyncSubscription:
             frequency="fixed",
             product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
             quantity=1,
+        )
+        assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
+
+    @parametrize
+    async def test_method_create_with_all_params(self, async_client: AsyncTerminal) -> None:
+        subscription = await async_client.subscription.create(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            frequency="fixed",
+            product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            quantity=1,
+            next="2025-02-01T19:36:19.000Z",
         )
         assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 
