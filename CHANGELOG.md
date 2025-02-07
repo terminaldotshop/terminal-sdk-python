@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2025-02-07)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Chores
+
+* **internal:** fix type traversing dictionary params ([#38](https://github.com/terminaldotshop/terminal-sdk-python/issues/38)) ([933f424](https://github.com/terminaldotshop/terminal-sdk-python/commit/933f4242cdbe5b24cc9245467619501067236240))
+* **internal:** minor type handling changes ([#40](https://github.com/terminaldotshop/terminal-sdk-python/issues/40)) ([b201593](https://github.com/terminaldotshop/terminal-sdk-python/commit/b20159360a84cfb3caee540e16aeef3afe275bc9))
+
 ## 0.1.0-alpha.3 (2025-02-06)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
