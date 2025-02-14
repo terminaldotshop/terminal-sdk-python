@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2025-02-14)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Bug Fixes
+
+* asyncify on non-asyncio runtimes ([#42](https://github.com/terminaldotshop/terminal-sdk-python/issues/42)) ([f1aab42](https://github.com/terminaldotshop/terminal-sdk-python/commit/f1aab42c4b3e29719b499e4d8c3ed6c1a7a0c402))
+
 ## 0.1.0-alpha.4 (2025-02-07)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
