@@ -1,13 +1,26 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
-from typing_extensions import Literal
+from typing import Union, Optional
+from typing_extensions import Literal, TypeAlias
 
 from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Subscription"]
+__all__ = ["Subscription", "Schedule", "ScheduleType", "ScheduleUnionMember1"]
+
+
+class ScheduleType(BaseModel):
+    type: Literal["fixed"]
+
+
+class ScheduleUnionMember1(BaseModel):
+    interval: int
+
+    type: Literal["weekly"]
+
+
+Schedule: TypeAlias = Union[ScheduleType, ScheduleUnionMember1]
 
 
 class Subscription(BaseModel):
@@ -31,3 +44,6 @@ class Subscription(BaseModel):
 
     next: Optional[str] = None
     """Next shipment and billing date for the subscription."""
+
+    schedule: Optional[Schedule] = None
+    """Schedule of the subscription."""

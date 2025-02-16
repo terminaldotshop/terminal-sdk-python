@@ -43,6 +43,10 @@ class TestSubscription:
             product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
             quantity=1,
             next="2025-02-01T19:36:19.000Z",
+            schedule={
+                "interval": 3,
+                "type": "weekly",
+            },
         )
         assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 
@@ -169,6 +173,10 @@ class TestAsyncSubscription:
             product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
             quantity=1,
             next="2025-02-01T19:36:19.000Z",
+            schedule={
+                "interval": 3,
+                "type": "weekly",
+            },
         )
         assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 

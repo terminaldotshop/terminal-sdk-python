@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal, Required, Annotated, TypedDict
+from typing import Union
+from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SubscriptionCreateParams"]
+__all__ = ["SubscriptionCreateParams", "Schedule", "ScheduleType", "ScheduleUnionMember1"]
 
 
 class SubscriptionCreateParams(TypedDict, total=False):
@@ -30,3 +31,19 @@ class SubscriptionCreateParams(TypedDict, total=False):
 
     next: str
     """Next shipment and billing date for the subscription."""
+
+    schedule: Schedule
+    """Schedule of the subscription."""
+
+
+class ScheduleType(TypedDict, total=False):
+    type: Required[Literal["fixed"]]
+
+
+class ScheduleUnionMember1(TypedDict, total=False):
+    interval: Required[int]
+
+    type: Required[Literal["weekly"]]
+
+
+Schedule: TypeAlias = Union[ScheduleType, ScheduleUnionMember1]
