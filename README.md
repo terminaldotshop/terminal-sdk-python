@@ -33,8 +33,15 @@ client = Terminal(
     environment="dev",
 )
 
-product = client.product.list()
-print(product.data)
+subscription = client.subscription.create(
+    id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    frequency="fixed",
+    product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    quantity=1,
+)
+print(subscription.data)
 ```
 
 While you can provide a `bearer_token` keyword argument,
@@ -59,8 +66,15 @@ client = AsyncTerminal(
 
 
 async def main() -> None:
-    product = await client.product.list()
-    print(product.data)
+    subscription = await client.subscription.create(
+        id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        frequency="fixed",
+        product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        quantity=1,
+    )
+    print(subscription.data)
 
 
 asyncio.run(main())
