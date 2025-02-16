@@ -93,7 +93,14 @@ from terminal_shop import Terminal
 client = Terminal()
 
 try:
-    client.product.list()
+    client.subscription.create(
+        id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        frequency="fixed",
+        product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        quantity=1,
+    )
 except terminal_shop.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
@@ -136,7 +143,14 @@ client = Terminal(
 )
 
 # Or, configure per-request:
-client.with_options(max_retries=5).product.list()
+client.with_options(max_retries=5).subscription.create(
+    id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    frequency="fixed",
+    product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    quantity=1,
+)
 ```
 
 ### Timeouts
@@ -159,7 +173,14 @@ client = Terminal(
 )
 
 # Override per-request:
-client.with_options(timeout=5.0).product.list()
+client.with_options(timeout=5.0).subscription.create(
+    id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    frequency="fixed",
+    product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    quantity=1,
+)
 ```
 
 On timeout, an `APITimeoutError` is thrown.
@@ -200,11 +221,18 @@ The "raw" Response object can be accessed by prefixing `.with_raw_response.` to 
 from terminal_shop import Terminal
 
 client = Terminal()
-response = client.product.with_raw_response.list()
+response = client.subscription.with_raw_response.create(
+    id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    frequency="fixed",
+    product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    quantity=1,
+)
 print(response.headers.get('X-My-Header'))
 
-product = response.parse()  # get the object that `product.list()` would have returned
-print(product.data)
+subscription = response.parse()  # get the object that `subscription.create()` would have returned
+print(subscription.data)
 ```
 
 These methods return an [`APIResponse`](https://github.com/terminaldotshop/terminal-sdk-python/tree/main/src/terminal_shop/_response.py) object.
@@ -218,7 +246,14 @@ The above interface eagerly reads the full response body when you make the reque
 To stream the response body, use `.with_streaming_response` instead, which requires a context manager and only reads the response body once you call `.read()`, `.text()`, `.json()`, `.iter_bytes()`, `.iter_text()`, `.iter_lines()` or `.parse()`. In the async client, these are async methods.
 
 ```python
-with client.product.with_streaming_response.list() as response:
+with client.subscription.with_streaming_response.create(
+    id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    frequency="fixed",
+    product_variant_id="var_XXXXXXXXXXXXXXXXXXXXXXXXX",
+    quantity=1,
+) as response:
     print(response.headers.get("X-My-Header"))
 
     for line in response.iter_lines():
