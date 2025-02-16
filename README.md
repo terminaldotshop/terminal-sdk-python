@@ -30,7 +30,7 @@ from terminal_shop import Terminal
 client = Terminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="sandbox",
+    environment="dev",
 )
 
 product = client.product.list()
@@ -54,7 +54,7 @@ from terminal_shop import AsyncTerminal
 client = AsyncTerminal(
     bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
-    environment="sandbox",
+    environment="dev",
 )
 
 
