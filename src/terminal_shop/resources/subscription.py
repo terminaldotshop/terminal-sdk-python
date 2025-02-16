@@ -58,6 +58,7 @@ class SubscriptionResource(SyncAPIResource):
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
+        schedule: subscription_create_params.Schedule | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -83,6 +84,8 @@ class SubscriptionResource(SyncAPIResource):
 
           next: Next shipment and billing date for the subscription.
 
+          schedule: Schedule of the subscription.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -102,6 +105,7 @@ class SubscriptionResource(SyncAPIResource):
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
+                    "schedule": schedule,
                 },
                 subscription_create_params.SubscriptionCreateParams,
             ),
@@ -196,6 +200,7 @@ class AsyncSubscriptionResource(AsyncAPIResource):
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
+        schedule: subscription_create_params.Schedule | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -221,6 +226,8 @@ class AsyncSubscriptionResource(AsyncAPIResource):
 
           next: Next shipment and billing date for the subscription.
 
+          schedule: Schedule of the subscription.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -240,6 +247,7 @@ class AsyncSubscriptionResource(AsyncAPIResource):
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
+                    "schedule": schedule,
                 },
                 subscription_create_params.SubscriptionCreateParams,
             ),
