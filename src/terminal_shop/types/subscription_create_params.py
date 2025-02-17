@@ -7,7 +7,7 @@ from typing_extensions import Literal, Required, Annotated, TypeAlias, TypedDict
 
 from .._utils import PropertyInfo
 
-__all__ = ["SubscriptionCreateParams", "Schedule", "ScheduleType", "ScheduleUnionMember1"]
+__all__ = ["SubscriptionCreateParams", "Schedule", "ScheduleFixed", "ScheduleWeekly"]
 
 
 class SubscriptionCreateParams(TypedDict, total=False):
@@ -36,14 +36,14 @@ class SubscriptionCreateParams(TypedDict, total=False):
     """Schedule of the subscription."""
 
 
-class ScheduleType(TypedDict, total=False):
+class ScheduleFixed(TypedDict, total=False):
     type: Required[Literal["fixed"]]
 
 
-class ScheduleUnionMember1(TypedDict, total=False):
+class ScheduleWeekly(TypedDict, total=False):
     interval: Required[int]
 
     type: Required[Literal["weekly"]]
 
 
-Schedule: TypeAlias = Union[ScheduleType, ScheduleUnionMember1]
+Schedule: TypeAlias = Union[ScheduleFixed, ScheduleWeekly]
