@@ -7,20 +7,20 @@ from pydantic import Field as FieldInfo
 
 from .._models import BaseModel
 
-__all__ = ["Subscription", "Schedule", "ScheduleType", "ScheduleUnionMember1"]
+__all__ = ["Subscription", "Schedule", "ScheduleFixed", "ScheduleWeekly"]
 
 
-class ScheduleType(BaseModel):
+class ScheduleFixed(BaseModel):
     type: Literal["fixed"]
 
 
-class ScheduleUnionMember1(BaseModel):
+class ScheduleWeekly(BaseModel):
     interval: int
 
     type: Literal["weekly"]
 
 
-Schedule: TypeAlias = Union[ScheduleType, ScheduleUnionMember1]
+Schedule: TypeAlias = Union[ScheduleFixed, ScheduleWeekly]
 
 
 class Subscription(BaseModel):
