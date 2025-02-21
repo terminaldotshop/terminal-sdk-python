@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.10 (2025-02-21)
+
+Full Changelog: [v0.1.0-alpha.9...v0.1.0-alpha.10](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.9...v0.1.0-alpha.10)
+
+### Features
+
+* **client:** allow passing `NotGiven` for body ([#57](https://github.com/terminaldotshop/terminal-sdk-python/issues/57)) ([9bedf28](https://github.com/terminaldotshop/terminal-sdk-python/commit/9bedf28a803840cbb645819dc4f982842e741ad8))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([9bedf28](https://github.com/terminaldotshop/terminal-sdk-python/commit/9bedf28a803840cbb645819dc4f982842e741ad8))
+
 ## 0.1.0-alpha.9 (2025-02-17)
 
 Full Changelog: [v0.1.0-alpha.8...v0.1.0-alpha.9](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.8...v0.1.0-alpha.9)
