@@ -17,3 +17,6 @@ class App(BaseModel):
 
     redirect_uri: str = FieldInfo(alias="redirectURI")
     """Redirect URI of the app."""
+
+    secret: str
+    """OAuth 2.0 client secret of the app (obfuscated)."""
