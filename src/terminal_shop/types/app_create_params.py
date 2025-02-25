@@ -18,3 +18,6 @@ class AppCreateParams(TypedDict, total=False):
 
     redirect_uri: Required[Annotated[str, PropertyInfo(alias="redirectURI")]]
     """Redirect URI of the app."""
+
+    secret: Required[str]
+    """OAuth 2.0 client secret of the app (obfuscated)."""
