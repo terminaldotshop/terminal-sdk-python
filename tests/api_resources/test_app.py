@@ -23,6 +23,7 @@ class TestApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         )
         assert_matches_type(AppCreateResponse, app, path=["response"])
 
@@ -32,6 +33,7 @@ class TestApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         )
 
         assert response.is_closed is True
@@ -45,6 +47,7 @@ class TestApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -165,6 +168,7 @@ class TestAsyncApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         )
         assert_matches_type(AppCreateResponse, app, path=["response"])
 
@@ -174,6 +178,7 @@ class TestAsyncApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         )
 
         assert response.is_closed is True
@@ -187,6 +192,7 @@ class TestAsyncApp:
             id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
+            secret="sec_******XXXX",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
