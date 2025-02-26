@@ -3,12 +3,7 @@
 
 from .._models import BaseModel
 
-__all__ = ["Token", "Time"]
-
-
-class Time(BaseModel):
-    created: str
-    """The created time for the token."""
+__all__ = ["Token"]
 
 
 class Token(BaseModel):
@@ -18,5 +13,5 @@ class Token(BaseModel):
     token: str
     """Personal access token (obfuscated)."""
 
-    time: Time
-    """Relevant timestamps for the token."""
+    created: str
+    """The created time for the token."""
