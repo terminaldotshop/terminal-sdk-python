@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2025-02-26)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### Features
+
+* **api:** manual updates ([#66](https://github.com/terminaldotshop/terminal-sdk-python/issues/66)) ([9688e34](https://github.com/terminaldotshop/terminal-sdk-python/commit/9688e344bf7e1ec2380c6db3ab0b4e0f547428db))
+* **api:** manual updates ([#67](https://github.com/terminaldotshop/terminal-sdk-python/issues/67)) ([3faef72](https://github.com/terminaldotshop/terminal-sdk-python/commit/3faef72e10292187a0e634668d36cb72ef4ee8c0))
+
+
+### Chores
+
+* **internal:** properly set __pydantic_private__ ([#64](https://github.com/terminaldotshop/terminal-sdk-python/issues/64)) ([479263c](https://github.com/terminaldotshop/terminal-sdk-python/commit/479263c3e932a14df5b7d5c1c67939103e7d2364))
+
 ## 0.1.0-alpha.11 (2025-02-25)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
