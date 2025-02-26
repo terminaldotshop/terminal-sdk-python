@@ -33,9 +33,6 @@ class Subscription(BaseModel):
     card_id: str = FieldInfo(alias="cardID")
     """ID of the card used for the subscription."""
 
-    frequency: Literal["fixed", "daily", "weekly", "monthly", "yearly"]
-    """Frequency of the subscription."""
-
     product_variant_id: str = FieldInfo(alias="productVariantID")
     """ID of the product variant being subscribed to."""
 

@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing_extensions import Literal
-
 import httpx
 
 from ..types import subscription_create_params
@@ -54,7 +52,6 @@ class SubscriptionResource(SyncAPIResource):
         id: str,
         address_id: str,
         card_id: str,
-        frequency: Literal["fixed", "daily", "weekly", "monthly", "yearly"],
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
@@ -75,8 +72,6 @@ class SubscriptionResource(SyncAPIResource):
           address_id: ID of the shipping address used for the subscription.
 
           card_id: ID of the card used for the subscription.
-
-          frequency: Frequency of the subscription.
 
           product_variant_id: ID of the product variant being subscribed to.
 
@@ -101,7 +96,6 @@ class SubscriptionResource(SyncAPIResource):
                     "id": id,
                     "address_id": address_id,
                     "card_id": card_id,
-                    "frequency": frequency,
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
@@ -196,7 +190,6 @@ class AsyncSubscriptionResource(AsyncAPIResource):
         id: str,
         address_id: str,
         card_id: str,
-        frequency: Literal["fixed", "daily", "weekly", "monthly", "yearly"],
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
@@ -217,8 +210,6 @@ class AsyncSubscriptionResource(AsyncAPIResource):
           address_id: ID of the shipping address used for the subscription.
 
           card_id: ID of the card used for the subscription.
-
-          frequency: Frequency of the subscription.
 
           product_variant_id: ID of the product variant being subscribed to.
 
@@ -243,7 +234,6 @@ class AsyncSubscriptionResource(AsyncAPIResource):
                     "id": id,
                     "address_id": address_id,
                     "card_id": card_id,
-                    "frequency": frequency,
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
