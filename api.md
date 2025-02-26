@@ -91,11 +91,12 @@ Methods:
 Types:
 
 ```python
-from terminal_shop.types import Order, OrderListResponse, OrderGetResponse
+from terminal_shop.types import Order, OrderCreateResponse, OrderListResponse, OrderGetResponse
 ```
 
 Methods:
 
+- <code title="post /order">client.order.<a href="./src/terminal_shop/resources/order.py">create</a>(\*\*<a href="src/terminal_shop/types/order_create_params.py">params</a>) -> <a href="./src/terminal_shop/types/order_create_response.py">OrderCreateResponse</a></code>
 - <code title="get /order">client.order.<a href="./src/terminal_shop/resources/order.py">list</a>() -> <a href="./src/terminal_shop/types/order_list_response.py">OrderListResponse</a></code>
 - <code title="get /order/{id}">client.order.<a href="./src/terminal_shop/resources/order.py">get</a>(id) -> <a href="./src/terminal_shop/types/order_get_response.py">OrderGetResponse</a></code>
 
