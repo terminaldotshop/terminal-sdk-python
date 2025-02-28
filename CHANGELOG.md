@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.0-alpha.13 (2025-02-28)
+
+Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
+
+### Features
+
+* **api:** manual updates ([#71](https://github.com/terminaldotshop/terminal-sdk-python/issues/71)) ([9781030](https://github.com/terminaldotshop/terminal-sdk-python/commit/9781030c2eb00526f97ed957b28f91266b035ed3))
+
+
+### Chores
+
+* **docs:** update client docstring ([#70](https://github.com/terminaldotshop/terminal-sdk-python/issues/70)) ([da48dbf](https://github.com/terminaldotshop/terminal-sdk-python/commit/da48dbf4f04fd35d3844cf2d2a2c11f7bc451718))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#69](https://github.com/terminaldotshop/terminal-sdk-python/issues/69)) ([6cf439f](https://github.com/terminaldotshop/terminal-sdk-python/commit/6cf439f3f3b8cf38232c41e826db5dfb58042a70))
+
 ## 0.1.0-alpha.12 (2025-02-26)
 
 Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
