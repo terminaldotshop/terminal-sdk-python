@@ -32,6 +32,7 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+from .resources.app import AppResource, AsyncAppResource
 
 __all__ = [
     "ENVIRONMENTS",
@@ -68,6 +69,7 @@ class Terminal(SyncAPIClient):
 
     # client options
     bearer_token: str
+    app: str | None
 
     _environment: Literal["production", "dev"] | NotGiven
 
@@ -75,6 +77,7 @@ class Terminal(SyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
+        app: str | None = None,
         environment: Literal["production", "dev"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
@@ -106,6 +109,8 @@ class Terminal(SyncAPIClient):
                 "The bearer_token client option must be set either by passing bearer_token to the client or by setting the TERMINAL_BEARER_TOKEN environment variable"
             )
         self.bearer_token = bearer_token
+
+        self.app = app
 
         self._environment = environment
 
@@ -152,7 +157,7 @@ class Terminal(SyncAPIClient):
         self.order = order.OrderResource(self)
         self.subscription = subscription.SubscriptionResource(self)
         self.token = token.TokenResource(self)
-        self.app = app.AppResource(self)
+        self.app = AppResource(self)
         self.email = email.EmailResource(self)
         self.view = view.ViewResource(self)
         self.with_raw_response = TerminalWithRawResponse(self)
@@ -175,6 +180,7 @@ class Terminal(SyncAPIClient):
         return {
             **super().default_headers,
             "X-Stainless-Async": "false",
+            "x-terminal-app": self.app if self.app is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -182,6 +188,7 @@ class Terminal(SyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
+        app: str | None = None,
         environment: Literal["production", "dev"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
@@ -217,6 +224,7 @@ class Terminal(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             bearer_token=bearer_token or self.bearer_token,
+            app=app or self.app,
             base_url=base_url or self.base_url,
             environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
@@ -282,6 +290,7 @@ class AsyncTerminal(AsyncAPIClient):
 
     # client options
     bearer_token: str
+    app: str | None
 
     _environment: Literal["production", "dev"] | NotGiven
 
@@ -289,6 +298,7 @@ class AsyncTerminal(AsyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
+        app: str | None = None,
         environment: Literal["production", "dev"] | NotGiven = NOT_GIVEN,
         base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
@@ -320,6 +330,8 @@ class AsyncTerminal(AsyncAPIClient):
                 "The bearer_token client option must be set either by passing bearer_token to the client or by setting the TERMINAL_BEARER_TOKEN environment variable"
             )
         self.bearer_token = bearer_token
+
+        self.app = app
 
         self._environment = environment
 
@@ -366,7 +378,7 @@ class AsyncTerminal(AsyncAPIClient):
         self.order = order.AsyncOrderResource(self)
         self.subscription = subscription.AsyncSubscriptionResource(self)
         self.token = token.AsyncTokenResource(self)
-        self.app = app.AsyncAppResource(self)
+        self.app = AsyncAppResource(self)
         self.email = email.AsyncEmailResource(self)
         self.view = view.AsyncViewResource(self)
         self.with_raw_response = AsyncTerminalWithRawResponse(self)
@@ -389,6 +401,7 @@ class AsyncTerminal(AsyncAPIClient):
         return {
             **super().default_headers,
             "X-Stainless-Async": f"async:{get_async_library()}",
+            "x-terminal-app": self.app if self.app is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -396,6 +409,7 @@ class AsyncTerminal(AsyncAPIClient):
         self,
         *,
         bearer_token: str | None = None,
+        app: str | None = None,
         environment: Literal["production", "dev"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
@@ -431,6 +445,7 @@ class AsyncTerminal(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             bearer_token=bearer_token or self.bearer_token,
+            app=app or self.app,
             base_url=base_url or self.base_url,
             environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
