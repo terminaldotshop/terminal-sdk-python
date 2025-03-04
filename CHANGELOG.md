@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.15 (2025-03-04)
+
+Full Changelog: [v0.1.0-alpha.14...v0.1.0-alpha.15](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.14...v0.1.0-alpha.15)
+
+### Chores
+
+* **internal:** remove unused http client options forwarding ([#77](https://github.com/terminaldotshop/terminal-sdk-python/issues/77)) ([7abe7d0](https://github.com/terminaldotshop/terminal-sdk-python/commit/7abe7d0780a2308e319c3061208ab1bd97f0fbff))
+
 ## 0.1.0-alpha.14 (2025-02-28)
 
 Full Changelog: [v0.1.0-alpha.13...v0.1.0-alpha.14](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.13...v0.1.0-alpha.14)
