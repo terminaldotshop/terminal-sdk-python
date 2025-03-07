@@ -19,11 +19,6 @@ class TestProfile:
 
     @parametrize
     def test_method_update(self, client: Terminal) -> None:
-        profile = client.profile.update()
-        assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
-
-    @parametrize
-    def test_method_update_with_all_params(self, client: Terminal) -> None:
         profile = client.profile.update(
             email="john@example.com",
             name="John Doe",
@@ -32,7 +27,10 @@ class TestProfile:
 
     @parametrize
     def test_raw_response_update(self, client: Terminal) -> None:
-        response = client.profile.with_raw_response.update()
+        response = client.profile.with_raw_response.update(
+            email="john@example.com",
+            name="John Doe",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -41,7 +39,10 @@ class TestProfile:
 
     @parametrize
     def test_streaming_response_update(self, client: Terminal) -> None:
-        with client.profile.with_streaming_response.update() as response:
+        with client.profile.with_streaming_response.update(
+            email="john@example.com",
+            name="John Doe",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -81,11 +82,6 @@ class TestAsyncProfile:
 
     @parametrize
     async def test_method_update(self, async_client: AsyncTerminal) -> None:
-        profile = await async_client.profile.update()
-        assert_matches_type(ProfileUpdateResponse, profile, path=["response"])
-
-    @parametrize
-    async def test_method_update_with_all_params(self, async_client: AsyncTerminal) -> None:
         profile = await async_client.profile.update(
             email="john@example.com",
             name="John Doe",
@@ -94,7 +90,10 @@ class TestAsyncProfile:
 
     @parametrize
     async def test_raw_response_update(self, async_client: AsyncTerminal) -> None:
-        response = await async_client.profile.with_raw_response.update()
+        response = await async_client.profile.with_raw_response.update(
+            email="john@example.com",
+            name="John Doe",
+        )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -103,7 +102,10 @@ class TestAsyncProfile:
 
     @parametrize
     async def test_streaming_response_update(self, async_client: AsyncTerminal) -> None:
-        async with async_client.profile.with_streaming_response.update() as response:
+        async with async_client.profile.with_streaming_response.update(
+            email="john@example.com",
+            name="John Doe",
+        ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
