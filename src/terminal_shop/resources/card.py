@@ -19,6 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.card_get_response import CardGetResponse
 from ..types.card_list_response import CardListResponse
 from ..types.card_create_response import CardCreateResponse
 from ..types.card_delete_response import CardDeleteResponse
@@ -158,6 +159,41 @@ class CardResource(SyncAPIResource):
             cast_to=CardCollectResponse,
         )
 
+    def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CardGetResponse:
+        """
+        Get a credit card by ID associated with the current user.
+
+        Args:
+          id: ID of the card to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/card/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CardGetResponse,
+        )
+
 
 class AsyncCardResource(AsyncAPIResource):
     @cached_property
@@ -290,6 +326,41 @@ class AsyncCardResource(AsyncAPIResource):
             cast_to=CardCollectResponse,
         )
 
+    async def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CardGetResponse:
+        """
+        Get a credit card by ID associated with the current user.
+
+        Args:
+          id: ID of the card to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/card/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CardGetResponse,
+        )
+
 
 class CardResourceWithRawResponse:
     def __init__(self, card: CardResource) -> None:
@@ -306,6 +377,9 @@ class CardResourceWithRawResponse:
         )
         self.collect = to_raw_response_wrapper(
             card.collect,
+        )
+        self.get = to_raw_response_wrapper(
+            card.get,
         )
 
 
@@ -325,6 +399,9 @@ class AsyncCardResourceWithRawResponse:
         self.collect = async_to_raw_response_wrapper(
             card.collect,
         )
+        self.get = async_to_raw_response_wrapper(
+            card.get,
+        )
 
 
 class CardResourceWithStreamingResponse:
@@ -343,6 +420,9 @@ class CardResourceWithStreamingResponse:
         self.collect = to_streamed_response_wrapper(
             card.collect,
         )
+        self.get = to_streamed_response_wrapper(
+            card.get,
+        )
 
 
 class AsyncCardResourceWithStreamingResponse:
@@ -360,4 +440,7 @@ class AsyncCardResourceWithStreamingResponse:
         )
         self.collect = async_to_streamed_response_wrapper(
             card.collect,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            card.get,
         )

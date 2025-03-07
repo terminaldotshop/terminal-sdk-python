@@ -20,20 +20,16 @@ class TestApp:
     @parametrize
     def test_method_create(self, client: Terminal) -> None:
         app = client.app.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         )
         assert_matches_type(AppCreateResponse, app, path=["response"])
 
     @parametrize
     def test_raw_response_create(self, client: Terminal) -> None:
         response = client.app.with_raw_response.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         )
 
         assert response.is_closed is True
@@ -44,10 +40,8 @@ class TestApp:
     @parametrize
     def test_streaming_response_create(self, client: Terminal) -> None:
         with client.app.with_streaming_response.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -165,20 +159,16 @@ class TestAsyncApp:
     @parametrize
     async def test_method_create(self, async_client: AsyncTerminal) -> None:
         app = await async_client.app.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         )
         assert_matches_type(AppCreateResponse, app, path=["response"])
 
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncTerminal) -> None:
         response = await async_client.app.with_raw_response.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         )
 
         assert response.is_closed is True
@@ -189,10 +179,8 @@ class TestAsyncApp:
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncTerminal) -> None:
         async with async_client.app.with_streaming_response.create(
-            id="cli_XXXXXXXXXXXXXXXXXXXXXXXXX",
             name="Example App",
             redirect_uri="https://example.com/callback",
-            secret="sec_******XXXX",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

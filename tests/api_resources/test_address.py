@@ -9,7 +9,12 @@ import pytest
 
 from tests.utils import assert_matches_type
 from terminal_shop import Terminal, AsyncTerminal
-from terminal_shop.types import AddressListResponse, AddressCreateResponse, AddressDeleteResponse
+from terminal_shop.types import (
+    AddressGetResponse,
+    AddressListResponse,
+    AddressCreateResponse,
+    AddressDeleteResponse,
+)
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -137,6 +142,44 @@ class TestAddress:
                 "",
             )
 
+    @parametrize
+    def test_method_get(self, client: Terminal) -> None:
+        address = client.address.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+        assert_matches_type(AddressGetResponse, address, path=["response"])
+
+    @parametrize
+    def test_raw_response_get(self, client: Terminal) -> None:
+        response = client.address.with_raw_response.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        address = response.parse()
+        assert_matches_type(AddressGetResponse, address, path=["response"])
+
+    @parametrize
+    def test_streaming_response_get(self, client: Terminal) -> None:
+        with client.address.with_streaming_response.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            address = response.parse()
+            assert_matches_type(AddressGetResponse, address, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_get(self, client: Terminal) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.address.with_raw_response.get(
+                "",
+            )
+
 
 class TestAsyncAddress:
     parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
@@ -258,5 +301,43 @@ class TestAsyncAddress:
     async def test_path_params_delete(self, async_client: AsyncTerminal) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
             await async_client.address.with_raw_response.delete(
+                "",
+            )
+
+    @parametrize
+    async def test_method_get(self, async_client: AsyncTerminal) -> None:
+        address = await async_client.address.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+        assert_matches_type(AddressGetResponse, address, path=["response"])
+
+    @parametrize
+    async def test_raw_response_get(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.address.with_raw_response.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        address = await response.parse()
+        assert_matches_type(AddressGetResponse, address, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_get(self, async_client: AsyncTerminal) -> None:
+        async with async_client.address.with_streaming_response.get(
+            "shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            address = await response.parse()
+            assert_matches_type(AddressGetResponse, address, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncTerminal) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.address.with_raw_response.get(
                 "",
             )

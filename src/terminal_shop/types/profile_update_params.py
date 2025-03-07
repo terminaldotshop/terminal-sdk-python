@@ -2,15 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Required, TypedDict
 
 __all__ = ["ProfileUpdateParams"]
 
 
 class ProfileUpdateParams(TypedDict, total=False):
-    email: Optional[str]
-    """Email address of the user."""
+    email: Required[str]
 
-    name: Optional[str]
-    """Name of the user."""
+    name: Required[str]

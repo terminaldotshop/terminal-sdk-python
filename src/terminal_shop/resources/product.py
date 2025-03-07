@@ -14,6 +14,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.product_get_response import ProductGetResponse
 from ..types.product_list_response import ProductListResponse
 
 __all__ = ["ProductResource", "AsyncProductResource"]
@@ -58,6 +59,41 @@ class ProductResource(SyncAPIResource):
             cast_to=ProductListResponse,
         )
 
+    def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ProductGetResponse:
+        """
+        Get a product by ID from the Terminal shop.
+
+        Args:
+          id: ID of the product to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/product/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ProductGetResponse,
+        )
+
 
 class AsyncProductResource(AsyncAPIResource):
     @cached_property
@@ -98,6 +134,41 @@ class AsyncProductResource(AsyncAPIResource):
             cast_to=ProductListResponse,
         )
 
+    async def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> ProductGetResponse:
+        """
+        Get a product by ID from the Terminal shop.
+
+        Args:
+          id: ID of the product to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/product/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=ProductGetResponse,
+        )
+
 
 class ProductResourceWithRawResponse:
     def __init__(self, product: ProductResource) -> None:
@@ -105,6 +176,9 @@ class ProductResourceWithRawResponse:
 
         self.list = to_raw_response_wrapper(
             product.list,
+        )
+        self.get = to_raw_response_wrapper(
+            product.get,
         )
 
 
@@ -115,6 +189,9 @@ class AsyncProductResourceWithRawResponse:
         self.list = async_to_raw_response_wrapper(
             product.list,
         )
+        self.get = async_to_raw_response_wrapper(
+            product.get,
+        )
 
 
 class ProductResourceWithStreamingResponse:
@@ -124,6 +201,9 @@ class ProductResourceWithStreamingResponse:
         self.list = to_streamed_response_wrapper(
             product.list,
         )
+        self.get = to_streamed_response_wrapper(
+            product.get,
+        )
 
 
 class AsyncProductResourceWithStreamingResponse:
@@ -132,4 +212,7 @@ class AsyncProductResourceWithStreamingResponse:
 
         self.list = async_to_streamed_response_wrapper(
             product.list,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            product.get,
         )

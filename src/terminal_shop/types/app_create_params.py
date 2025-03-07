@@ -10,14 +10,6 @@ __all__ = ["AppCreateParams"]
 
 
 class AppCreateParams(TypedDict, total=False):
-    id: Required[str]
-    """Unique object identifier. The format and length of IDs may change over time."""
-
     name: Required[str]
-    """Name of the app."""
 
     redirect_uri: Required[Annotated[str, PropertyInfo(alias="redirectURI")]]
-    """Redirect URI of the app."""
-
-    secret: Required[str]
-    """OAuth 2.0 client secret of the app (obfuscated)."""
