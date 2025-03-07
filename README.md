@@ -16,7 +16,7 @@ The REST API documentation can be found on [terminal.shop](https://terminal.shop
 
 ```sh
 # install from PyPI
-pip install --pre terminal-shop
+pip install terminal-shop
 ```
 
 ## Usage
