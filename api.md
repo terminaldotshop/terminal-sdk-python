@@ -3,12 +3,13 @@
 Types:
 
 ```python
-from terminal_shop.types import Product, ProductVariant, ProductListResponse
+from terminal_shop.types import Product, ProductVariant, ProductListResponse, ProductGetResponse
 ```
 
 Methods:
 
 - <code title="get /product">client.product.<a href="./src/terminal_shop/resources/product.py">list</a>() -> <a href="./src/terminal_shop/types/product_list_response.py">ProductListResponse</a></code>
+- <code title="get /product/{id}">client.product.<a href="./src/terminal_shop/resources/product.py">get</a>(id) -> <a href="./src/terminal_shop/types/product_get_response.py">ProductGetResponse</a></code>
 
 # Profile
 
@@ -33,6 +34,7 @@ from terminal_shop.types import (
     AddressCreateResponse,
     AddressListResponse,
     AddressDeleteResponse,
+    AddressGetResponse,
 )
 ```
 
@@ -41,6 +43,7 @@ Methods:
 - <code title="post /address">client.address.<a href="./src/terminal_shop/resources/address.py">create</a>(\*\*<a href="src/terminal_shop/types/address_create_params.py">params</a>) -> <a href="./src/terminal_shop/types/address_create_response.py">AddressCreateResponse</a></code>
 - <code title="get /address">client.address.<a href="./src/terminal_shop/resources/address.py">list</a>() -> <a href="./src/terminal_shop/types/address_list_response.py">AddressListResponse</a></code>
 - <code title="delete /address/{id}">client.address.<a href="./src/terminal_shop/resources/address.py">delete</a>(id) -> <a href="./src/terminal_shop/types/address_delete_response.py">AddressDeleteResponse</a></code>
+- <code title="get /address/{id}">client.address.<a href="./src/terminal_shop/resources/address.py">get</a>(id) -> <a href="./src/terminal_shop/types/address_get_response.py">AddressGetResponse</a></code>
 
 # Card
 
@@ -53,6 +56,7 @@ from terminal_shop.types import (
     CardListResponse,
     CardDeleteResponse,
     CardCollectResponse,
+    CardGetResponse,
 )
 ```
 
@@ -62,6 +66,7 @@ Methods:
 - <code title="get /card">client.card.<a href="./src/terminal_shop/resources/card.py">list</a>() -> <a href="./src/terminal_shop/types/card_list_response.py">CardListResponse</a></code>
 - <code title="delete /card/{id}">client.card.<a href="./src/terminal_shop/resources/card.py">delete</a>(id) -> <a href="./src/terminal_shop/types/card_delete_response.py">CardDeleteResponse</a></code>
 - <code title="post /card/collect">client.card.<a href="./src/terminal_shop/resources/card.py">collect</a>() -> <a href="./src/terminal_shop/types/card_collect_response.py">CardCollectResponse</a></code>
+- <code title="get /card/{id}">client.card.<a href="./src/terminal_shop/resources/card.py">get</a>(id) -> <a href="./src/terminal_shop/types/card_get_response.py">CardGetResponse</a></code>
 
 # Cart
 
@@ -110,6 +115,7 @@ from terminal_shop.types import (
     SubscriptionCreateResponse,
     SubscriptionListResponse,
     SubscriptionDeleteResponse,
+    SubscriptionGetResponse,
 )
 ```
 
@@ -118,6 +124,7 @@ Methods:
 - <code title="post /subscription">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">create</a>(\*\*<a href="src/terminal_shop/types/subscription_create_params.py">params</a>) -> <a href="./src/terminal_shop/types/subscription_create_response.py">SubscriptionCreateResponse</a></code>
 - <code title="get /subscription">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">list</a>() -> <a href="./src/terminal_shop/types/subscription_list_response.py">SubscriptionListResponse</a></code>
 - <code title="delete /subscription/{id}">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">delete</a>(id) -> <a href="./src/terminal_shop/types/subscription_delete_response.py">SubscriptionDeleteResponse</a></code>
+- <code title="get /subscription/{id}">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">get</a>(id) -> <a href="./src/terminal_shop/types/subscription_get_response.py">SubscriptionGetResponse</a></code>
 
 # Token
 

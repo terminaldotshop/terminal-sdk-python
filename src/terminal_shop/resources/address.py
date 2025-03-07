@@ -19,6 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.address_get_response import AddressGetResponse
 from ..types.address_list_response import AddressListResponse
 from ..types.address_create_response import AddressCreateResponse
 from ..types.address_delete_response import AddressDeleteResponse
@@ -167,6 +168,41 @@ class AddressResource(SyncAPIResource):
             cast_to=AddressDeleteResponse,
         )
 
+    def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AddressGetResponse:
+        """
+        Get the shipping address with the given ID.
+
+        Args:
+          id: ID of the shipping address to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/address/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AddressGetResponse,
+        )
+
 
 class AsyncAddressResource(AsyncAPIResource):
     @cached_property
@@ -309,6 +345,41 @@ class AsyncAddressResource(AsyncAPIResource):
             cast_to=AddressDeleteResponse,
         )
 
+    async def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> AddressGetResponse:
+        """
+        Get the shipping address with the given ID.
+
+        Args:
+          id: ID of the shipping address to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/address/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AddressGetResponse,
+        )
+
 
 class AddressResourceWithRawResponse:
     def __init__(self, address: AddressResource) -> None:
@@ -322,6 +393,9 @@ class AddressResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             address.delete,
+        )
+        self.get = to_raw_response_wrapper(
+            address.get,
         )
 
 
@@ -338,6 +412,9 @@ class AsyncAddressResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             address.delete,
         )
+        self.get = async_to_raw_response_wrapper(
+            address.get,
+        )
 
 
 class AddressResourceWithStreamingResponse:
@@ -353,6 +430,9 @@ class AddressResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             address.delete,
         )
+        self.get = to_streamed_response_wrapper(
+            address.get,
+        )
 
 
 class AsyncAddressResourceWithStreamingResponse:
@@ -367,4 +447,7 @@ class AsyncAddressResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             address.delete,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            address.get,
         )

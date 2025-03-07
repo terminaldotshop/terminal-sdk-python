@@ -1,12 +1,24 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
 from .product_variant import ProductVariant
 
-__all__ = ["Product"]
+__all__ = ["Product", "Tags"]
+
+
+class Tags(BaseModel):
+    app: Optional[str] = None
+
+    color: Optional[str] = None
+
+    featured: Optional[bool] = None
+
+    market_eu: Optional[bool] = None
+
+    market_na: Optional[bool] = None
 
 
 class Product(BaseModel):
@@ -15,8 +27,6 @@ class Product(BaseModel):
 
     description: str
     """Description of the product."""
-
-    filters: List[Literal["eu", "na"]]
 
     name: str
     """Name of the product."""
@@ -30,5 +40,5 @@ class Product(BaseModel):
     subscription: Optional[Literal["allowed", "required"]] = None
     """Whether the product must be or can be subscribed to."""
 
-    tags: Optional[Dict[str, str]] = None
+    tags: Optional[Tags] = None
     """Tags for the product."""
