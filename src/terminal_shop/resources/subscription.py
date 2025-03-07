@@ -19,6 +19,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.subscription_get_response import SubscriptionGetResponse
 from ..types.subscription_list_response import SubscriptionListResponse
 from ..types.subscription_create_response import SubscriptionCreateResponse
 from ..types.subscription_delete_response import SubscriptionDeleteResponse
@@ -163,6 +164,41 @@ class SubscriptionResource(SyncAPIResource):
             cast_to=SubscriptionDeleteResponse,
         )
 
+    def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SubscriptionGetResponse:
+        """
+        Get the subscription with the given ID.
+
+        Args:
+          id: ID of the subscription to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._get(
+            f"/subscription/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SubscriptionGetResponse,
+        )
+
 
 class AsyncSubscriptionResource(AsyncAPIResource):
     @cached_property
@@ -301,6 +337,41 @@ class AsyncSubscriptionResource(AsyncAPIResource):
             cast_to=SubscriptionDeleteResponse,
         )
 
+    async def get(
+        self,
+        id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SubscriptionGetResponse:
+        """
+        Get the subscription with the given ID.
+
+        Args:
+          id: ID of the subscription to get.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._get(
+            f"/subscription/{id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SubscriptionGetResponse,
+        )
+
 
 class SubscriptionResourceWithRawResponse:
     def __init__(self, subscription: SubscriptionResource) -> None:
@@ -314,6 +385,9 @@ class SubscriptionResourceWithRawResponse:
         )
         self.delete = to_raw_response_wrapper(
             subscription.delete,
+        )
+        self.get = to_raw_response_wrapper(
+            subscription.get,
         )
 
 
@@ -330,6 +404,9 @@ class AsyncSubscriptionResourceWithRawResponse:
         self.delete = async_to_raw_response_wrapper(
             subscription.delete,
         )
+        self.get = async_to_raw_response_wrapper(
+            subscription.get,
+        )
 
 
 class SubscriptionResourceWithStreamingResponse:
@@ -345,6 +422,9 @@ class SubscriptionResourceWithStreamingResponse:
         self.delete = to_streamed_response_wrapper(
             subscription.delete,
         )
+        self.get = to_streamed_response_wrapper(
+            subscription.get,
+        )
 
 
 class AsyncSubscriptionResourceWithStreamingResponse:
@@ -359,4 +439,7 @@ class AsyncSubscriptionResourceWithStreamingResponse:
         )
         self.delete = async_to_streamed_response_wrapper(
             subscription.delete,
+        )
+        self.get = async_to_streamed_response_wrapper(
+            subscription.get,
         )
