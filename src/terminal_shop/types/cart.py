@@ -13,8 +13,14 @@ class Amount(BaseModel):
     subtotal: int
     """Subtotal of the current user's cart, in cents (USD)."""
 
+    gift_card: Optional[int] = FieldInfo(alias="giftCard", default=None)
+    """Amount applied from gift card on the current user's cart, in cents (USD)."""
+
     shipping: Optional[int] = None
     """Shipping amount of the current user's cart, in cents (USD)."""
+
+    total: Optional[int] = None
+    """Total amount after gift card applied, in cents (USD)."""
 
 
 class Item(BaseModel):
@@ -54,6 +60,9 @@ class Cart(BaseModel):
 
     card_id: Optional[str] = FieldInfo(alias="cardID", default=None)
     """ID of the card selected on the current user's cart."""
+
+    gift_card_id: Optional[str] = FieldInfo(alias="giftCardID", default=None)
+    """ID of the gift card applied to the current user's cart."""
 
     shipping: Optional[Shipping] = None
     """Shipping information for the current user's cart."""

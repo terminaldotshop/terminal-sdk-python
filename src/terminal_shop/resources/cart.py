@@ -4,7 +4,13 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import cart_set_card_params, cart_set_item_params, cart_set_address_params
+from ..types import (
+    cart_convert_params,
+    cart_set_card_params,
+    cart_set_item_params,
+    cart_set_address_params,
+    cart_redeem_gift_card_params,
+)
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -24,6 +30,8 @@ from ..types.cart_convert_response import CartConvertResponse
 from ..types.cart_set_card_response import CartSetCardResponse
 from ..types.cart_set_item_response import CartSetItemResponse
 from ..types.cart_set_address_response import CartSetAddressResponse
+from ..types.cart_redeem_gift_card_response import CartRedeemGiftCardResponse
+from ..types.cart_remove_gift_card_response import CartRemoveGiftCardResponse
 
 __all__ = ["CartResource", "AsyncCartResource"]
 
@@ -51,6 +59,7 @@ class CartResource(SyncAPIResource):
     def convert(
         self,
         *,
+        recipient_email: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -58,9 +67,21 @@ class CartResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> CartConvertResponse:
-        """Convert the current user's cart to an order."""
+        """
+        Convert the current user's cart to an order.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return self._post(
             "/cart/convert",
+            body=maybe_transform({"recipient_email": recipient_email}, cart_convert_params.CartConvertParams),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -84,6 +105,57 @@ class CartResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CartGetResponse,
+        )
+
+    def redeem_gift_card(
+        self,
+        *,
+        gift_card_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartRedeemGiftCardResponse:
+        """
+        Apply a gift card to the current user's cart.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._put(
+            "/cart/gift-card",
+            body=maybe_transform({"gift_card_id": gift_card_id}, cart_redeem_gift_card_params.CartRedeemGiftCardParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartRedeemGiftCardResponse,
+        )
+
+    def remove_gift_card(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartRemoveGiftCardResponse:
+        """Remove the gift card from the current user's cart."""
+        return self._delete(
+            "/cart/gift-card",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartRemoveGiftCardResponse,
         )
 
     def set_address(
@@ -221,6 +293,7 @@ class AsyncCartResource(AsyncAPIResource):
     async def convert(
         self,
         *,
+        recipient_email: str | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -228,9 +301,23 @@ class AsyncCartResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> CartConvertResponse:
-        """Convert the current user's cart to an order."""
+        """
+        Convert the current user's cart to an order.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
         return await self._post(
             "/cart/convert",
+            body=await async_maybe_transform(
+                {"recipient_email": recipient_email}, cart_convert_params.CartConvertParams
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -254,6 +341,59 @@ class AsyncCartResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=CartGetResponse,
+        )
+
+    async def redeem_gift_card(
+        self,
+        *,
+        gift_card_id: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartRedeemGiftCardResponse:
+        """
+        Apply a gift card to the current user's cart.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._put(
+            "/cart/gift-card",
+            body=await async_maybe_transform(
+                {"gift_card_id": gift_card_id}, cart_redeem_gift_card_params.CartRedeemGiftCardParams
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartRedeemGiftCardResponse,
+        )
+
+    async def remove_gift_card(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartRemoveGiftCardResponse:
+        """Remove the gift card from the current user's cart."""
+        return await self._delete(
+            "/cart/gift-card",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartRemoveGiftCardResponse,
         )
 
     async def set_address(
@@ -378,6 +518,12 @@ class CartResourceWithRawResponse:
         self.get = to_raw_response_wrapper(
             cart.get,
         )
+        self.redeem_gift_card = to_raw_response_wrapper(
+            cart.redeem_gift_card,
+        )
+        self.remove_gift_card = to_raw_response_wrapper(
+            cart.remove_gift_card,
+        )
         self.set_address = to_raw_response_wrapper(
             cart.set_address,
         )
@@ -398,6 +544,12 @@ class AsyncCartResourceWithRawResponse:
         )
         self.get = async_to_raw_response_wrapper(
             cart.get,
+        )
+        self.redeem_gift_card = async_to_raw_response_wrapper(
+            cart.redeem_gift_card,
+        )
+        self.remove_gift_card = async_to_raw_response_wrapper(
+            cart.remove_gift_card,
         )
         self.set_address = async_to_raw_response_wrapper(
             cart.set_address,
@@ -420,6 +572,12 @@ class CartResourceWithStreamingResponse:
         self.get = to_streamed_response_wrapper(
             cart.get,
         )
+        self.redeem_gift_card = to_streamed_response_wrapper(
+            cart.redeem_gift_card,
+        )
+        self.remove_gift_card = to_streamed_response_wrapper(
+            cart.remove_gift_card,
+        )
         self.set_address = to_streamed_response_wrapper(
             cart.set_address,
         )
@@ -440,6 +598,12 @@ class AsyncCartResourceWithStreamingResponse:
         )
         self.get = async_to_streamed_response_wrapper(
             cart.get,
+        )
+        self.redeem_gift_card = async_to_streamed_response_wrapper(
+            cart.redeem_gift_card,
+        )
+        self.remove_gift_card = async_to_streamed_response_wrapper(
+            cart.remove_gift_card,
         )
         self.set_address = async_to_streamed_response_wrapper(
             cart.set_address,

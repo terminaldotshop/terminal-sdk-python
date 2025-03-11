@@ -15,6 +15,8 @@ from terminal_shop.types import (
     CartSetCardResponse,
     CartSetItemResponse,
     CartSetAddressResponse,
+    CartRedeemGiftCardResponse,
+    CartRemoveGiftCardResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -26,6 +28,13 @@ class TestCart:
     @parametrize
     def test_method_convert(self, client: Terminal) -> None:
         cart = client.cart.convert()
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
+
+    @parametrize
+    def test_method_convert_with_all_params(self, client: Terminal) -> None:
+        cart = client.cart.convert(
+            recipient_email="dev@stainless.com",
+        )
         assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
@@ -70,6 +79,62 @@ class TestCart:
 
             cart = response.parse()
             assert_matches_type(CartGetResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_redeem_gift_card(self, client: Terminal) -> None:
+        cart = client.cart.redeem_gift_card(
+            gift_card_id="giftCardID",
+        )
+        assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    def test_raw_response_redeem_gift_card(self, client: Terminal) -> None:
+        response = client.cart.with_raw_response.redeem_gift_card(
+            gift_card_id="giftCardID",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = response.parse()
+        assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    def test_streaming_response_redeem_gift_card(self, client: Terminal) -> None:
+        with client.cart.with_streaming_response.redeem_gift_card(
+            gift_card_id="giftCardID",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = response.parse()
+            assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_remove_gift_card(self, client: Terminal) -> None:
+        cart = client.cart.remove_gift_card()
+        assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    def test_raw_response_remove_gift_card(self, client: Terminal) -> None:
+        response = client.cart.with_raw_response.remove_gift_card()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = response.parse()
+        assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    def test_streaming_response_remove_gift_card(self, client: Terminal) -> None:
+        with client.cart.with_streaming_response.remove_gift_card() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = response.parse()
+            assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -179,6 +244,13 @@ class TestAsyncCart:
         assert_matches_type(CartConvertResponse, cart, path=["response"])
 
     @parametrize
+    async def test_method_convert_with_all_params(self, async_client: AsyncTerminal) -> None:
+        cart = await async_client.cart.convert(
+            recipient_email="dev@stainless.com",
+        )
+        assert_matches_type(CartConvertResponse, cart, path=["response"])
+
+    @parametrize
     async def test_raw_response_convert(self, async_client: AsyncTerminal) -> None:
         response = await async_client.cart.with_raw_response.convert()
 
@@ -220,6 +292,62 @@ class TestAsyncCart:
 
             cart = await response.parse()
             assert_matches_type(CartGetResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_redeem_gift_card(self, async_client: AsyncTerminal) -> None:
+        cart = await async_client.cart.redeem_gift_card(
+            gift_card_id="giftCardID",
+        )
+        assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_raw_response_redeem_gift_card(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.cart.with_raw_response.redeem_gift_card(
+            gift_card_id="giftCardID",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = await response.parse()
+        assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_redeem_gift_card(self, async_client: AsyncTerminal) -> None:
+        async with async_client.cart.with_streaming_response.redeem_gift_card(
+            gift_card_id="giftCardID",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = await response.parse()
+            assert_matches_type(CartRedeemGiftCardResponse, cart, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_remove_gift_card(self, async_client: AsyncTerminal) -> None:
+        cart = await async_client.cart.remove_gift_card()
+        assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_raw_response_remove_gift_card(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.cart.with_raw_response.remove_gift_card()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        cart = await response.parse()
+        assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_remove_gift_card(self, async_client: AsyncTerminal) -> None:
+        async with async_client.cart.with_streaming_response.remove_gift_card() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            cart = await response.parse()
+            assert_matches_type(CartRemoveGiftCardResponse, cart, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
