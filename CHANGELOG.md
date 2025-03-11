@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.0 (2025-03-11)
+
+Full Changelog: [v1.0.0...v1.1.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.0.0...v1.1.0)
+
+### Features
+
+* **api:** gift cards ([#83](https://github.com/terminaldotshop/terminal-sdk-python/issues/83)) ([2f579f2](https://github.com/terminaldotshop/terminal-sdk-python/commit/2f579f2cc2db07daa43cb9424f3d9891e062bed8))
+
 ## 1.0.0 (2025-03-07)
 
 Full Changelog: [v0.1.0-alpha.14...v1.0.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v0.1.0-alpha.14...v1.0.0)
