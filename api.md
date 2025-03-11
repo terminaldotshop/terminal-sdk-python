@@ -77,6 +77,8 @@ from terminal_shop.types import (
     Cart,
     CartConvertResponse,
     CartGetResponse,
+    CartRedeemGiftCardResponse,
+    CartRemoveGiftCardResponse,
     CartSetAddressResponse,
     CartSetCardResponse,
     CartSetItemResponse,
@@ -85,8 +87,10 @@ from terminal_shop.types import (
 
 Methods:
 
-- <code title="post /cart/convert">client.cart.<a href="./src/terminal_shop/resources/cart.py">convert</a>() -> <a href="./src/terminal_shop/types/cart_convert_response.py">CartConvertResponse</a></code>
+- <code title="post /cart/convert">client.cart.<a href="./src/terminal_shop/resources/cart.py">convert</a>(\*\*<a href="src/terminal_shop/types/cart_convert_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_convert_response.py">CartConvertResponse</a></code>
 - <code title="get /cart">client.cart.<a href="./src/terminal_shop/resources/cart.py">get</a>() -> <a href="./src/terminal_shop/types/cart_get_response.py">CartGetResponse</a></code>
+- <code title="put /cart/gift-card">client.cart.<a href="./src/terminal_shop/resources/cart.py">redeem_gift_card</a>(\*\*<a href="src/terminal_shop/types/cart_redeem_gift_card_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_redeem_gift_card_response.py">CartRedeemGiftCardResponse</a></code>
+- <code title="delete /cart/gift-card">client.cart.<a href="./src/terminal_shop/resources/cart.py">remove_gift_card</a>() -> <a href="./src/terminal_shop/types/cart_remove_gift_card_response.py">CartRemoveGiftCardResponse</a></code>
 - <code title="put /cart/address">client.cart.<a href="./src/terminal_shop/resources/cart.py">set_address</a>(\*\*<a href="src/terminal_shop/types/cart_set_address_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_set_address_response.py">CartSetAddressResponse</a></code>
 - <code title="put /cart/card">client.cart.<a href="./src/terminal_shop/resources/cart.py">set_card</a>(\*\*<a href="src/terminal_shop/types/cart_set_card_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_set_card_response.py">CartSetCardResponse</a></code>
 - <code title="put /cart/item">client.cart.<a href="./src/terminal_shop/resources/cart.py">set_item</a>(\*\*<a href="src/terminal_shop/types/cart_set_item_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_set_item_response.py">CartSetItemResponse</a></code>
