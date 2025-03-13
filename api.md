@@ -187,7 +187,7 @@ Methods:
 Types:
 
 ```python
-from terminal_shop.types import ViewInitResponse
+from terminal_shop.types import Region, ViewInitResponse
 ```
 
 Methods:
