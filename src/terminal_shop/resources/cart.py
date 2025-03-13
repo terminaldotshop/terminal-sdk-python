@@ -26,6 +26,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.cart_get_response import CartGetResponse
+from ..types.cart_clear_response import CartClearResponse
 from ..types.cart_convert_response import CartConvertResponse
 from ..types.cart_set_card_response import CartSetCardResponse
 from ..types.cart_set_item_response import CartSetItemResponse
@@ -55,6 +56,25 @@ class CartResource(SyncAPIResource):
         For more information, see https://www.github.com/terminaldotshop/terminal-sdk-python#with_streaming_response
         """
         return CartResourceWithStreamingResponse(self)
+
+    def clear(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartClearResponse:
+        """Clear the current user's cart."""
+        return self._delete(
+            "/cart",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartClearResponse,
+        )
 
     def convert(
         self,
@@ -290,6 +310,25 @@ class AsyncCartResource(AsyncAPIResource):
         """
         return AsyncCartResourceWithStreamingResponse(self)
 
+    async def clear(
+        self,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> CartClearResponse:
+        """Clear the current user's cart."""
+        return await self._delete(
+            "/cart",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=CartClearResponse,
+        )
+
     async def convert(
         self,
         *,
@@ -512,6 +551,9 @@ class CartResourceWithRawResponse:
     def __init__(self, cart: CartResource) -> None:
         self._cart = cart
 
+        self.clear = to_raw_response_wrapper(
+            cart.clear,
+        )
         self.convert = to_raw_response_wrapper(
             cart.convert,
         )
@@ -539,6 +581,9 @@ class AsyncCartResourceWithRawResponse:
     def __init__(self, cart: AsyncCartResource) -> None:
         self._cart = cart
 
+        self.clear = async_to_raw_response_wrapper(
+            cart.clear,
+        )
         self.convert = async_to_raw_response_wrapper(
             cart.convert,
         )
@@ -566,6 +611,9 @@ class CartResourceWithStreamingResponse:
     def __init__(self, cart: CartResource) -> None:
         self._cart = cart
 
+        self.clear = to_streamed_response_wrapper(
+            cart.clear,
+        )
         self.convert = to_streamed_response_wrapper(
             cart.convert,
         )
@@ -593,6 +641,9 @@ class AsyncCartResourceWithStreamingResponse:
     def __init__(self, cart: AsyncCartResource) -> None:
         self._cart = cart
 
+        self.clear = async_to_streamed_response_wrapper(
+            cart.clear,
+        )
         self.convert = async_to_streamed_response_wrapper(
             cart.convert,
         )

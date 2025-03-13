@@ -75,6 +75,7 @@ Types:
 ```python
 from terminal_shop.types import (
     Cart,
+    CartClearResponse,
     CartConvertResponse,
     CartGetResponse,
     CartRedeemGiftCardResponse,
@@ -87,6 +88,7 @@ from terminal_shop.types import (
 
 Methods:
 
+- <code title="delete /cart">client.cart.<a href="./src/terminal_shop/resources/cart.py">clear</a>() -> <a href="./src/terminal_shop/types/cart_clear_response.py">CartClearResponse</a></code>
 - <code title="post /cart/convert">client.cart.<a href="./src/terminal_shop/resources/cart.py">convert</a>(\*\*<a href="src/terminal_shop/types/cart_convert_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_convert_response.py">CartConvertResponse</a></code>
 - <code title="get /cart">client.cart.<a href="./src/terminal_shop/resources/cart.py">get</a>() -> <a href="./src/terminal_shop/types/cart_get_response.py">CartGetResponse</a></code>
 - <code title="put /cart/gift-card">client.cart.<a href="./src/terminal_shop/resources/cart.py">redeem_gift_card</a>(\*\*<a href="src/terminal_shop/types/cart_redeem_gift_card_params.py">params</a>) -> <a href="./src/terminal_shop/types/cart_redeem_gift_card_response.py">CartRedeemGiftCardResponse</a></code>
