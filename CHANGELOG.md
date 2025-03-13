@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.5.0 (2025-03-13)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** region type ([#94](https://github.com/terminaldotshop/terminal-sdk-python/issues/94)) ([a5111bb](https://github.com/terminaldotshop/terminal-sdk-python/commit/a5111bbf6a338e6c154ddd25d38fe8d024168c70))
+
 ## 1.4.0 (2025-03-13)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.3.0...v1.4.0)
