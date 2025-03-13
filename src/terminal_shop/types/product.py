@@ -20,8 +20,6 @@ class Tags(BaseModel):
 
     market_na: Optional[bool] = None
 
-    type: Optional[str] = None
-
 
 class Product(BaseModel):
     id: str
