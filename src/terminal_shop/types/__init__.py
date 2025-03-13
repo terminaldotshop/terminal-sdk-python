@@ -24,6 +24,7 @@ from .token_get_response import TokenGetResponse as TokenGetResponse
 from .view_init_response import ViewInitResponse as ViewInitResponse
 from .app_create_response import AppCreateResponse as AppCreateResponse
 from .app_delete_response import AppDeleteResponse as AppDeleteResponse
+from .cart_clear_response import CartClearResponse as CartClearResponse
 from .cart_convert_params import CartConvertParams as CartConvertParams
 from .email_create_params import EmailCreateParams as EmailCreateParams
 from .order_create_params import OrderCreateParams as OrderCreateParams
