@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (2025-03-13)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **api:** add region to `GET /view/init` ([#91](https://github.com/terminaldotshop/terminal-sdk-python/issues/91)) ([2f0982d](https://github.com/terminaldotshop/terminal-sdk-python/commit/2f0982dba3b12696519fab909f83486a2052d21b))
+
 ## 1.3.0 (2025-03-13)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.2.0...v1.3.0)
