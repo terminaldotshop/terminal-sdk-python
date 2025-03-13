@@ -34,7 +34,8 @@ class Data(BaseModel):
     profile: Profile
     """A Terminal shop user's profile. (We have users, btw.)"""
 
-    region: Literal["na", "eu"]
+    region: Literal["eu", "na"]
+    """A Terminal shop user's region."""
 
     subscriptions: List[Subscription]
 
