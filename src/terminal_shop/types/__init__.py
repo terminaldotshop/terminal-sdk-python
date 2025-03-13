@@ -7,6 +7,7 @@ from .card import Card as Card
 from .cart import Cart as Cart
 from .order import Order as Order
 from .token import Token as Token
+from .region import Region as Region
 from .address import Address as Address
 from .product import Product as Product
 from .profile import Profile as Profile

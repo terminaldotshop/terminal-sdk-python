@@ -1,13 +1,13 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
-from typing_extensions import Literal
 
 from .app import App
 from .card import Card
 from .cart import Cart
 from .order import Order
 from .token import Token
+from .region import Region
 from .address import Address
 from .product import Product
 from .profile import Profile
@@ -34,7 +34,7 @@ class Data(BaseModel):
     profile: Profile
     """A Terminal shop user's profile. (We have users, btw.)"""
 
-    region: Literal["eu", "na"]
+    region: Region
     """A Terminal shop user's region."""
 
     subscriptions: List[Subscription]
