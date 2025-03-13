@@ -25,7 +25,6 @@ from .view_init_response import ViewInitResponse as ViewInitResponse
 from .app_create_response import AppCreateResponse as AppCreateResponse
 from .app_delete_response import AppDeleteResponse as AppDeleteResponse
 from .cart_clear_response import CartClearResponse as CartClearResponse
-from .cart_convert_params import CartConvertParams as CartConvertParams
 from .email_create_params import EmailCreateParams as EmailCreateParams
 from .order_create_params import OrderCreateParams as OrderCreateParams
 from .order_list_response import OrderListResponse as OrderListResponse
@@ -57,8 +56,5 @@ from .cart_set_address_response import CartSetAddressResponse as CartSetAddressR
 from .subscription_get_response import SubscriptionGetResponse as SubscriptionGetResponse
 from .subscription_create_params import SubscriptionCreateParams as SubscriptionCreateParams
 from .subscription_list_response import SubscriptionListResponse as SubscriptionListResponse
-from .cart_redeem_gift_card_params import CartRedeemGiftCardParams as CartRedeemGiftCardParams
 from .subscription_create_response import SubscriptionCreateResponse as SubscriptionCreateResponse
 from .subscription_delete_response import SubscriptionDeleteResponse as SubscriptionDeleteResponse
-from .cart_redeem_gift_card_response import CartRedeemGiftCardResponse as CartRedeemGiftCardResponse
-from .cart_remove_gift_card_response import CartRemoveGiftCardResponse as CartRemoveGiftCardResponse
