@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List
+from typing_extensions import Literal
 
 from .app import App
 from .card import Card
@@ -32,6 +33,8 @@ class Data(BaseModel):
 
     profile: Profile
     """A Terminal shop user's profile. (We have users, btw.)"""
+
+    region: Literal["na", "eu"]
 
     subscriptions: List[Subscription]
 
