@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.3.0 (2025-03-13)
+
+Full Changelog: [v1.2.0...v1.3.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.2.0...v1.3.0)
+
+### Features
+
+* **api:** remove gift cards ([#88](https://github.com/terminaldotshop/terminal-sdk-python/issues/88)) ([423b013](https://github.com/terminaldotshop/terminal-sdk-python/commit/423b013385e2dad4ff60881bfea7ca3b023516c2))
+
 ## 1.2.0 (2025-03-13)
 
 Full Changelog: [v1.1.0...v1.2.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.1.0...v1.2.0)
