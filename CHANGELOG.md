@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.2.0 (2025-03-13)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** clear cart api ([#85](https://github.com/terminaldotshop/terminal-sdk-python/issues/85)) ([27777a4](https://github.com/terminaldotshop/terminal-sdk-python/commit/27777a441938716d20ab7be85405ee81fc91120c))
+
 ## 1.1.0 (2025-03-11)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.0.0...v1.1.0)
