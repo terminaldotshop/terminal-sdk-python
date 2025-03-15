@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.5.1 (2025-03-15)
+
+Full Changelog: [v1.5.0...v1.5.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.5.0...v1.5.1)
+
+### Bug Fixes
+
+* **types:** handle more discriminated union shapes ([#102](https://github.com/terminaldotshop/terminal-sdk-python/issues/102)) ([8879a51](https://github.com/terminaldotshop/terminal-sdk-python/commit/8879a51fe6b9ebd64192cc7217039ff14c4ac1db))
+
+
+### Chores
+
+* **internal:** bump rye to 0.44.0 ([#101](https://github.com/terminaldotshop/terminal-sdk-python/issues/101)) ([c381a8b](https://github.com/terminaldotshop/terminal-sdk-python/commit/c381a8bf59f7c035db408921ed352615e09d8493))
+* **internal:** codegen related update ([#100](https://github.com/terminaldotshop/terminal-sdk-python/issues/100)) ([fa1bec3](https://github.com/terminaldotshop/terminal-sdk-python/commit/fa1bec32a61228b33398681d499d36713575245c))
+* **internal:** remove extra empty newlines ([#98](https://github.com/terminaldotshop/terminal-sdk-python/issues/98)) ([dc37340](https://github.com/terminaldotshop/terminal-sdk-python/commit/dc373407e9725afda24896c5e79de7b6fb8b7822))
+
 ## 1.5.0 (2025-03-13)
 
 Full Changelog: [v1.4.0...v1.5.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.4.0...v1.5.0)
