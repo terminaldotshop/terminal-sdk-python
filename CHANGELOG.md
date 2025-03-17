@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.6.0 (2025-03-17)
+
+Full Changelog: [v1.5.1...v1.6.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.5.1...v1.6.0)
+
+### Features
+
+* **api:** region model ([#97](https://github.com/terminaldotshop/terminal-sdk-python/issues/97)) ([07ff267](https://github.com/terminaldotshop/terminal-sdk-python/commit/07ff26716ee141b33a913c041a23f1b32aefd9ab))
+
+
+### Bug Fixes
+
+* **ci:** ensure pip is always available ([#104](https://github.com/terminaldotshop/terminal-sdk-python/issues/104)) ([07b0c98](https://github.com/terminaldotshop/terminal-sdk-python/commit/07b0c98365c3f90c3a8b075c3074ceb12e7bd709))
+* **ci:** remove publishing patch ([#106](https://github.com/terminaldotshop/terminal-sdk-python/issues/106)) ([9c21943](https://github.com/terminaldotshop/terminal-sdk-python/commit/9c21943e996db21ec0e7f9b79f93fac80b9dde19))
+
 ## 1.5.1 (2025-03-15)
 
 Full Changelog: [v1.5.0...v1.5.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.5.0...v1.5.1)
