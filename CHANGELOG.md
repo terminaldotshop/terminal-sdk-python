@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.1 (2025-03-27)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.0...v1.6.1)
+
+### Chores
+
+* fix typos ([#108](https://github.com/terminaldotshop/terminal-sdk-python/issues/108)) ([1a18e63](https://github.com/terminaldotshop/terminal-sdk-python/commit/1a18e634ec5758abef88a331a6fe9b56f431c8ac))
+
 ## 1.6.0 (2025-03-17)
 
 Full Changelog: [v1.5.1...v1.6.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.5.1...v1.6.0)
