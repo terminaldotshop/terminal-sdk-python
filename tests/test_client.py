@@ -577,7 +577,7 @@ class TestTerminal:
             client = Terminal(
                 base_url=None, bearer_token=bearer_token, _strict_response_validation=True, environment="production"
             )
-            assert str(client.base_url).startswith("https://api.terminal.shop/")
+            assert str(client.base_url).startswith("https://api.terminal.shop")
 
     @pytest.mark.parametrize(
         "client",
@@ -1367,7 +1367,7 @@ class TestAsyncTerminal:
             client = AsyncTerminal(
                 base_url=None, bearer_token=bearer_token, _strict_response_validation=True, environment="production"
             )
-            assert str(client.base_url).startswith("https://api.terminal.shop/")
+            assert str(client.base_url).startswith("https://api.terminal.shop")
 
     @pytest.mark.parametrize(
         "client",
