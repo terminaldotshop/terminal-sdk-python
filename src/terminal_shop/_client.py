@@ -46,8 +46,8 @@ __all__ = [
 ]
 
 ENVIRONMENTS: Dict[str, str] = {
-    "production": "https://api.terminal.shop/",
-    "dev": "https://api.dev.terminal.shop/",
+    "production": "https://api.terminal.shop",
+    "dev": "https://api.dev.terminal.shop",
 }
 
 
