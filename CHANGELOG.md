@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.6.1 (2025-04-02)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.0...v1.6.1)
+
+### Bug Fixes
+
+* pluralize `list` response variables ([#111](https://github.com/terminaldotshop/terminal-sdk-python/issues/111)) ([efe4050](https://github.com/terminaldotshop/terminal-sdk-python/commit/efe40507ac770afbb37cc211c158a6e424e9100f))
+* remove trailing / for environments ([#110](https://github.com/terminaldotshop/terminal-sdk-python/issues/110)) ([32e0d53](https://github.com/terminaldotshop/terminal-sdk-python/commit/32e0d531892d8429917e01ff391c5cd1ad4fe2dd))
+
+
+### Chores
+
+* fix typos ([#108](https://github.com/terminaldotshop/terminal-sdk-python/issues/108)) ([1a18e63](https://github.com/terminaldotshop/terminal-sdk-python/commit/1a18e634ec5758abef88a331a6fe9b56f431c8ac))
+
 ## 1.6.0 (2025-03-17)
 
 Full Changelog: [v1.5.1...v1.6.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.5.1...v1.6.0)
