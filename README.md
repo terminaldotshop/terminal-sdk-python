@@ -33,8 +33,8 @@ client = Terminal(
     environment="dev",
 )
 
-product = client.product.list()
-print(product.data)
+products = client.product.list()
+print(products.data)
 ```
 
 While you can provide a `bearer_token` keyword argument,
@@ -59,8 +59,8 @@ client = AsyncTerminal(
 
 
 async def main() -> None:
-    product = await client.product.list()
-    print(product.data)
+    products = await client.product.list()
+    print(products.data)
 
 
 asyncio.run(main())
