@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.6.2 (2025-04-04)
+
+Full Changelog: [v1.6.1...v1.6.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.1...v1.6.2)
+
+### Chores
+
+* **internal:** remove trailing character ([#113](https://github.com/terminaldotshop/terminal-sdk-python/issues/113)) ([11cab8a](https://github.com/terminaldotshop/terminal-sdk-python/commit/11cab8a5c20e0fdd59b94ea80947605bf29692e4))
+
 ## 1.6.1 (2025-04-02)
 
 Full Changelog: [v1.6.0...v1.6.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.0...v1.6.1)
