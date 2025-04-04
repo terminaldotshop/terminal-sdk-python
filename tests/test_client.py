@@ -1657,7 +1657,7 @@ class TestAsyncTerminal:
         import threading
 
         from terminal_shop._utils import asyncify
-        from terminal_shop._base_client import get_platform 
+        from terminal_shop._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
