@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.7.0 (2025-04-09)
+
+Full Changelog: [v1.6.1...v1.7.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.1...v1.7.0)
+
+### Features
+
+* **api:** include shipment tracking info on order ([#116](https://github.com/terminaldotshop/terminal-sdk-python/issues/116)) ([194091b](https://github.com/terminaldotshop/terminal-sdk-python/commit/194091bc078214c61d6279b7214b0822d0183b1d))
+
+
+### Chores
+
+* **internal:** remove trailing character ([#113](https://github.com/terminaldotshop/terminal-sdk-python/issues/113)) ([11cab8a](https://github.com/terminaldotshop/terminal-sdk-python/commit/11cab8a5c20e0fdd59b94ea80947605bf29692e4))
+* **internal:** slight transform perf improvement ([#115](https://github.com/terminaldotshop/terminal-sdk-python/issues/115)) ([dc6a830](https://github.com/terminaldotshop/terminal-sdk-python/commit/dc6a830cb0e5e05aa50f9c5313d618ac6d617c44))
+
 ## 1.6.1 (2025-04-02)
 
 Full Changelog: [v1.6.0...v1.6.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.0...v1.6.1)
