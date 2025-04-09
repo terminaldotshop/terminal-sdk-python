@@ -67,6 +67,15 @@ class Tracking(BaseModel):
     service: Optional[str] = None
     """Shipping service of the order."""
 
+    status: Optional[str] = None
+    """Current tracking status of the shipment."""
+
+    status_details: Optional[str] = FieldInfo(alias="statusDetails", default=None)
+    """Additional details about the tracking status."""
+
+    status_updated_at: Optional[str] = FieldInfo(alias="statusUpdatedAt", default=None)
+    """When the tracking status was last updated."""
+
     url: Optional[str] = None
     """Tracking URL of the order."""
 
