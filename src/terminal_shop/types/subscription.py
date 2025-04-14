@@ -33,6 +33,9 @@ class Subscription(BaseModel):
     card_id: str = FieldInfo(alias="cardID")
     """ID of the card used for the subscription."""
 
+    created: str
+    """Date the subscription was created."""
+
     product_variant_id: str = FieldInfo(alias="productVariantID")
     """ID of the product variant being subscribed to."""
 

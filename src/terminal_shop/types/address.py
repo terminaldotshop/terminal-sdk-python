@@ -17,6 +17,9 @@ class Address(BaseModel):
     country: str
     """ISO 3166-1 alpha-2 country code of the address."""
 
+    created: str
+    """Date the address was created."""
+
     name: str
     """The recipient's name."""
 
