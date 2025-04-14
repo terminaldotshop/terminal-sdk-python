@@ -21,6 +21,9 @@ class Card(BaseModel):
     brand: str
     """Brand of the card."""
 
+    created: str
+    """Date the card was created."""
+
     expiration: Expiration
     """Expiration of the card."""
 

@@ -87,6 +87,9 @@ class Order(BaseModel):
     amount: Amount
     """The subtotal and shipping amounts of the order."""
 
+    created: str
+    """Date the order was created."""
+
     items: List[Item]
     """Items in the order."""
 

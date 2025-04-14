@@ -20,6 +20,9 @@ class SubscriptionCreateParams(TypedDict, total=False):
     card_id: Required[Annotated[str, PropertyInfo(alias="cardID")]]
     """ID of the card used for the subscription."""
 
+    created: Required[str]
+    """Date the subscription was created."""
+
     product_variant_id: Required[Annotated[str, PropertyInfo(alias="productVariantID")]]
     """ID of the product variant being subscribed to."""
 
