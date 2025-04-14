@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.8.0 (2025-04-14)
+
+Full Changelog: [v1.7.0...v1.8.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.7.0...v1.8.0)
+
+### Features
+
+* **api:** include created timestamps ([dad128a](https://github.com/terminaldotshop/terminal-sdk-python/commit/dad128a2c454acc28fa505d049d8f610ab418230))
+
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([8a11ed7](https://github.com/terminaldotshop/terminal-sdk-python/commit/8a11ed765f925233fc350e672a68a76f558a3356))
+* **perf:** skip traversing types for NotGiven values ([1e7a1e3](https://github.com/terminaldotshop/terminal-sdk-python/commit/1e7a1e3e1e1166dbedf6013ff711b87d77cf9400))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([349cb45](https://github.com/terminaldotshop/terminal-sdk-python/commit/349cb4525d2008c42c3b6ae39d841c950c6e5a91))
+* **internal:** reduce CI branch coverage ([d88ec66](https://github.com/terminaldotshop/terminal-sdk-python/commit/d88ec6653de4e5aa2f2fed70957f3e397e1d7c38))
+
 ## 1.7.0 (2025-04-09)
 
 Full Changelog: [v1.6.1...v1.7.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.6.1...v1.7.0)
