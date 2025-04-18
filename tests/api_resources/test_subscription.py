@@ -14,6 +14,7 @@ from terminal_shop.types import (
     SubscriptionListResponse,
     SubscriptionCreateResponse,
     SubscriptionDeleteResponse,
+    SubscriptionUpdateResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -84,6 +85,57 @@ class TestSubscription:
             assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_method_update(self, client: Terminal) -> None:
+        subscription = client.subscription.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    def test_method_update_with_all_params(self, client: Terminal) -> None:
+        subscription = client.subscription.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            schedule={
+                "interval": 3,
+                "type": "weekly",
+            },
+        )
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    def test_raw_response_update(self, client: Terminal) -> None:
+        response = client.subscription.with_raw_response.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        subscription = response.parse()
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    def test_streaming_response_update(self, client: Terminal) -> None:
+        with client.subscription.with_streaming_response.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            subscription = response.parse()
+            assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    def test_path_params_update(self, client: Terminal) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            client.subscription.with_raw_response.update(
+                id="",
+            )
 
     @parametrize
     def test_method_list(self, client: Terminal) -> None:
@@ -252,6 +304,57 @@ class TestAsyncSubscription:
             assert_matches_type(SubscriptionCreateResponse, subscription, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_method_update(self, async_client: AsyncTerminal) -> None:
+        subscription = await async_client.subscription.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    async def test_method_update_with_all_params(self, async_client: AsyncTerminal) -> None:
+        subscription = await async_client.subscription.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            address_id="shp_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            card_id="crd_XXXXXXXXXXXXXXXXXXXXXXXXX",
+            schedule={
+                "interval": 3,
+                "type": "weekly",
+            },
+        )
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    async def test_raw_response_update(self, async_client: AsyncTerminal) -> None:
+        response = await async_client.subscription.with_raw_response.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        subscription = await response.parse()
+        assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+    @parametrize
+    async def test_streaming_response_update(self, async_client: AsyncTerminal) -> None:
+        async with async_client.subscription.with_streaming_response.update(
+            id="sub_XXXXXXXXXXXXXXXXXXXXXXXXX",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            subscription = await response.parse()
+            assert_matches_type(SubscriptionUpdateResponse, subscription, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @parametrize
+    async def test_path_params_update(self, async_client: AsyncTerminal) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `id` but received ''"):
+            await async_client.subscription.with_raw_response.update(
+                id="",
+            )
 
     @parametrize
     async def test_method_list(self, async_client: AsyncTerminal) -> None:

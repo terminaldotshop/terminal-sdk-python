@@ -115,6 +115,7 @@ Types:
 from terminal_shop.types import (
     Subscription,
     SubscriptionCreateResponse,
+    SubscriptionUpdateResponse,
     SubscriptionListResponse,
     SubscriptionDeleteResponse,
     SubscriptionGetResponse,
@@ -124,6 +125,7 @@ from terminal_shop.types import (
 Methods:
 
 - <code title="post /subscription">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">create</a>(\*\*<a href="src/terminal_shop/types/subscription_create_params.py">params</a>) -> <a href="./src/terminal_shop/types/subscription_create_response.py">SubscriptionCreateResponse</a></code>
+- <code title="put /subscription/{id}">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">update</a>(id, \*\*<a href="src/terminal_shop/types/subscription_update_params.py">params</a>) -> <a href="./src/terminal_shop/types/subscription_update_response.py">SubscriptionUpdateResponse</a></code>
 - <code title="get /subscription">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">list</a>() -> <a href="./src/terminal_shop/types/subscription_list_response.py">SubscriptionListResponse</a></code>
 - <code title="delete /subscription/{id}">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">delete</a>(id) -> <a href="./src/terminal_shop/types/subscription_delete_response.py">SubscriptionDeleteResponse</a></code>
 - <code title="get /subscription/{id}">client.subscription.<a href="./src/terminal_shop/resources/subscription.py">get</a>(id) -> <a href="./src/terminal_shop/types/subscription_get_response.py">SubscriptionGetResponse</a></code>
