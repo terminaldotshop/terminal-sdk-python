@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import subscription_create_params
+from ..types import subscription_create_params, subscription_update_params
 from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
 from .._utils import (
     maybe_transform,
@@ -23,6 +23,7 @@ from ..types.subscription_get_response import SubscriptionGetResponse
 from ..types.subscription_list_response import SubscriptionListResponse
 from ..types.subscription_create_response import SubscriptionCreateResponse
 from ..types.subscription_delete_response import SubscriptionDeleteResponse
+from ..types.subscription_update_response import SubscriptionUpdateResponse
 
 __all__ = ["SubscriptionResource", "AsyncSubscriptionResource"]
 
@@ -112,6 +113,58 @@ class SubscriptionResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=SubscriptionCreateResponse,
+        )
+
+    def update(
+        self,
+        id: str,
+        *,
+        address_id: str | NotGiven = NOT_GIVEN,
+        card_id: str | NotGiven = NOT_GIVEN,
+        schedule: subscription_update_params.Schedule | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SubscriptionUpdateResponse:
+        """
+        Update card, address, or interval for an existing subscription.
+
+        Args:
+          id: ID of the subscription to update.
+
+          address_id: New shipping address ID for the subscription.
+
+          card_id: New payment method ID for the subscription.
+
+          schedule: New schedule for the subscription.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return self._put(
+            f"/subscription/{id}",
+            body=maybe_transform(
+                {
+                    "address_id": address_id,
+                    "card_id": card_id,
+                    "schedule": schedule,
+                },
+                subscription_update_params.SubscriptionUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SubscriptionUpdateResponse,
         )
 
     def list(
@@ -291,6 +344,58 @@ class AsyncSubscriptionResource(AsyncAPIResource):
             cast_to=SubscriptionCreateResponse,
         )
 
+    async def update(
+        self,
+        id: str,
+        *,
+        address_id: str | NotGiven = NOT_GIVEN,
+        card_id: str | NotGiven = NOT_GIVEN,
+        schedule: subscription_update_params.Schedule | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> SubscriptionUpdateResponse:
+        """
+        Update card, address, or interval for an existing subscription.
+
+        Args:
+          id: ID of the subscription to update.
+
+          address_id: New shipping address ID for the subscription.
+
+          card_id: New payment method ID for the subscription.
+
+          schedule: New schedule for the subscription.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not id:
+            raise ValueError(f"Expected a non-empty value for `id` but received {id!r}")
+        return await self._put(
+            f"/subscription/{id}",
+            body=await async_maybe_transform(
+                {
+                    "address_id": address_id,
+                    "card_id": card_id,
+                    "schedule": schedule,
+                },
+                subscription_update_params.SubscriptionUpdateParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=SubscriptionUpdateResponse,
+        )
+
     async def list(
         self,
         *,
@@ -388,6 +493,9 @@ class SubscriptionResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             subscription.create,
         )
+        self.update = to_raw_response_wrapper(
+            subscription.update,
+        )
         self.list = to_raw_response_wrapper(
             subscription.list,
         )
@@ -405,6 +513,9 @@ class AsyncSubscriptionResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             subscription.create,
+        )
+        self.update = async_to_raw_response_wrapper(
+            subscription.update,
         )
         self.list = async_to_raw_response_wrapper(
             subscription.list,
@@ -424,6 +535,9 @@ class SubscriptionResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             subscription.create,
         )
+        self.update = to_streamed_response_wrapper(
+            subscription.update,
+        )
         self.list = to_streamed_response_wrapper(
             subscription.list,
         )
@@ -441,6 +555,9 @@ class AsyncSubscriptionResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             subscription.create,
+        )
+        self.update = async_to_streamed_response_wrapper(
+            subscription.update,
         )
         self.list = async_to_streamed_response_wrapper(
             subscription.list,
