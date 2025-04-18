@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.9.0 (2025-04-18)
+
+Full Changelog: [v1.8.0...v1.9.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.8.0...v1.9.0)
+
+### Features
+
+* **api:** update subscription route ([d376b2b](https://github.com/terminaldotshop/terminal-sdk-python/commit/d376b2b47c6dcbdc8954a6070ab6ddb7a5f268b4))
+
+
+### Chores
+
+* **client:** minor internal fixes ([ea926ad](https://github.com/terminaldotshop/terminal-sdk-python/commit/ea926ad8d5a78d051e5da41d6ab14069b0a920bb))
+* **internal:** base client updates ([b449e6a](https://github.com/terminaldotshop/terminal-sdk-python/commit/b449e6a9b006f27b002ce6468c9edda0e4efe313))
+* **internal:** bump pyright version ([45eaad7](https://github.com/terminaldotshop/terminal-sdk-python/commit/45eaad7c82855c080157d4472c971815370cfabe))
+* **internal:** update pyright settings ([aaf385b](https://github.com/terminaldotshop/terminal-sdk-python/commit/aaf385bc137e1239512014f81e5a4fc7eeb6a388))
+
 ## 1.8.0 (2025-04-14)
 
 Full Changelog: [v1.7.0...v1.8.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.7.0...v1.8.0)
