@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.1 (2025-04-19)
+
+Full Changelog: [v1.9.0...v1.9.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.9.0...v1.9.1)
+
+### Chores
+
+* **internal:** update models test ([50a5d0b](https://github.com/terminaldotshop/terminal-sdk-python/commit/50a5d0b4ea8b4e21f55c2a073142b3329c010c63))
+
 ## 1.9.0 (2025-04-18)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.8.0...v1.9.0)
