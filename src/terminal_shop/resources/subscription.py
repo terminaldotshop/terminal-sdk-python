@@ -52,6 +52,7 @@ class SubscriptionResource(SyncAPIResource):
         address_id: str,
         card_id: str,
         created: str,
+        price: int,
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
@@ -74,6 +75,8 @@ class SubscriptionResource(SyncAPIResource):
           card_id: ID of the card used for the subscription.
 
           created: Date the subscription was created.
+
+          price: Price of the subscription in cents (USD).
 
           product_variant_id: ID of the product variant being subscribed to.
 
@@ -99,6 +102,7 @@ class SubscriptionResource(SyncAPIResource):
                     "address_id": address_id,
                     "card_id": card_id,
                     "created": created,
+                    "price": price,
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
@@ -281,6 +285,7 @@ class AsyncSubscriptionResource(AsyncAPIResource):
         address_id: str,
         card_id: str,
         created: str,
+        price: int,
         product_variant_id: str,
         quantity: int,
         next: str | NotGiven = NOT_GIVEN,
@@ -303,6 +308,8 @@ class AsyncSubscriptionResource(AsyncAPIResource):
           card_id: ID of the card used for the subscription.
 
           created: Date the subscription was created.
+
+          price: Price of the subscription in cents (USD).
 
           product_variant_id: ID of the product variant being subscribed to.
 
@@ -328,6 +335,7 @@ class AsyncSubscriptionResource(AsyncAPIResource):
                     "address_id": address_id,
                     "card_id": card_id,
                     "created": created,
+                    "price": price,
                     "product_variant_id": product_variant_id,
                     "quantity": quantity,
                     "next": next,
