@@ -23,6 +23,9 @@ class SubscriptionCreateParams(TypedDict, total=False):
     created: Required[str]
     """Date the subscription was created."""
 
+    price: Required[int]
+    """Price of the subscription in cents (USD)."""
+
     product_variant_id: Required[Annotated[str, PropertyInfo(alias="productVariantID")]]
     """ID of the product variant being subscribed to."""
 

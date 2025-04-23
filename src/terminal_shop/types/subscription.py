@@ -36,6 +36,9 @@ class Subscription(BaseModel):
     created: str
     """Date the subscription was created."""
 
+    price: int
+    """Price of the subscription in cents (USD)."""
+
     product_variant_id: str = FieldInfo(alias="productVariantID")
     """ID of the product variant being subscribed to."""
 
