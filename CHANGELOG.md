@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.10.0 (2025-04-23)
+
+Full Changelog: [v1.9.0...v1.10.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.9.0...v1.10.0)
+
+### Features
+
+* **api:** include price on subscriptions ([641a792](https://github.com/terminaldotshop/terminal-sdk-python/commit/641a7922cd98a736c0afe6352b16aaea92973f96))
+
+
+### Bug Fixes
+
+* **pydantic v1:** more robust ModelField.annotation check ([79d90e5](https://github.com/terminaldotshop/terminal-sdk-python/commit/79d90e5f5a36569e3fd081b3cc600ed96315c937))
+
+
+### Chores
+
+* **ci:** add timeout thresholds for CI jobs ([a2d45d9](https://github.com/terminaldotshop/terminal-sdk-python/commit/a2d45d94a3a2018aaf7202786ea591d0e19a4e7a))
+* **internal:** fix list file params ([e24aa62](https://github.com/terminaldotshop/terminal-sdk-python/commit/e24aa62985b91da5ea0add44e9832ae7dc085ac0))
+* **internal:** import reformatting ([d7bc394](https://github.com/terminaldotshop/terminal-sdk-python/commit/d7bc3947496de2a8efcb6c4e8ee3f5f4ad386f4e))
+* **internal:** refactor retries to not use recursion ([45f9f55](https://github.com/terminaldotshop/terminal-sdk-python/commit/45f9f553cf4a42ee709da2b8d215c31f30c04812))
+* **internal:** update models test ([50a5d0b](https://github.com/terminaldotshop/terminal-sdk-python/commit/50a5d0b4ea8b4e21f55c2a073142b3329c010c63))
+
 ## 1.9.0 (2025-04-18)
 
 Full Changelog: [v1.8.0...v1.9.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.8.0...v1.9.0)
