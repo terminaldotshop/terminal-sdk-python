@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.11.0 (2025-04-24)
+
+Full Changelog: [v1.10.0...v1.11.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.10.0...v1.11.0)
+
+### Features
+
+* **api:** global region, typed tracking status, variant tags ([55f97d3](https://github.com/terminaldotshop/terminal-sdk-python/commit/55f97d3481f9d81e4de4a4e4755e7440b1902f7a))
+* **api:** product variant descriptions ([0e4a97d](https://github.com/terminaldotshop/terminal-sdk-python/commit/0e4a97d8dfbeda73b0b69d5bbeec380ffb57d0fc))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([db7288e](https://github.com/terminaldotshop/terminal-sdk-python/commit/db7288e1db9974ee578af88ced0a7174f3447d53))
+* **ci:** only use depot for staging repos ([a293466](https://github.com/terminaldotshop/terminal-sdk-python/commit/a2934662486ff56f1407702557c2d7547b781254))
+* **internal:** codegen related update ([7e42d70](https://github.com/terminaldotshop/terminal-sdk-python/commit/7e42d7065218f4d3795750c4155aef399b2ca37a))
+* **internal:** minor formatting changes ([044e54a](https://github.com/terminaldotshop/terminal-sdk-python/commit/044e54a4f2f34bff972c54b4158ec10820d0d7ff))
+
 ## 1.10.0 (2025-04-23)
 
 Full Changelog: [v1.9.0...v1.10.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.9.0...v1.10.0)
