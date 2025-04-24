@@ -4,4 +4,4 @@ from typing_extensions import Literal, TypeAlias
 
 __all__ = ["Region"]
 
-Region: TypeAlias = Literal["eu", "na"]
+Region: TypeAlias = Literal["eu", "na", "global"]
