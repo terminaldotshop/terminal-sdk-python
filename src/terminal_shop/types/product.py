@@ -18,6 +18,8 @@ class Tags(BaseModel):
 
     market_eu: Optional[bool] = None
 
+    market_global: Optional[bool] = None
+
     market_na: Optional[bool] = None
 
 
