@@ -1,6 +1,7 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 from typing import List, Optional
+from typing_extensions import Literal
 
 from pydantic import Field as FieldInfo
 
@@ -67,7 +68,7 @@ class Tracking(BaseModel):
     service: Optional[str] = None
     """Shipping service of the order."""
 
-    status: Optional[str] = None
+    status: Optional[Literal["PRE_TRANSIT", "TRANSIT", "DELIVERED", "RETURNED", "FAILURE", "UNKNOWN"]] = None
     """Current tracking status of the shipment."""
 
     status_details: Optional[str] = FieldInfo(alias="statusDetails", default=None)

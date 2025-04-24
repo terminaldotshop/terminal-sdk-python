@@ -1,8 +1,20 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+from typing import Optional
+
 from .._models import BaseModel
 
-__all__ = ["ProductVariant"]
+__all__ = ["ProductVariant", "Tags"]
+
+
+class Tags(BaseModel):
+    app: Optional[str] = None
+
+    market_eu: Optional[bool] = None
+
+    market_global: Optional[bool] = None
+
+    market_na: Optional[bool] = None
 
 
 class ProductVariant(BaseModel):
@@ -14,3 +26,6 @@ class ProductVariant(BaseModel):
 
     price: int
     """Price of the product variant in cents (USD)."""
+
+    tags: Optional[Tags] = None
+    """Tags for the product variant."""
