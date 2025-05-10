@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.11.1 (2025-05-10)
+
+Full Changelog: [v1.11.0...v1.11.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.0...v1.11.1)
+
+### Bug Fixes
+
+* **package:** support direct resource imports ([b676099](https://github.com/terminaldotshop/terminal-sdk-python/commit/b67609908f07f26b9b951f531adb964e4c3bfea8))
+
+
+### Chores
+
+* **internal:** avoid errors for isinstance checks on proxies ([a61cacf](https://github.com/terminaldotshop/terminal-sdk-python/commit/a61cacf60150c76bbe3ede309300f7498c2be790))
+
 ## 1.11.0 (2025-04-24)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.10.0...v1.11.0)
