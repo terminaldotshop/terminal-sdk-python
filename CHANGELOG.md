@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.11.2 (2025-05-16)
+
+Full Changelog: [v1.11.1...v1.11.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.1...v1.11.2)
+
+### Chores
+
+* **ci:** fix installation instructions ([c67fc25](https://github.com/terminaldotshop/terminal-sdk-python/commit/c67fc255b0d2a3bd250b469a01d5baccf8f4c5a6))
+* **ci:** upload sdks to package manager ([c380e7e](https://github.com/terminaldotshop/terminal-sdk-python/commit/c380e7ef5adffca1e82bb10b99e9a9d4dfe8217a))
+
 ## 1.11.1 (2025-05-10)
 
 Full Changelog: [v1.11.0...v1.11.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.0...v1.11.1)
