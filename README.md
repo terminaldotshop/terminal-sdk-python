@@ -24,11 +24,9 @@ pip install terminal-shop
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from terminal_shop import Terminal
 
 client = Terminal(
-    bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
     environment="dev",
 )
@@ -47,12 +45,10 @@ so that your Bearer Token is not stored in source control.
 Simply import `AsyncTerminal` instead of `Terminal` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from terminal_shop import AsyncTerminal
 
 client = AsyncTerminal(
-    bearer_token=os.environ.get("TERMINAL_BEARER_TOKEN"),  # This is the default and can be omitted
     # defaults to "production".
     environment="dev",
 )
