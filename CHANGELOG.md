@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.12.0 (2025-06-13)
+
+Full Changelog: [v1.11.1...v1.12.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.1...v1.12.0)
+
+### Features
+
+* **client:** add follow_redirects request option ([9bd4cf4](https://github.com/terminaldotshop/terminal-sdk-python/commit/9bd4cf4c4a8941ec67d8ef70a1a88d1c147c65e1))
+
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([67e114d](https://github.com/terminaldotshop/terminal-sdk-python/commit/67e114d0986fb2b09e2a21ffc8150c6cfa108fda))
+
+
+### Chores
+
+* **ci:** fix installation instructions ([c67fc25](https://github.com/terminaldotshop/terminal-sdk-python/commit/c67fc255b0d2a3bd250b469a01d5baccf8f4c5a6))
+* **ci:** upload sdks to package manager ([c380e7e](https://github.com/terminaldotshop/terminal-sdk-python/commit/c380e7ef5adffca1e82bb10b99e9a9d4dfe8217a))
+* **docs:** grammar improvements ([dff2776](https://github.com/terminaldotshop/terminal-sdk-python/commit/dff2776cc45b31111ce791f1d4632ebed17b5ac0))
+* **docs:** remove reference to rye shell ([fb612e7](https://github.com/terminaldotshop/terminal-sdk-python/commit/fb612e76e759abdc355b4af1333fe5079f60cd50))
+* **internal:** codegen related update ([858b047](https://github.com/terminaldotshop/terminal-sdk-python/commit/858b047b0765eae7915d38f716693bb13ac48876))
+* **tests:** run tests in parallel ([2533b57](https://github.com/terminaldotshop/terminal-sdk-python/commit/2533b57e46766b33207ace1adcc1a46550bc7097))
+
 ## 1.11.1 (2025-05-10)
 
 Full Changelog: [v1.11.0...v1.11.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.0...v1.11.1)
