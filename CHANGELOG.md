@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.12.0 (2025-06-21)
+
+Full Changelog: [v1.11.1...v1.12.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.1...v1.12.0)
+
+### Features
+
+* **client:** add follow_redirects request option ([9bd4cf4](https://github.com/terminaldotshop/terminal-sdk-python/commit/9bd4cf4c4a8941ec67d8ef70a1a88d1c147c65e1))
+* **client:** add support for aiohttp ([a21864c](https://github.com/terminaldotshop/terminal-sdk-python/commit/a21864cfba2db14411209bca5fd6276ac123b71e))
+
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([67e114d](https://github.com/terminaldotshop/terminal-sdk-python/commit/67e114d0986fb2b09e2a21ffc8150c6cfa108fda))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([3a3a5a8](https://github.com/terminaldotshop/terminal-sdk-python/commit/3a3a5a88089f0e2f96eb34d8ad639d5db82f6f3b))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([0b9c773](https://github.com/terminaldotshop/terminal-sdk-python/commit/0b9c773f7cba0360927423ebd82193c50d7d235a))
+* **ci:** fix installation instructions ([c67fc25](https://github.com/terminaldotshop/terminal-sdk-python/commit/c67fc255b0d2a3bd250b469a01d5baccf8f4c5a6))
+* **ci:** upload sdks to package manager ([c380e7e](https://github.com/terminaldotshop/terminal-sdk-python/commit/c380e7ef5adffca1e82bb10b99e9a9d4dfe8217a))
+* **docs:** grammar improvements ([dff2776](https://github.com/terminaldotshop/terminal-sdk-python/commit/dff2776cc45b31111ce791f1d4632ebed17b5ac0))
+* **docs:** remove reference to rye shell ([fb612e7](https://github.com/terminaldotshop/terminal-sdk-python/commit/fb612e76e759abdc355b4af1333fe5079f60cd50))
+* **internal:** codegen related update ([858b047](https://github.com/terminaldotshop/terminal-sdk-python/commit/858b047b0765eae7915d38f716693bb13ac48876))
+* **internal:** update conftest.py ([f211b5b](https://github.com/terminaldotshop/terminal-sdk-python/commit/f211b5b8ed1f93ee6ef1596133a5058962f28248))
+* **readme:** update badges ([b9b68c0](https://github.com/terminaldotshop/terminal-sdk-python/commit/b9b68c07b61370f2c4fba011760e41179480f7a8))
+* **tests:** add tests for httpx client instantiation & proxies ([87d9495](https://github.com/terminaldotshop/terminal-sdk-python/commit/87d94957188a9602e3d372510cd958f8d87985cf))
+* **tests:** run tests in parallel ([2533b57](https://github.com/terminaldotshop/terminal-sdk-python/commit/2533b57e46766b33207ace1adcc1a46550bc7097))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([f2d5840](https://github.com/terminaldotshop/terminal-sdk-python/commit/f2d58408b719707774fc5cb099ce8cb48a749a2d))
+
 ## 1.11.1 (2025-05-10)
 
 Full Changelog: [v1.11.0...v1.11.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.0...v1.11.1)
