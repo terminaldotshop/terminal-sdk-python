@@ -37,6 +37,8 @@ classifiers = [
 Homepage = "https://github.com/terminaldotshop/terminal-sdk-python"
 Repository = "https://github.com/terminaldotshop/terminal-sdk-python"
 
+[project.optional-dependencies]
+aiohttp = ["aiohttp", "httpx_aiohttp>=0.1.6"]
 
 [tool.rye]
 managed = true
