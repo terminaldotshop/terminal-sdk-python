@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.12.1 (2025-06-27)
+
+Full Changelog: [v1.12.0...v1.12.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.0...v1.12.1)
+
+### Bug Fixes
+
+* **ci:** release-doctor — report correct token name ([2034cac](https://github.com/terminaldotshop/terminal-sdk-python/commit/2034cac9a93880e3904d713d9e07138fb656b3c7))
+
+
+### Chores
+
+* **tests:** skip some failing tests on the latest python versions ([d5a3c2d](https://github.com/terminaldotshop/terminal-sdk-python/commit/d5a3c2d7c53b3628e3a5678ee6d701f26976aeda))
+
 ## 1.12.0 (2025-06-21)
 
 Full Changelog: [v1.11.1...v1.12.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.11.1...v1.12.0)
