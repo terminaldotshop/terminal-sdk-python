@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.12.2 (2025-06-30)
+
+Full Changelog: [v1.12.1...v1.12.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.1...v1.12.2)
+
+### Bug Fixes
+
+* **ci:** correct conditional ([a97a328](https://github.com/terminaldotshop/terminal-sdk-python/commit/a97a3282115977827373a0715323d703ee21057b))
+
+
+### Chores
+
+* **ci:** only run for pushes and fork pull requests ([38bba09](https://github.com/terminaldotshop/terminal-sdk-python/commit/38bba09c0a0cb034ebfd599e742c33a906847cf7))
+
 ## 1.12.1 (2025-06-27)
 
 Full Changelog: [v1.12.0...v1.12.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.0...v1.12.1)
