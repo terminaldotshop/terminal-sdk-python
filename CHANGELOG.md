@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.12.3 (2025-07-09)
+
+Full Changelog: [v1.12.2...v1.12.3](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.2...v1.12.3)
+
+### Bug Fixes
+
+* **parsing:** correctly handle nested discriminated unions ([5860144](https://github.com/terminaldotshop/terminal-sdk-python/commit/58601441af8645039a051721255326f676b07fa6))
+
+
+### Chores
+
+* **ci:** change upload type ([9391923](https://github.com/terminaldotshop/terminal-sdk-python/commit/93919233d371b366bf2b0f3d7fe37a23599d9832))
+* **internal:** bump pinned h11 dep ([d0a01b3](https://github.com/terminaldotshop/terminal-sdk-python/commit/d0a01b3daad0064b7f817ad16787e63388546b06))
+* **internal:** codegen related update ([0459572](https://github.com/terminaldotshop/terminal-sdk-python/commit/045957247b6d72c4656ae9deaee49a1735e9fbe8))
+* **package:** mark python 3.13 as supported ([7c29f11](https://github.com/terminaldotshop/terminal-sdk-python/commit/7c29f11415de1d5aed314ed7b8ab740b34ca2135))
+
 ## 1.12.2 (2025-06-30)
 
 Full Changelog: [v1.12.1...v1.12.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.1...v1.12.2)
