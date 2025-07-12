@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.12.4 (2025-07-12)
+
+Full Changelog: [v1.12.3...v1.12.4](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.3...v1.12.4)
+
+### Bug Fixes
+
+* **client:** don't send Content-Type header on GET requests ([d2ebcdb](https://github.com/terminaldotshop/terminal-sdk-python/commit/d2ebcdbf779137a6f1f53c3aeb91f527a6d8af3c))
+
+
+### Chores
+
+* **readme:** fix version rendering on pypi ([b86f3fd](https://github.com/terminaldotshop/terminal-sdk-python/commit/b86f3fd950aea81056ab50f8b820c02e7b7054c9))
+
 ## 1.12.3 (2025-07-09)
 
 Full Changelog: [v1.12.2...v1.12.3](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.2...v1.12.3)
