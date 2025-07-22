@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.5 (2025-07-22)
+
+Full Changelog: [v1.12.4...v1.12.5](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.4...v1.12.5)
+
+### Bug Fixes
+
+* **parsing:** ignore empty metadata ([4b145ce](https://github.com/terminaldotshop/terminal-sdk-python/commit/4b145cef671702a2ecd9160df84ee05413ed50c7))
+
 ## 1.12.4 (2025-07-12)
 
 Full Changelog: [v1.12.3...v1.12.4](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.3...v1.12.4)
