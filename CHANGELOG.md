@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.6 (2025-07-23)
+
+Full Changelog: [v1.12.5...v1.12.6](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.5...v1.12.6)
+
+### Bug Fixes
+
+* **parsing:** parse extra field types ([2a31a14](https://github.com/terminaldotshop/terminal-sdk-python/commit/2a31a1476d2067130e89d0974e2e61bfd583cfc8))
+
 ## 1.12.5 (2025-07-22)
 
 Full Changelog: [v1.12.4...v1.12.5](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.4...v1.12.5)
