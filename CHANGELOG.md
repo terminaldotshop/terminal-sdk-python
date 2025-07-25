@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.7 (2025-07-25)
+
+Full Changelog: [v1.12.6...v1.12.7](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.6...v1.12.7)
+
+### Chores
+
+* **project:** add settings file for vscode ([3d9ee1b](https://github.com/terminaldotshop/terminal-sdk-python/commit/3d9ee1bc5922d3bb9bec2e9fb32b0c96efd6cc72))
+
 ## 1.12.6 (2025-07-23)
 
 Full Changelog: [v1.12.5...v1.12.6](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.5...v1.12.6)
