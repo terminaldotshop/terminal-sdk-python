@@ -3,6 +3,8 @@
 from typing import List, Optional
 from typing_extensions import Literal
 
+from pydantic import Field as FieldInfo
+
 from .._models import BaseModel
 from .product_variant import ProductVariant
 
@@ -44,3 +46,6 @@ class Product(BaseModel):
 
     tags: Optional[Tags] = None
     """Tags for the product."""
+
+    time_hidden: Optional[str] = FieldInfo(alias="timeHidden", default=None)
+    """Timestamp when the product was hidden from public view."""
