@@ -27,8 +27,5 @@ class ProductVariant(BaseModel):
     price: int
     """Price of the product variant in cents (USD)."""
 
-    description: Optional[str] = None
-    """Description of the product variant."""
-
     tags: Optional[Tags] = None
     """Tags for the product variant."""
