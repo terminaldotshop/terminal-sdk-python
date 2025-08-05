@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.13.0 (2025-08-05)
+
+Full Changelog: [v1.12.6...v1.13.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.6...v1.13.0)
+
+### Features
+
+* **api:** manual updates ([a0868d6](https://github.com/terminaldotshop/terminal-sdk-python/commit/a0868d667823bc8964ef2dee123d646065eaf9c8))
+* **client:** support file upload requests ([f2444c2](https://github.com/terminaldotshop/terminal-sdk-python/commit/f2444c23f031fc4835ca8620c6fae862f100ac80))
+
+
+### Chores
+
+* **project:** add settings file for vscode ([3d9ee1b](https://github.com/terminaldotshop/terminal-sdk-python/commit/3d9ee1bc5922d3bb9bec2e9fb32b0c96efd6cc72))
+
 ## 1.12.6 (2025-07-23)
 
 Full Changelog: [v1.12.5...v1.12.6](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.5...v1.12.6)
