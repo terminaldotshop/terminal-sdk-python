@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.13.1 (2025-08-27)
+
+Full Changelog: [v1.13.0...v1.13.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.13.0...v1.13.1)
+
+### Bug Fixes
+
+* avoid newer type syntax ([3bbc634](https://github.com/terminaldotshop/terminal-sdk-python/commit/3bbc63406434b78f8d819ef7febdea9bdbe532c2))
+
+
+### Chores
+
+* **internal:** change ci workflow machines ([8c0c341](https://github.com/terminaldotshop/terminal-sdk-python/commit/8c0c341d45380d70b6fabd196a9d8735a9de5313))
+* **internal:** fix ruff target version ([02cfbb2](https://github.com/terminaldotshop/terminal-sdk-python/commit/02cfbb295669c4ec608948bf5cf9cfcd4fd6a380))
+* **internal:** update comment in script ([8561e5d](https://github.com/terminaldotshop/terminal-sdk-python/commit/8561e5dae2aeaf5748356716e956b386c90903d7))
+* update @stainless-api/prism-cli to v5.15.0 ([05332cc](https://github.com/terminaldotshop/terminal-sdk-python/commit/05332cce6e17f77a6f6bdcafd80f016fed6ede79))
+* update github action ([81919a1](https://github.com/terminaldotshop/terminal-sdk-python/commit/81919a1dd1e91e866f4ef6b483b29e043d063b54))
+
 ## 1.13.0 (2025-08-05)
 
 Full Changelog: [v1.12.6...v1.13.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.12.6...v1.13.0)
