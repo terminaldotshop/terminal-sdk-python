@@ -5,7 +5,7 @@ from __future__ import annotations
 import httpx
 
 from ..types import address_create_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -52,15 +52,15 @@ class AddressResource(SyncAPIResource):
         name: str,
         street1: str,
         zip: str,
-        phone: str | NotGiven = NOT_GIVEN,
-        province: str | NotGiven = NOT_GIVEN,
-        street2: str | NotGiven = NOT_GIVEN,
+        phone: str | Omit = omit,
+        province: str | Omit = omit,
+        street2: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressCreateResponse:
         """
         Create and add a shipping address to the current user.
@@ -119,7 +119,7 @@ class AddressResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressListResponse:
         """Get the shipping addresses associated with the current user."""
         return self._get(
@@ -139,7 +139,7 @@ class AddressResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressDeleteResponse:
         """
         Delete a shipping address from the current user.
@@ -174,7 +174,7 @@ class AddressResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressGetResponse:
         """
         Get the shipping address with the given ID.
@@ -229,15 +229,15 @@ class AsyncAddressResource(AsyncAPIResource):
         name: str,
         street1: str,
         zip: str,
-        phone: str | NotGiven = NOT_GIVEN,
-        province: str | NotGiven = NOT_GIVEN,
-        street2: str | NotGiven = NOT_GIVEN,
+        phone: str | Omit = omit,
+        province: str | Omit = omit,
+        street2: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressCreateResponse:
         """
         Create and add a shipping address to the current user.
@@ -296,7 +296,7 @@ class AsyncAddressResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressListResponse:
         """Get the shipping addresses associated with the current user."""
         return await self._get(
@@ -316,7 +316,7 @@ class AsyncAddressResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressDeleteResponse:
         """
         Delete a shipping address from the current user.
@@ -351,7 +351,7 @@ class AsyncAddressResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AddressGetResponse:
         """
         Get the shipping address with the given ID.
