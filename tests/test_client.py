@@ -59,51 +59,49 @@ def _get_open_connections(client: Terminal | AsyncTerminal) -> int:
 
 
 class TestTerminal:
-    client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response(self, respx_mock: MockRouter) -> None:
+    def test_raw_response(self, respx_mock: MockRouter, client: Terminal) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = self.client.post("/foo", cast_to=httpx.Response)
+        response = client.post("/foo", cast_to=httpx.Response)
         assert response.status_code == 200
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_raw_response_for_binary(self, respx_mock: MockRouter) -> None:
+    def test_raw_response_for_binary(self, respx_mock: MockRouter, client: Terminal) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
 
-        response = self.client.post("/foo", cast_to=httpx.Response)
+        response = client.post("/foo", cast_to=httpx.Response)
         assert response.status_code == 200
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self) -> None:
-        copied = self.client.copy()
-        assert id(copied) != id(self.client)
+    def test_copy(self, client: Terminal) -> None:
+        copied = client.copy()
+        assert id(copied) != id(client)
 
-        copied = self.client.copy(bearer_token="another My Bearer Token")
+        copied = client.copy(bearer_token="another My Bearer Token")
         assert copied.bearer_token == "another My Bearer Token"
-        assert self.client.bearer_token == "My Bearer Token"
+        assert client.bearer_token == "My Bearer Token"
 
-    def test_copy_default_options(self) -> None:
+    def test_copy_default_options(self, client: Terminal) -> None:
         # options that have a default are overridden correctly
-        copied = self.client.copy(max_retries=7)
+        copied = client.copy(max_retries=7)
         assert copied.max_retries == 7
-        assert self.client.max_retries == 2
+        assert client.max_retries == 2
 
         copied2 = copied.copy(max_retries=6)
         assert copied2.max_retries == 6
         assert copied.max_retries == 7
 
         # timeout
-        assert isinstance(self.client.timeout, httpx.Timeout)
-        copied = self.client.copy(timeout=None)
+        assert isinstance(client.timeout, httpx.Timeout)
+        copied = client.copy(timeout=None)
         assert copied.timeout is None
-        assert isinstance(self.client.timeout, httpx.Timeout)
+        assert isinstance(client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
         client = Terminal(
@@ -141,6 +139,7 @@ class TestTerminal:
             match="`default_headers` and `set_default_headers` arguments are mutually exclusive",
         ):
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
+        client.close()
 
     def test_copy_default_query(self) -> None:
         client = Terminal(
@@ -178,13 +177,15 @@ class TestTerminal:
         ):
             client.copy(set_default_query={}, default_query={"foo": "Bar"})
 
-    def test_copy_signature(self) -> None:
+        client.close()
+
+    def test_copy_signature(self, client: Terminal) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
-            self.client.__init__,  # type: ignore[misc]
+            client.__init__,  # type: ignore[misc]
         )
-        copy_signature = inspect.signature(self.client.copy)
+        copy_signature = inspect.signature(client.copy)
         exclude_params = {"transport", "proxies", "_strict_response_validation"}
 
         for name in init_signature.parameters.keys():
@@ -195,12 +196,12 @@ class TestTerminal:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self) -> None:
+    def test_copy_build_request(self, client: Terminal) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
-            client = self.client.copy()
-            client._build_request(options)
+            client_copy = client.copy()
+            client_copy._build_request(options)
 
         # ensure that the machinery is warmed up before tracing starts.
         build_request(options)
@@ -257,14 +258,12 @@ class TestTerminal:
                     print(frame)
             raise AssertionError()
 
-    def test_request_timeout(self) -> None:
-        request = self.client._build_request(FinalRequestOptions(method="get", url="/foo"))
+    def test_request_timeout(self, client: Terminal) -> None:
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
 
-        request = self.client._build_request(
-            FinalRequestOptions(method="get", url="/foo", timeout=httpx.Timeout(100.0))
-        )
+        request = client._build_request(FinalRequestOptions(method="get", url="/foo", timeout=httpx.Timeout(100.0)))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == httpx.Timeout(100.0)
 
@@ -277,6 +276,8 @@ class TestTerminal:
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == httpx.Timeout(0)
 
+        client.close()
+
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
@@ -288,6 +289,8 @@ class TestTerminal:
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == httpx.Timeout(None)
 
+            client.close()
+
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
             client = Terminal(
@@ -298,6 +301,8 @@ class TestTerminal:
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT
 
+            client.close()
+
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
             client = Terminal(
@@ -307,6 +312,8 @@ class TestTerminal:
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT  # our default
+
+            client.close()
 
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
@@ -319,17 +326,17 @@ class TestTerminal:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = Terminal(
+        test_client = Terminal(
             base_url=base_url,
             bearer_token=bearer_token,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = Terminal(
+        test_client2 = Terminal(
             base_url=base_url,
             bearer_token=bearer_token,
             _strict_response_validation=True,
@@ -338,9 +345,12 @@ class TestTerminal:
                 "X-Stainless-Lang": "my-overriding-header",
             },
         )
-        request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+        request = test_client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+        test_client.close()
+        test_client2.close()
 
     def test_validate_headers(self) -> None:
         client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
@@ -373,8 +383,10 @@ class TestTerminal:
         url = httpx.URL(request.url)
         assert dict(url.params) == {"foo": "baz", "query_param": "overridden"}
 
-    def test_request_extra_json(self) -> None:
-        request = self.client._build_request(
+        client.close()
+
+    def test_request_extra_json(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -385,7 +397,7 @@ class TestTerminal:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": False}
 
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -396,7 +408,7 @@ class TestTerminal:
         assert data == {"baz": False}
 
         # `extra_json` takes priority over `json_data` when keys clash
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -407,8 +419,8 @@ class TestTerminal:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self) -> None:
-        request = self.client._build_request(
+    def test_request_extra_headers(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -418,7 +430,7 @@ class TestTerminal:
         assert request.headers.get("X-Foo") == "Foo"
 
         # `extra_headers` takes priority over `default_headers` when keys clash
-        request = self.client.with_options(default_headers={"X-Bar": "true"})._build_request(
+        request = client.with_options(default_headers={"X-Bar": "true"})._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -429,8 +441,8 @@ class TestTerminal:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self) -> None:
-        request = self.client._build_request(
+    def test_request_extra_query(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -443,7 +455,7 @@ class TestTerminal:
         assert params == {"my_query_param": "Foo"}
 
         # if both `query` and `extra_query` are given, they are merged
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -457,7 +469,7 @@ class TestTerminal:
         assert params == {"bar": "1", "foo": "2"}
 
         # `extra_query` takes priority over `query` when keys clash
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -500,7 +512,7 @@ class TestTerminal:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    def test_basic_union_response(self, respx_mock: MockRouter) -> None:
+    def test_basic_union_response(self, respx_mock: MockRouter, client: Terminal) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -509,12 +521,12 @@ class TestTerminal:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    def test_union_response_different_types(self, respx_mock: MockRouter) -> None:
+    def test_union_response_different_types(self, respx_mock: MockRouter, client: Terminal) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -525,18 +537,18 @@ class TestTerminal:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
 
-        response = self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model1)
         assert response.foo == 1
 
     @pytest.mark.respx(base_url=base_url)
-    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter) -> None:
+    def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter, client: Terminal) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
         """
@@ -552,7 +564,7 @@ class TestTerminal:
             )
         )
 
-        response = self.client.get("/foo", cast_to=Model)
+        response = client.get("/foo", cast_to=Model)
         assert isinstance(response, Model)
         assert response.foo == 2
 
@@ -565,6 +577,8 @@ class TestTerminal:
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
 
         assert client.base_url == "https://example.com/from_setter/"
+
+        client.close()
 
     def test_base_url_env(self) -> None:
         with update_env(TERMINAL_BASE_URL="http://localhost:5000/from/env"):
@@ -580,6 +594,8 @@ class TestTerminal:
                 base_url=None, bearer_token=bearer_token, _strict_response_validation=True, environment="production"
             )
             assert str(client.base_url).startswith("https://api.terminal.shop")
+
+            client.close()
 
     @pytest.mark.parametrize(
         "client",
@@ -607,6 +623,7 @@ class TestTerminal:
             ),
         )
         assert request.url == "http://localhost:5000/custom/path/foo"
+        client.close()
 
     @pytest.mark.parametrize(
         "client",
@@ -634,6 +651,7 @@ class TestTerminal:
             ),
         )
         assert request.url == "http://localhost:5000/custom/path/foo"
+        client.close()
 
     @pytest.mark.parametrize(
         "client",
@@ -661,35 +679,36 @@ class TestTerminal:
             ),
         )
         assert request.url == "https://myapi.com/foo"
+        client.close()
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-        assert not client.is_closed()
+        test_client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        assert not test_client.is_closed()
 
-        copied = client.copy()
-        assert copied is not client
+        copied = test_client.copy()
+        assert copied is not test_client
 
         del copied
 
-        assert not client.is_closed()
+        assert not test_client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-        with client as c2:
-            assert c2 is client
+        test_client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        with test_client as c2:
+            assert c2 is test_client
             assert not c2.is_closed()
-            assert not client.is_closed()
-        assert client.is_closed()
+            assert not test_client.is_closed()
+        assert test_client.is_closed()
 
     @pytest.mark.respx(base_url=base_url)
-    def test_client_response_validation_error(self, respx_mock: MockRouter) -> None:
+    def test_client_response_validation_error(self, respx_mock: MockRouter, client: Terminal) -> None:
         class Model(BaseModel):
             foo: str
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
 
         with pytest.raises(APIResponseValidationError) as exc:
-            self.client.get("/foo", cast_to=Model)
+            client.get("/foo", cast_to=Model)
 
         assert isinstance(exc.value.__cause__, ValidationError)
 
@@ -714,10 +733,13 @@ class TestTerminal:
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=False)
+        non_strict_client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=False)
 
-        response = client.get("/foo", cast_to=Model)
+        response = non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
+
+        strict_client.close()
+        non_strict_client.close()
 
     @pytest.mark.parametrize(
         "remaining_retries,retry_after,timeout",
@@ -741,9 +763,9 @@ class TestTerminal:
         ],
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
-    def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = Terminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-
+    def test_parse_retry_after_header(
+        self, remaining_retries: int, retry_after: str, timeout: float, client: Terminal
+    ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
@@ -757,7 +779,7 @@ class TestTerminal:
         with pytest.raises(APITimeoutError):
             client.product.with_streaming_response.list().__enter__()
 
-        assert _get_open_connections(self.client) == 0
+        assert _get_open_connections(client) == 0
 
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
@@ -766,7 +788,7 @@ class TestTerminal:
 
         with pytest.raises(APIStatusError):
             client.product.with_streaming_response.list().__enter__()
-        assert _get_open_connections(self.client) == 0
+        assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
@@ -868,83 +890,77 @@ class TestTerminal:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects(self, respx_mock: MockRouter) -> None:
+    def test_follow_redirects(self, respx_mock: MockRouter, client: Terminal) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
         respx_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
 
-        response = self.client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
+        response = client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    def test_follow_redirects_disabled(self, respx_mock: MockRouter) -> None:
+    def test_follow_redirects_disabled(self, respx_mock: MockRouter, client: Terminal) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
 
         with pytest.raises(APIStatusError) as exc_info:
-            self.client.post(
-                "/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx.Response
-            )
+            client.post("/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx.Response)
 
         assert exc_info.value.response.status_code == 302
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
 class TestAsyncTerminal:
-    client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
-    async def test_raw_response(self, respx_mock: MockRouter) -> None:
+    async def test_raw_response(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         respx_mock.post("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = await self.client.post("/foo", cast_to=httpx.Response)
+        response = await async_client.post("/foo", cast_to=httpx.Response)
         assert response.status_code == 200
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
-    async def test_raw_response_for_binary(self, respx_mock: MockRouter) -> None:
+    async def test_raw_response_for_binary(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         respx_mock.post("/foo").mock(
             return_value=httpx.Response(200, headers={"Content-Type": "application/binary"}, content='{"foo": "bar"}')
         )
 
-        response = await self.client.post("/foo", cast_to=httpx.Response)
+        response = await async_client.post("/foo", cast_to=httpx.Response)
         assert response.status_code == 200
         assert isinstance(response, httpx.Response)
         assert response.json() == {"foo": "bar"}
 
-    def test_copy(self) -> None:
-        copied = self.client.copy()
-        assert id(copied) != id(self.client)
+    def test_copy(self, async_client: AsyncTerminal) -> None:
+        copied = async_client.copy()
+        assert id(copied) != id(async_client)
 
-        copied = self.client.copy(bearer_token="another My Bearer Token")
+        copied = async_client.copy(bearer_token="another My Bearer Token")
         assert copied.bearer_token == "another My Bearer Token"
-        assert self.client.bearer_token == "My Bearer Token"
+        assert async_client.bearer_token == "My Bearer Token"
 
-    def test_copy_default_options(self) -> None:
+    def test_copy_default_options(self, async_client: AsyncTerminal) -> None:
         # options that have a default are overridden correctly
-        copied = self.client.copy(max_retries=7)
+        copied = async_client.copy(max_retries=7)
         assert copied.max_retries == 7
-        assert self.client.max_retries == 2
+        assert async_client.max_retries == 2
 
         copied2 = copied.copy(max_retries=6)
         assert copied2.max_retries == 6
         assert copied.max_retries == 7
 
         # timeout
-        assert isinstance(self.client.timeout, httpx.Timeout)
-        copied = self.client.copy(timeout=None)
+        assert isinstance(async_client.timeout, httpx.Timeout)
+        copied = async_client.copy(timeout=None)
         assert copied.timeout is None
-        assert isinstance(self.client.timeout, httpx.Timeout)
+        assert isinstance(async_client.timeout, httpx.Timeout)
 
-    def test_copy_default_headers(self) -> None:
+    async def test_copy_default_headers(self) -> None:
         client = AsyncTerminal(
             base_url=base_url,
             bearer_token=bearer_token,
@@ -980,8 +996,9 @@ class TestAsyncTerminal:
             match="`default_headers` and `set_default_headers` arguments are mutually exclusive",
         ):
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
+        await client.close()
 
-    def test_copy_default_query(self) -> None:
+    async def test_copy_default_query(self) -> None:
         client = AsyncTerminal(
             base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True, default_query={"foo": "bar"}
         )
@@ -1017,13 +1034,15 @@ class TestAsyncTerminal:
         ):
             client.copy(set_default_query={}, default_query={"foo": "Bar"})
 
-    def test_copy_signature(self) -> None:
+        await client.close()
+
+    def test_copy_signature(self, async_client: AsyncTerminal) -> None:
         # ensure the same parameters that can be passed to the client are defined in the `.copy()` method
         init_signature = inspect.signature(
             # mypy doesn't like that we access the `__init__` property.
-            self.client.__init__,  # type: ignore[misc]
+            async_client.__init__,  # type: ignore[misc]
         )
-        copy_signature = inspect.signature(self.client.copy)
+        copy_signature = inspect.signature(async_client.copy)
         exclude_params = {"transport", "proxies", "_strict_response_validation"}
 
         for name in init_signature.parameters.keys():
@@ -1034,12 +1053,12 @@ class TestAsyncTerminal:
             assert copy_param is not None, f"copy() signature is missing the {name} param"
 
     @pytest.mark.skipif(sys.version_info >= (3, 10), reason="fails because of a memory leak that started from 3.12")
-    def test_copy_build_request(self) -> None:
+    def test_copy_build_request(self, async_client: AsyncTerminal) -> None:
         options = FinalRequestOptions(method="get", url="/foo")
 
         def build_request(options: FinalRequestOptions) -> None:
-            client = self.client.copy()
-            client._build_request(options)
+            client_copy = async_client.copy()
+            client_copy._build_request(options)
 
         # ensure that the machinery is warmed up before tracing starts.
         build_request(options)
@@ -1096,12 +1115,12 @@ class TestAsyncTerminal:
                     print(frame)
             raise AssertionError()
 
-    async def test_request_timeout(self) -> None:
-        request = self.client._build_request(FinalRequestOptions(method="get", url="/foo"))
+    async def test_request_timeout(self, async_client: AsyncTerminal) -> None:
+        request = async_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == DEFAULT_TIMEOUT
 
-        request = self.client._build_request(
+        request = async_client._build_request(
             FinalRequestOptions(method="get", url="/foo", timeout=httpx.Timeout(100.0))
         )
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
@@ -1116,6 +1135,8 @@ class TestAsyncTerminal:
         timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
         assert timeout == httpx.Timeout(0)
 
+        await client.close()
+
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
@@ -1127,6 +1148,8 @@ class TestAsyncTerminal:
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == httpx.Timeout(None)
 
+            await client.close()
+
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
             client = AsyncTerminal(
@@ -1136,6 +1159,8 @@ class TestAsyncTerminal:
             request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT
+
+            await client.close()
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
@@ -1147,6 +1172,8 @@ class TestAsyncTerminal:
             timeout = httpx.Timeout(**request.extensions["timeout"])  # type: ignore
             assert timeout == DEFAULT_TIMEOUT  # our default
 
+            await client.close()
+
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
@@ -1157,18 +1184,18 @@ class TestAsyncTerminal:
                     http_client=cast(Any, http_client),
                 )
 
-    def test_default_headers_option(self) -> None:
-        client = AsyncTerminal(
+    async def test_default_headers_option(self) -> None:
+        test_client = AsyncTerminal(
             base_url=base_url,
             bearer_token=bearer_token,
             _strict_response_validation=True,
             default_headers={"X-Foo": "bar"},
         )
-        request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
+        request = test_client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncTerminal(
+        test_client2 = AsyncTerminal(
             base_url=base_url,
             bearer_token=bearer_token,
             _strict_response_validation=True,
@@ -1177,9 +1204,12 @@ class TestAsyncTerminal:
                 "X-Stainless-Lang": "my-overriding-header",
             },
         )
-        request = client2._build_request(FinalRequestOptions(method="get", url="/foo"))
+        request = test_client2._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "stainless"
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
+
+        await test_client.close()
+        await test_client2.close()
 
     def test_validate_headers(self) -> None:
         client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
@@ -1191,7 +1221,7 @@ class TestAsyncTerminal:
                 client2 = AsyncTerminal(base_url=base_url, bearer_token=None, _strict_response_validation=True)
             _ = client2
 
-    def test_default_query_option(self) -> None:
+    async def test_default_query_option(self) -> None:
         client = AsyncTerminal(
             base_url=base_url,
             bearer_token=bearer_token,
@@ -1212,8 +1242,10 @@ class TestAsyncTerminal:
         url = httpx.URL(request.url)
         assert dict(url.params) == {"foo": "baz", "query_param": "overridden"}
 
-    def test_request_extra_json(self) -> None:
-        request = self.client._build_request(
+        await client.close()
+
+    def test_request_extra_json(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1224,7 +1256,7 @@ class TestAsyncTerminal:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": False}
 
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1235,7 +1267,7 @@ class TestAsyncTerminal:
         assert data == {"baz": False}
 
         # `extra_json` takes priority over `json_data` when keys clash
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1246,8 +1278,8 @@ class TestAsyncTerminal:
         data = json.loads(request.content.decode("utf-8"))
         assert data == {"foo": "bar", "baz": None}
 
-    def test_request_extra_headers(self) -> None:
-        request = self.client._build_request(
+    def test_request_extra_headers(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1257,7 +1289,7 @@ class TestAsyncTerminal:
         assert request.headers.get("X-Foo") == "Foo"
 
         # `extra_headers` takes priority over `default_headers` when keys clash
-        request = self.client.with_options(default_headers={"X-Bar": "true"})._build_request(
+        request = client.with_options(default_headers={"X-Bar": "true"})._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1268,8 +1300,8 @@ class TestAsyncTerminal:
         )
         assert request.headers.get("X-Bar") == "false"
 
-    def test_request_extra_query(self) -> None:
-        request = self.client._build_request(
+    def test_request_extra_query(self, client: Terminal) -> None:
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1282,7 +1314,7 @@ class TestAsyncTerminal:
         assert params == {"my_query_param": "Foo"}
 
         # if both `query` and `extra_query` are given, they are merged
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1296,7 +1328,7 @@ class TestAsyncTerminal:
         assert params == {"bar": "1", "foo": "2"}
 
         # `extra_query` takes priority over `query` when keys clash
-        request = self.client._build_request(
+        request = client._build_request(
             FinalRequestOptions(
                 method="post",
                 url="/foo",
@@ -1339,7 +1371,7 @@ class TestAsyncTerminal:
         ]
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_basic_union_response(self, respx_mock: MockRouter) -> None:
+    async def test_basic_union_response(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         class Model1(BaseModel):
             name: str
 
@@ -1348,12 +1380,12 @@ class TestAsyncTerminal:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = await self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_union_response_different_types(self, respx_mock: MockRouter) -> None:
+    async def test_union_response_different_types(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         """Union of objects with the same field name using a different type"""
 
         class Model1(BaseModel):
@@ -1364,18 +1396,20 @@ class TestAsyncTerminal:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": "bar"}))
 
-        response = await self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model2)
         assert response.foo == "bar"
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": 1}))
 
-        response = await self.client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
+        response = await async_client.get("/foo", cast_to=cast(Any, Union[Model1, Model2]))
         assert isinstance(response, Model1)
         assert response.foo == 1
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_non_application_json_content_type_for_json_data(self, respx_mock: MockRouter) -> None:
+    async def test_non_application_json_content_type_for_json_data(
+        self, respx_mock: MockRouter, async_client: AsyncTerminal
+    ) -> None:
         """
         Response that sets Content-Type to something other than application/json but returns json data
         """
@@ -1391,11 +1425,11 @@ class TestAsyncTerminal:
             )
         )
 
-        response = await self.client.get("/foo", cast_to=Model)
+        response = await async_client.get("/foo", cast_to=Model)
         assert isinstance(response, Model)
         assert response.foo == 2
 
-    def test_base_url_setter(self) -> None:
+    async def test_base_url_setter(self) -> None:
         client = AsyncTerminal(
             base_url="https://example.com/from_init", bearer_token=bearer_token, _strict_response_validation=True
         )
@@ -1405,7 +1439,9 @@ class TestAsyncTerminal:
 
         assert client.base_url == "https://example.com/from_setter/"
 
-    def test_base_url_env(self) -> None:
+        await client.close()
+
+    async def test_base_url_env(self) -> None:
         with update_env(TERMINAL_BASE_URL="http://localhost:5000/from/env"):
             client = AsyncTerminal(bearer_token=bearer_token, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
@@ -1420,32 +1456,7 @@ class TestAsyncTerminal:
             )
             assert str(client.base_url).startswith("https://api.terminal.shop")
 
-    @pytest.mark.parametrize(
-        "client",
-        [
-            AsyncTerminal(
-                base_url="http://localhost:5000/custom/path/",
-                bearer_token=bearer_token,
-                _strict_response_validation=True,
-            ),
-            AsyncTerminal(
-                base_url="http://localhost:5000/custom/path/",
-                bearer_token=bearer_token,
-                _strict_response_validation=True,
-                http_client=httpx.AsyncClient(),
-            ),
-        ],
-        ids=["standard", "custom http client"],
-    )
-    def test_base_url_trailing_slash(self, client: AsyncTerminal) -> None:
-        request = client._build_request(
-            FinalRequestOptions(
-                method="post",
-                url="/foo",
-                json_data={"foo": "bar"},
-            ),
-        )
-        assert request.url == "http://localhost:5000/custom/path/foo"
+            await client.close()
 
     @pytest.mark.parametrize(
         "client",
@@ -1464,7 +1475,7 @@ class TestAsyncTerminal:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncTerminal) -> None:
+    async def test_base_url_trailing_slash(self, client: AsyncTerminal) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1473,6 +1484,7 @@ class TestAsyncTerminal:
             ),
         )
         assert request.url == "http://localhost:5000/custom/path/foo"
+        await client.close()
 
     @pytest.mark.parametrize(
         "client",
@@ -1491,7 +1503,35 @@ class TestAsyncTerminal:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncTerminal) -> None:
+    async def test_base_url_no_trailing_slash(self, client: AsyncTerminal) -> None:
+        request = client._build_request(
+            FinalRequestOptions(
+                method="post",
+                url="/foo",
+                json_data={"foo": "bar"},
+            ),
+        )
+        assert request.url == "http://localhost:5000/custom/path/foo"
+        await client.close()
+
+    @pytest.mark.parametrize(
+        "client",
+        [
+            AsyncTerminal(
+                base_url="http://localhost:5000/custom/path/",
+                bearer_token=bearer_token,
+                _strict_response_validation=True,
+            ),
+            AsyncTerminal(
+                base_url="http://localhost:5000/custom/path/",
+                bearer_token=bearer_token,
+                _strict_response_validation=True,
+                http_client=httpx.AsyncClient(),
+            ),
+        ],
+        ids=["standard", "custom http client"],
+    )
+    async def test_absolute_request_url(self, client: AsyncTerminal) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1500,37 +1540,37 @@ class TestAsyncTerminal:
             ),
         )
         assert request.url == "https://myapi.com/foo"
+        await client.close()
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-        assert not client.is_closed()
+        test_client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        assert not test_client.is_closed()
 
-        copied = client.copy()
-        assert copied is not client
+        copied = test_client.copy()
+        assert copied is not test_client
 
         del copied
 
         await asyncio.sleep(0.2)
-        assert not client.is_closed()
+        assert not test_client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-        async with client as c2:
-            assert c2 is client
+        test_client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
+        async with test_client as c2:
+            assert c2 is test_client
             assert not c2.is_closed()
-            assert not client.is_closed()
-        assert client.is_closed()
+            assert not test_client.is_closed()
+        assert test_client.is_closed()
 
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
-    async def test_client_response_validation_error(self, respx_mock: MockRouter) -> None:
+    async def test_client_response_validation_error(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         class Model(BaseModel):
             foo: str
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, json={"foo": {"invalid": True}}))
 
         with pytest.raises(APIResponseValidationError) as exc:
-            await self.client.get("/foo", cast_to=Model)
+            await async_client.get("/foo", cast_to=Model)
 
         assert isinstance(exc.value.__cause__, ValidationError)
 
@@ -1544,7 +1584,6 @@ class TestAsyncTerminal:
             )
 
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
     async def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
         class Model(BaseModel):
             name: str
@@ -1556,10 +1595,15 @@ class TestAsyncTerminal:
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=False)
+        non_strict_client = AsyncTerminal(
+            base_url=base_url, bearer_token=bearer_token, _strict_response_validation=False
+        )
 
-        response = await client.get("/foo", cast_to=Model)
+        response = await non_strict_client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
+
+        await strict_client.close()
+        await non_strict_client.close()
 
     @pytest.mark.parametrize(
         "remaining_retries,retry_after,timeout",
@@ -1583,13 +1627,12 @@ class TestAsyncTerminal:
         ],
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
-    @pytest.mark.asyncio
-    async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncTerminal(base_url=base_url, bearer_token=bearer_token, _strict_response_validation=True)
-
+    async def test_parse_retry_after_header(
+        self, remaining_retries: int, retry_after: str, timeout: float, async_client: AsyncTerminal
+    ) -> None:
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
-        calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
+        calculated = async_client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
@@ -1602,7 +1645,7 @@ class TestAsyncTerminal:
         with pytest.raises(APITimeoutError):
             await async_client.product.with_streaming_response.list().__aenter__()
 
-        assert _get_open_connections(self.client) == 0
+        assert _get_open_connections(async_client) == 0
 
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
@@ -1613,12 +1656,11 @@ class TestAsyncTerminal:
 
         with pytest.raises(APIStatusError):
             await async_client.product.with_streaming_response.list().__aenter__()
-        assert _get_open_connections(self.client) == 0
+        assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
@@ -1650,7 +1692,6 @@ class TestAsyncTerminal:
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
     async def test_omit_retry_count_header(
         self, async_client: AsyncTerminal, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
@@ -1674,7 +1715,6 @@ class TestAsyncTerminal:
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("terminal_shop._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
         self, async_client: AsyncTerminal, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
@@ -1722,26 +1762,26 @@ class TestAsyncTerminal:
         )
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects(self, respx_mock: MockRouter) -> None:
+    async def test_follow_redirects(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         # Test that the default follow_redirects=True allows following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
         respx_mock.get("/redirected").mock(return_value=httpx.Response(200, json={"status": "ok"}))
 
-        response = await self.client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
+        response = await async_client.post("/redirect", body={"key": "value"}, cast_to=httpx.Response)
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
     @pytest.mark.respx(base_url=base_url)
-    async def test_follow_redirects_disabled(self, respx_mock: MockRouter) -> None:
+    async def test_follow_redirects_disabled(self, respx_mock: MockRouter, async_client: AsyncTerminal) -> None:
         # Test that follow_redirects=False prevents following redirects
         respx_mock.post("/redirect").mock(
             return_value=httpx.Response(302, headers={"Location": f"{base_url}/redirected"})
         )
 
         with pytest.raises(APIStatusError) as exc_info:
-            await self.client.post(
+            await async_client.post(
                 "/redirect", body={"key": "value"}, options={"follow_redirects": False}, cast_to=httpx.Response
             )
 
