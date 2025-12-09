@@ -12,6 +12,8 @@ __all__ = ["Product", "Tags"]
 
 
 class Tags(BaseModel):
+    """Tags for the product."""
+
     app: Optional[str] = None
 
     color: Optional[str] = None
@@ -26,6 +28,8 @@ class Tags(BaseModel):
 
 
 class Product(BaseModel):
+    """Product sold in the Terminal shop."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 

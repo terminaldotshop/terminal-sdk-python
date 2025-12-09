@@ -18,6 +18,8 @@ __all__ = ["ViewInitResponse", "Data"]
 
 
 class Data(BaseModel):
+    """Initial app data."""
+
     addresses: List[Address]
 
     apps: List[App]
