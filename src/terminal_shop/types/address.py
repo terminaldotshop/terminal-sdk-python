@@ -8,6 +8,8 @@ __all__ = ["Address"]
 
 
 class Address(BaseModel):
+    """Physical address associated with a Terminal shop user."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 

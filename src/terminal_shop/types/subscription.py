@@ -24,6 +24,8 @@ Schedule: TypeAlias = Union[ScheduleFixed, ScheduleWeekly]
 
 
 class Subscription(BaseModel):
+    """Subscription to a Terminal shop product."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 

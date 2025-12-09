@@ -10,6 +10,8 @@ __all__ = ["Profile", "User"]
 
 
 class User(BaseModel):
+    """A Terminal shop user. (We have users, btw.)"""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 
@@ -27,5 +29,7 @@ class User(BaseModel):
 
 
 class Profile(BaseModel):
+    """A Terminal shop user's profile. (We have users, btw.)"""
+
     user: User
     """A Terminal shop user. (We have users, btw.)"""

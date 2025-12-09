@@ -8,6 +8,8 @@ __all__ = ["App"]
 
 
 class App(BaseModel):
+    """A Terminal App used for configuring an OAuth 2.0 client."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 
