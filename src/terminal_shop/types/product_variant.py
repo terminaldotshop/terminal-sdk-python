@@ -8,6 +8,8 @@ __all__ = ["ProductVariant", "Tags"]
 
 
 class Tags(BaseModel):
+    """Tags for the product variant."""
+
     app: Optional[str] = None
 
     market_eu: Optional[bool] = None
@@ -18,6 +20,8 @@ class Tags(BaseModel):
 
 
 class ProductVariant(BaseModel):
+    """Variant of a product in the Terminal shop."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 

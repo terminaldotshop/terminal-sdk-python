@@ -6,6 +6,8 @@ __all__ = ["Card", "Expiration"]
 
 
 class Expiration(BaseModel):
+    """Expiration of the card."""
+
     month: int
     """Expiration month of the card."""
 
@@ -14,6 +16,8 @@ class Expiration(BaseModel):
 
 
 class Card(BaseModel):
+    """Credit card used for payments in the Terminal shop."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 

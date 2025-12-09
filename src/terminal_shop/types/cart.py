@@ -10,6 +10,8 @@ __all__ = ["Cart", "Amount", "Item", "Shipping"]
 
 
 class Amount(BaseModel):
+    """The subtotal and shipping amounts for the current user's cart."""
+
     subtotal: int
     """Subtotal of the current user's cart, in cents (USD)."""
 
@@ -21,6 +23,8 @@ class Amount(BaseModel):
 
 
 class Item(BaseModel):
+    """An item in the current Terminal shop user's cart."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 
@@ -35,6 +39,8 @@ class Item(BaseModel):
 
 
 class Shipping(BaseModel):
+    """Shipping information for the current user's cart."""
+
     service: Optional[str] = None
     """Shipping service name."""
 
@@ -43,6 +49,8 @@ class Shipping(BaseModel):
 
 
 class Cart(BaseModel):
+    """The current Terminal shop user's cart."""
+
     amount: Amount
     """The subtotal and shipping amounts for the current user's cart."""
 

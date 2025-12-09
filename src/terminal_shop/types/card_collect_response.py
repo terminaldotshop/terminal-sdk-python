@@ -6,6 +6,8 @@ __all__ = ["CardCollectResponse", "Data"]
 
 
 class Data(BaseModel):
+    """URL for collecting card information."""
+
     url: str
     """
     Temporary URL that allows a user to enter credit card details over https at

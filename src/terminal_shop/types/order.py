@@ -11,6 +11,8 @@ __all__ = ["Order", "Amount", "Item", "Shipping", "Tracking"]
 
 
 class Amount(BaseModel):
+    """The subtotal and shipping amounts of the order."""
+
     shipping: int
     """Shipping amount of the order, in cents (USD)."""
 
@@ -36,6 +38,8 @@ class Item(BaseModel):
 
 
 class Shipping(BaseModel):
+    """Shipping address of the order."""
+
     city: str
     """City of the address."""
 
@@ -62,6 +66,8 @@ class Shipping(BaseModel):
 
 
 class Tracking(BaseModel):
+    """Tracking information of the order."""
+
     number: Optional[str] = None
     """Tracking number of the order."""
 
@@ -82,6 +88,8 @@ class Tracking(BaseModel):
 
 
 class Order(BaseModel):
+    """An order from the Terminal shop."""
+
     id: str
     """Unique object identifier. The format and length of IDs may change over time."""
 
