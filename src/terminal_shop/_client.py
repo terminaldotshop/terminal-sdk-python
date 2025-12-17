@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Dict, Mapping, cast
+from typing import TYPE_CHECKING, Any, Dict, Mapping, cast
 from typing_extensions import Self, Literal, override
 
 import httpx
@@ -20,8 +20,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import app, card, cart, view, email, order, token, address, product, profile, subscription
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import TerminalError, APIStatusError
 from ._base_client import (
@@ -29,6 +29,20 @@ from ._base_client import (
     SyncAPIClient,
     AsyncAPIClient,
 )
+
+if TYPE_CHECKING:
+    from .resources import app, card, cart, view, email, order, token, address, product, profile, subscription
+    from .resources.app import AppResource, AsyncAppResource
+    from .resources.card import CardResource, AsyncCardResource
+    from .resources.cart import CartResource, AsyncCartResource
+    from .resources.view import ViewResource, AsyncViewResource
+    from .resources.email import EmailResource, AsyncEmailResource
+    from .resources.order import OrderResource, AsyncOrderResource
+    from .resources.token import TokenResource, AsyncTokenResource
+    from .resources.address import AddressResource, AsyncAddressResource
+    from .resources.product import ProductResource, AsyncProductResource
+    from .resources.profile import ProfileResource, AsyncProfileResource
+    from .resources.subscription import SubscriptionResource, AsyncSubscriptionResource
 
 __all__ = [
     "ENVIRONMENTS",
@@ -49,20 +63,6 @@ ENVIRONMENTS: Dict[str, str] = {
 
 
 class Terminal(SyncAPIClient):
-    product: product.ProductResource
-    profile: profile.ProfileResource
-    address: address.AddressResource
-    card: card.CardResource
-    cart: cart.CartResource
-    order: order.OrderResource
-    subscription: subscription.SubscriptionResource
-    token: token.TokenResource
-    app: app.AppResource
-    email: email.EmailResource
-    view: view.ViewResource
-    with_raw_response: TerminalWithRawResponse
-    with_streaming_response: TerminalWithStreamedResponse
-
     # client options
     bearer_token: str
     app_id: str | None
@@ -145,19 +145,79 @@ class Terminal(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.product = product.ProductResource(self)
-        self.profile = profile.ProfileResource(self)
-        self.address = address.AddressResource(self)
-        self.card = card.CardResource(self)
-        self.cart = cart.CartResource(self)
-        self.order = order.OrderResource(self)
-        self.subscription = subscription.SubscriptionResource(self)
-        self.token = token.TokenResource(self)
-        self.app = app.AppResource(self)
-        self.email = email.EmailResource(self)
-        self.view = view.ViewResource(self)
-        self.with_raw_response = TerminalWithRawResponse(self)
-        self.with_streaming_response = TerminalWithStreamedResponse(self)
+    @cached_property
+    def product(self) -> ProductResource:
+        from .resources.product import ProductResource
+
+        return ProductResource(self)
+
+    @cached_property
+    def profile(self) -> ProfileResource:
+        from .resources.profile import ProfileResource
+
+        return ProfileResource(self)
+
+    @cached_property
+    def address(self) -> AddressResource:
+        from .resources.address import AddressResource
+
+        return AddressResource(self)
+
+    @cached_property
+    def card(self) -> CardResource:
+        from .resources.card import CardResource
+
+        return CardResource(self)
+
+    @cached_property
+    def cart(self) -> CartResource:
+        from .resources.cart import CartResource
+
+        return CartResource(self)
+
+    @cached_property
+    def order(self) -> OrderResource:
+        from .resources.order import OrderResource
+
+        return OrderResource(self)
+
+    @cached_property
+    def subscription(self) -> SubscriptionResource:
+        from .resources.subscription import SubscriptionResource
+
+        return SubscriptionResource(self)
+
+    @cached_property
+    def token(self) -> TokenResource:
+        from .resources.token import TokenResource
+
+        return TokenResource(self)
+
+    @cached_property
+    def app(self) -> AppResource:
+        from .resources.app import AppResource
+
+        return AppResource(self)
+
+    @cached_property
+    def email(self) -> EmailResource:
+        from .resources.email import EmailResource
+
+        return EmailResource(self)
+
+    @cached_property
+    def view(self) -> ViewResource:
+        from .resources.view import ViewResource
+
+        return ViewResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> TerminalWithRawResponse:
+        return TerminalWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> TerminalWithStreamedResponse:
+        return TerminalWithStreamedResponse(self)
 
     @property
     @override
@@ -270,20 +330,6 @@ class Terminal(SyncAPIClient):
 
 
 class AsyncTerminal(AsyncAPIClient):
-    product: product.AsyncProductResource
-    profile: profile.AsyncProfileResource
-    address: address.AsyncAddressResource
-    card: card.AsyncCardResource
-    cart: cart.AsyncCartResource
-    order: order.AsyncOrderResource
-    subscription: subscription.AsyncSubscriptionResource
-    token: token.AsyncTokenResource
-    app: app.AsyncAppResource
-    email: email.AsyncEmailResource
-    view: view.AsyncViewResource
-    with_raw_response: AsyncTerminalWithRawResponse
-    with_streaming_response: AsyncTerminalWithStreamedResponse
-
     # client options
     bearer_token: str
     app_id: str | None
@@ -366,19 +412,79 @@ class AsyncTerminal(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.product = product.AsyncProductResource(self)
-        self.profile = profile.AsyncProfileResource(self)
-        self.address = address.AsyncAddressResource(self)
-        self.card = card.AsyncCardResource(self)
-        self.cart = cart.AsyncCartResource(self)
-        self.order = order.AsyncOrderResource(self)
-        self.subscription = subscription.AsyncSubscriptionResource(self)
-        self.token = token.AsyncTokenResource(self)
-        self.app = app.AsyncAppResource(self)
-        self.email = email.AsyncEmailResource(self)
-        self.view = view.AsyncViewResource(self)
-        self.with_raw_response = AsyncTerminalWithRawResponse(self)
-        self.with_streaming_response = AsyncTerminalWithStreamedResponse(self)
+    @cached_property
+    def product(self) -> AsyncProductResource:
+        from .resources.product import AsyncProductResource
+
+        return AsyncProductResource(self)
+
+    @cached_property
+    def profile(self) -> AsyncProfileResource:
+        from .resources.profile import AsyncProfileResource
+
+        return AsyncProfileResource(self)
+
+    @cached_property
+    def address(self) -> AsyncAddressResource:
+        from .resources.address import AsyncAddressResource
+
+        return AsyncAddressResource(self)
+
+    @cached_property
+    def card(self) -> AsyncCardResource:
+        from .resources.card import AsyncCardResource
+
+        return AsyncCardResource(self)
+
+    @cached_property
+    def cart(self) -> AsyncCartResource:
+        from .resources.cart import AsyncCartResource
+
+        return AsyncCartResource(self)
+
+    @cached_property
+    def order(self) -> AsyncOrderResource:
+        from .resources.order import AsyncOrderResource
+
+        return AsyncOrderResource(self)
+
+    @cached_property
+    def subscription(self) -> AsyncSubscriptionResource:
+        from .resources.subscription import AsyncSubscriptionResource
+
+        return AsyncSubscriptionResource(self)
+
+    @cached_property
+    def token(self) -> AsyncTokenResource:
+        from .resources.token import AsyncTokenResource
+
+        return AsyncTokenResource(self)
+
+    @cached_property
+    def app(self) -> AsyncAppResource:
+        from .resources.app import AsyncAppResource
+
+        return AsyncAppResource(self)
+
+    @cached_property
+    def email(self) -> AsyncEmailResource:
+        from .resources.email import AsyncEmailResource
+
+        return AsyncEmailResource(self)
+
+    @cached_property
+    def view(self) -> AsyncViewResource:
+        from .resources.view import AsyncViewResource
+
+        return AsyncViewResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncTerminalWithRawResponse:
+        return AsyncTerminalWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncTerminalWithStreamedResponse:
+        return AsyncTerminalWithStreamedResponse(self)
 
     @property
     @override
@@ -491,63 +597,295 @@ class AsyncTerminal(AsyncAPIClient):
 
 
 class TerminalWithRawResponse:
+    _client: Terminal
+
     def __init__(self, client: Terminal) -> None:
-        self.product = product.ProductResourceWithRawResponse(client.product)
-        self.profile = profile.ProfileResourceWithRawResponse(client.profile)
-        self.address = address.AddressResourceWithRawResponse(client.address)
-        self.card = card.CardResourceWithRawResponse(client.card)
-        self.cart = cart.CartResourceWithRawResponse(client.cart)
-        self.order = order.OrderResourceWithRawResponse(client.order)
-        self.subscription = subscription.SubscriptionResourceWithRawResponse(client.subscription)
-        self.token = token.TokenResourceWithRawResponse(client.token)
-        self.app = app.AppResourceWithRawResponse(client.app)
-        self.email = email.EmailResourceWithRawResponse(client.email)
-        self.view = view.ViewResourceWithRawResponse(client.view)
+        self._client = client
+
+    @cached_property
+    def product(self) -> product.ProductResourceWithRawResponse:
+        from .resources.product import ProductResourceWithRawResponse
+
+        return ProductResourceWithRawResponse(self._client.product)
+
+    @cached_property
+    def profile(self) -> profile.ProfileResourceWithRawResponse:
+        from .resources.profile import ProfileResourceWithRawResponse
+
+        return ProfileResourceWithRawResponse(self._client.profile)
+
+    @cached_property
+    def address(self) -> address.AddressResourceWithRawResponse:
+        from .resources.address import AddressResourceWithRawResponse
+
+        return AddressResourceWithRawResponse(self._client.address)
+
+    @cached_property
+    def card(self) -> card.CardResourceWithRawResponse:
+        from .resources.card import CardResourceWithRawResponse
+
+        return CardResourceWithRawResponse(self._client.card)
+
+    @cached_property
+    def cart(self) -> cart.CartResourceWithRawResponse:
+        from .resources.cart import CartResourceWithRawResponse
+
+        return CartResourceWithRawResponse(self._client.cart)
+
+    @cached_property
+    def order(self) -> order.OrderResourceWithRawResponse:
+        from .resources.order import OrderResourceWithRawResponse
+
+        return OrderResourceWithRawResponse(self._client.order)
+
+    @cached_property
+    def subscription(self) -> subscription.SubscriptionResourceWithRawResponse:
+        from .resources.subscription import SubscriptionResourceWithRawResponse
+
+        return SubscriptionResourceWithRawResponse(self._client.subscription)
+
+    @cached_property
+    def token(self) -> token.TokenResourceWithRawResponse:
+        from .resources.token import TokenResourceWithRawResponse
+
+        return TokenResourceWithRawResponse(self._client.token)
+
+    @cached_property
+    def app(self) -> app.AppResourceWithRawResponse:
+        from .resources.app import AppResourceWithRawResponse
+
+        return AppResourceWithRawResponse(self._client.app)
+
+    @cached_property
+    def email(self) -> email.EmailResourceWithRawResponse:
+        from .resources.email import EmailResourceWithRawResponse
+
+        return EmailResourceWithRawResponse(self._client.email)
+
+    @cached_property
+    def view(self) -> view.ViewResourceWithRawResponse:
+        from .resources.view import ViewResourceWithRawResponse
+
+        return ViewResourceWithRawResponse(self._client.view)
 
 
 class AsyncTerminalWithRawResponse:
+    _client: AsyncTerminal
+
     def __init__(self, client: AsyncTerminal) -> None:
-        self.product = product.AsyncProductResourceWithRawResponse(client.product)
-        self.profile = profile.AsyncProfileResourceWithRawResponse(client.profile)
-        self.address = address.AsyncAddressResourceWithRawResponse(client.address)
-        self.card = card.AsyncCardResourceWithRawResponse(client.card)
-        self.cart = cart.AsyncCartResourceWithRawResponse(client.cart)
-        self.order = order.AsyncOrderResourceWithRawResponse(client.order)
-        self.subscription = subscription.AsyncSubscriptionResourceWithRawResponse(client.subscription)
-        self.token = token.AsyncTokenResourceWithRawResponse(client.token)
-        self.app = app.AsyncAppResourceWithRawResponse(client.app)
-        self.email = email.AsyncEmailResourceWithRawResponse(client.email)
-        self.view = view.AsyncViewResourceWithRawResponse(client.view)
+        self._client = client
+
+    @cached_property
+    def product(self) -> product.AsyncProductResourceWithRawResponse:
+        from .resources.product import AsyncProductResourceWithRawResponse
+
+        return AsyncProductResourceWithRawResponse(self._client.product)
+
+    @cached_property
+    def profile(self) -> profile.AsyncProfileResourceWithRawResponse:
+        from .resources.profile import AsyncProfileResourceWithRawResponse
+
+        return AsyncProfileResourceWithRawResponse(self._client.profile)
+
+    @cached_property
+    def address(self) -> address.AsyncAddressResourceWithRawResponse:
+        from .resources.address import AsyncAddressResourceWithRawResponse
+
+        return AsyncAddressResourceWithRawResponse(self._client.address)
+
+    @cached_property
+    def card(self) -> card.AsyncCardResourceWithRawResponse:
+        from .resources.card import AsyncCardResourceWithRawResponse
+
+        return AsyncCardResourceWithRawResponse(self._client.card)
+
+    @cached_property
+    def cart(self) -> cart.AsyncCartResourceWithRawResponse:
+        from .resources.cart import AsyncCartResourceWithRawResponse
+
+        return AsyncCartResourceWithRawResponse(self._client.cart)
+
+    @cached_property
+    def order(self) -> order.AsyncOrderResourceWithRawResponse:
+        from .resources.order import AsyncOrderResourceWithRawResponse
+
+        return AsyncOrderResourceWithRawResponse(self._client.order)
+
+    @cached_property
+    def subscription(self) -> subscription.AsyncSubscriptionResourceWithRawResponse:
+        from .resources.subscription import AsyncSubscriptionResourceWithRawResponse
+
+        return AsyncSubscriptionResourceWithRawResponse(self._client.subscription)
+
+    @cached_property
+    def token(self) -> token.AsyncTokenResourceWithRawResponse:
+        from .resources.token import AsyncTokenResourceWithRawResponse
+
+        return AsyncTokenResourceWithRawResponse(self._client.token)
+
+    @cached_property
+    def app(self) -> app.AsyncAppResourceWithRawResponse:
+        from .resources.app import AsyncAppResourceWithRawResponse
+
+        return AsyncAppResourceWithRawResponse(self._client.app)
+
+    @cached_property
+    def email(self) -> email.AsyncEmailResourceWithRawResponse:
+        from .resources.email import AsyncEmailResourceWithRawResponse
+
+        return AsyncEmailResourceWithRawResponse(self._client.email)
+
+    @cached_property
+    def view(self) -> view.AsyncViewResourceWithRawResponse:
+        from .resources.view import AsyncViewResourceWithRawResponse
+
+        return AsyncViewResourceWithRawResponse(self._client.view)
 
 
 class TerminalWithStreamedResponse:
+    _client: Terminal
+
     def __init__(self, client: Terminal) -> None:
-        self.product = product.ProductResourceWithStreamingResponse(client.product)
-        self.profile = profile.ProfileResourceWithStreamingResponse(client.profile)
-        self.address = address.AddressResourceWithStreamingResponse(client.address)
-        self.card = card.CardResourceWithStreamingResponse(client.card)
-        self.cart = cart.CartResourceWithStreamingResponse(client.cart)
-        self.order = order.OrderResourceWithStreamingResponse(client.order)
-        self.subscription = subscription.SubscriptionResourceWithStreamingResponse(client.subscription)
-        self.token = token.TokenResourceWithStreamingResponse(client.token)
-        self.app = app.AppResourceWithStreamingResponse(client.app)
-        self.email = email.EmailResourceWithStreamingResponse(client.email)
-        self.view = view.ViewResourceWithStreamingResponse(client.view)
+        self._client = client
+
+    @cached_property
+    def product(self) -> product.ProductResourceWithStreamingResponse:
+        from .resources.product import ProductResourceWithStreamingResponse
+
+        return ProductResourceWithStreamingResponse(self._client.product)
+
+    @cached_property
+    def profile(self) -> profile.ProfileResourceWithStreamingResponse:
+        from .resources.profile import ProfileResourceWithStreamingResponse
+
+        return ProfileResourceWithStreamingResponse(self._client.profile)
+
+    @cached_property
+    def address(self) -> address.AddressResourceWithStreamingResponse:
+        from .resources.address import AddressResourceWithStreamingResponse
+
+        return AddressResourceWithStreamingResponse(self._client.address)
+
+    @cached_property
+    def card(self) -> card.CardResourceWithStreamingResponse:
+        from .resources.card import CardResourceWithStreamingResponse
+
+        return CardResourceWithStreamingResponse(self._client.card)
+
+    @cached_property
+    def cart(self) -> cart.CartResourceWithStreamingResponse:
+        from .resources.cart import CartResourceWithStreamingResponse
+
+        return CartResourceWithStreamingResponse(self._client.cart)
+
+    @cached_property
+    def order(self) -> order.OrderResourceWithStreamingResponse:
+        from .resources.order import OrderResourceWithStreamingResponse
+
+        return OrderResourceWithStreamingResponse(self._client.order)
+
+    @cached_property
+    def subscription(self) -> subscription.SubscriptionResourceWithStreamingResponse:
+        from .resources.subscription import SubscriptionResourceWithStreamingResponse
+
+        return SubscriptionResourceWithStreamingResponse(self._client.subscription)
+
+    @cached_property
+    def token(self) -> token.TokenResourceWithStreamingResponse:
+        from .resources.token import TokenResourceWithStreamingResponse
+
+        return TokenResourceWithStreamingResponse(self._client.token)
+
+    @cached_property
+    def app(self) -> app.AppResourceWithStreamingResponse:
+        from .resources.app import AppResourceWithStreamingResponse
+
+        return AppResourceWithStreamingResponse(self._client.app)
+
+    @cached_property
+    def email(self) -> email.EmailResourceWithStreamingResponse:
+        from .resources.email import EmailResourceWithStreamingResponse
+
+        return EmailResourceWithStreamingResponse(self._client.email)
+
+    @cached_property
+    def view(self) -> view.ViewResourceWithStreamingResponse:
+        from .resources.view import ViewResourceWithStreamingResponse
+
+        return ViewResourceWithStreamingResponse(self._client.view)
 
 
 class AsyncTerminalWithStreamedResponse:
+    _client: AsyncTerminal
+
     def __init__(self, client: AsyncTerminal) -> None:
-        self.product = product.AsyncProductResourceWithStreamingResponse(client.product)
-        self.profile = profile.AsyncProfileResourceWithStreamingResponse(client.profile)
-        self.address = address.AsyncAddressResourceWithStreamingResponse(client.address)
-        self.card = card.AsyncCardResourceWithStreamingResponse(client.card)
-        self.cart = cart.AsyncCartResourceWithStreamingResponse(client.cart)
-        self.order = order.AsyncOrderResourceWithStreamingResponse(client.order)
-        self.subscription = subscription.AsyncSubscriptionResourceWithStreamingResponse(client.subscription)
-        self.token = token.AsyncTokenResourceWithStreamingResponse(client.token)
-        self.app = app.AsyncAppResourceWithStreamingResponse(client.app)
-        self.email = email.AsyncEmailResourceWithStreamingResponse(client.email)
-        self.view = view.AsyncViewResourceWithStreamingResponse(client.view)
+        self._client = client
+
+    @cached_property
+    def product(self) -> product.AsyncProductResourceWithStreamingResponse:
+        from .resources.product import AsyncProductResourceWithStreamingResponse
+
+        return AsyncProductResourceWithStreamingResponse(self._client.product)
+
+    @cached_property
+    def profile(self) -> profile.AsyncProfileResourceWithStreamingResponse:
+        from .resources.profile import AsyncProfileResourceWithStreamingResponse
+
+        return AsyncProfileResourceWithStreamingResponse(self._client.profile)
+
+    @cached_property
+    def address(self) -> address.AsyncAddressResourceWithStreamingResponse:
+        from .resources.address import AsyncAddressResourceWithStreamingResponse
+
+        return AsyncAddressResourceWithStreamingResponse(self._client.address)
+
+    @cached_property
+    def card(self) -> card.AsyncCardResourceWithStreamingResponse:
+        from .resources.card import AsyncCardResourceWithStreamingResponse
+
+        return AsyncCardResourceWithStreamingResponse(self._client.card)
+
+    @cached_property
+    def cart(self) -> cart.AsyncCartResourceWithStreamingResponse:
+        from .resources.cart import AsyncCartResourceWithStreamingResponse
+
+        return AsyncCartResourceWithStreamingResponse(self._client.cart)
+
+    @cached_property
+    def order(self) -> order.AsyncOrderResourceWithStreamingResponse:
+        from .resources.order import AsyncOrderResourceWithStreamingResponse
+
+        return AsyncOrderResourceWithStreamingResponse(self._client.order)
+
+    @cached_property
+    def subscription(self) -> subscription.AsyncSubscriptionResourceWithStreamingResponse:
+        from .resources.subscription import AsyncSubscriptionResourceWithStreamingResponse
+
+        return AsyncSubscriptionResourceWithStreamingResponse(self._client.subscription)
+
+    @cached_property
+    def token(self) -> token.AsyncTokenResourceWithStreamingResponse:
+        from .resources.token import AsyncTokenResourceWithStreamingResponse
+
+        return AsyncTokenResourceWithStreamingResponse(self._client.token)
+
+    @cached_property
+    def app(self) -> app.AsyncAppResourceWithStreamingResponse:
+        from .resources.app import AsyncAppResourceWithStreamingResponse
+
+        return AsyncAppResourceWithStreamingResponse(self._client.app)
+
+    @cached_property
+    def email(self) -> email.AsyncEmailResourceWithStreamingResponse:
+        from .resources.email import AsyncEmailResourceWithStreamingResponse
+
+        return AsyncEmailResourceWithStreamingResponse(self._client.email)
+
+    @cached_property
+    def view(self) -> view.AsyncViewResourceWithStreamingResponse:
+        from .resources.view import AsyncViewResourceWithStreamingResponse
+
+        return AsyncViewResourceWithStreamingResponse(self._client.view)
 
 
 Client = Terminal
