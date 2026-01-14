@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.14.0 (2026-01-14)
+
+Full Changelog: [v1.13.1...v1.14.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.13.1...v1.14.0)
+
+### Features
+
+* improve future compat with pydantic v3 ([63d19b0](https://github.com/terminaldotshop/terminal-sdk-python/commit/63d19b06c105ddb3a17a8aa08fbda4a0645955e0))
+* **types:** replace List[str] with SequenceNotStr in params ([a354500](https://github.com/terminaldotshop/terminal-sdk-python/commit/a354500a7a6cf8e8a8914c7b47687e63972dbfbc))
+
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([24d6dde](https://github.com/terminaldotshop/terminal-sdk-python/commit/24d6dde6708b7a01546d171190355bacfeb0b672))
+* do not install brew dependencies in ./scripts/bootstrap by default ([1403648](https://github.com/terminaldotshop/terminal-sdk-python/commit/1403648110b842629ecf441339f6ab206eb25fa7))
+* **internal:** add Sequence related utils ([8f36faa](https://github.com/terminaldotshop/terminal-sdk-python/commit/8f36faa2b33ea4b1cfcc2e83821fa75e7fbb6169))
+* **internal:** codegen related update ([493eddb](https://github.com/terminaldotshop/terminal-sdk-python/commit/493eddb354221e7af78d0701750c91d7f2c13608))
+* **internal:** codegen related update ([f3737e6](https://github.com/terminaldotshop/terminal-sdk-python/commit/f3737e6733c46864a49e3271f958408e53df0078))
+* **internal:** codegen related update ([aaa2535](https://github.com/terminaldotshop/terminal-sdk-python/commit/aaa2535cb7a6fd7a16cc6814f007bfede4470d05))
+* **internal:** codegen related update ([b28d6a6](https://github.com/terminaldotshop/terminal-sdk-python/commit/b28d6a6da6fc0452204d5f0b0c54c3bc2856ee4c))
+* **internal:** codegen related update ([fa5d111](https://github.com/terminaldotshop/terminal-sdk-python/commit/fa5d111aa208b49f08d6727c16d8c314e76c8d01))
+* **internal:** codegen related update ([6502473](https://github.com/terminaldotshop/terminal-sdk-python/commit/650247319720820f6998d59c3d5476529109ee59))
+* **internal:** codegen related update ([e4dfcf7](https://github.com/terminaldotshop/terminal-sdk-python/commit/e4dfcf7caf88dc5530d69f5035ac5001dfbd5c39))
+* **internal:** codegen related update ([c847f66](https://github.com/terminaldotshop/terminal-sdk-python/commit/c847f66ab4d187900231b129ed53a905af08749a))
+* **internal:** codegen related update ([7bcccf1](https://github.com/terminaldotshop/terminal-sdk-python/commit/7bcccf1420cfaa0f996a0bfa92373eb83ab2c843))
+* **internal:** codegen related update ([17d9243](https://github.com/terminaldotshop/terminal-sdk-python/commit/17d924303f5a3f04de3c34016ecc24a788fe6ccc))
+* **internal:** codegen related update ([e581dfc](https://github.com/terminaldotshop/terminal-sdk-python/commit/e581dfc7edf618ff67c930bb3e7329045144581a))
+* **internal:** codegen related update ([015a17d](https://github.com/terminaldotshop/terminal-sdk-python/commit/015a17dc64cb6958864723028866c924a134df46))
+* **internal:** codegen related update ([d12e8d3](https://github.com/terminaldotshop/terminal-sdk-python/commit/d12e8d3b45f54cf8df64e2906394f2a5e842659f))
+* **internal:** codegen related update ([e0e8e07](https://github.com/terminaldotshop/terminal-sdk-python/commit/e0e8e072e53a07795c337474610ca00dce6bd4ca))
+* **internal:** codegen related update ([e7734e5](https://github.com/terminaldotshop/terminal-sdk-python/commit/e7734e5c397b18cb8e09643a811792dbc4128924))
+* **internal:** codegen related update ([13d3a16](https://github.com/terminaldotshop/terminal-sdk-python/commit/13d3a16fb48d8066e8b84b156e5af793124cc656))
+* **internal:** detect missing future annotations with ruff ([3b0d45f](https://github.com/terminaldotshop/terminal-sdk-python/commit/3b0d45ff072667150e1108471005c2489f3591c3))
+* **internal:** move mypy configurations to `pyproject.toml` file ([96e108e](https://github.com/terminaldotshop/terminal-sdk-python/commit/96e108ebd15ff9ff54b382fb95f7d19ff15d5928))
+* **internal:** update pydantic dependency ([5d990a4](https://github.com/terminaldotshop/terminal-sdk-python/commit/5d990a4c4a0ad83f55f849e404f2c2571c248be2))
+* **internal:** update pyright exclude list ([4deb5e4](https://github.com/terminaldotshop/terminal-sdk-python/commit/4deb5e48baf743d12388ec17799685975b648edb))
+* **tests:** simplify `get_platform` test ([3500c6e](https://github.com/terminaldotshop/terminal-sdk-python/commit/3500c6e3c3e705d4677a22f0062e044e97f2c22d))
+* **types:** change optional parameter type from NotGiven to Omit ([a55994a](https://github.com/terminaldotshop/terminal-sdk-python/commit/a55994aaf64f96476394fe61c884ab0b1b293607))
+
 ## 1.13.1 (2025-08-27)
 
 Full Changelog: [v1.13.0...v1.13.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.13.0...v1.13.1)
