@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.14.1 (2026-01-29)
+
+Full Changelog: [v1.14.0...v1.14.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.14.0...v1.14.1)
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([fa3d9e2](https://github.com/terminaldotshop/terminal-sdk-python/commit/fa3d9e2e396fd12b23d3566ab7a541adc50c2413))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([4b99b69](https://github.com/terminaldotshop/terminal-sdk-python/commit/4b99b6938a7cfa4115ed3cc88da7a2a3bd34479b))
+* **internal:** update `actions/checkout` version ([7e83e70](https://github.com/terminaldotshop/terminal-sdk-python/commit/7e83e70d1c567c27eb163e9503b82dd10c64cf3f))
+
 ## 1.14.0 (2026-01-14)
 
 Full Changelog: [v1.13.1...v1.14.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.13.1...v1.14.0)
