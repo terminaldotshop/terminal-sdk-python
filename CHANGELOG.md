@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.15.0 (2026-01-30)
+
+Full Changelog: [v1.14.1...v1.15.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.14.1...v1.15.0)
+
+### Features
+
+* **client:** add custom JSON encoder for extended type support ([653847b](https://github.com/terminaldotshop/terminal-sdk-python/commit/653847bdb3cf6b4c9a9c1b7e899cf20500c24049))
+
 ## 1.14.1 (2026-01-29)
 
 Full Changelog: [v1.14.0...v1.14.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.14.0...v1.14.1)
