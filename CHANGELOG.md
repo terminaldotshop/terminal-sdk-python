@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.15.1 (2026-03-17)
+
+Full Changelog: [v1.15.0...v1.15.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.0...v1.15.1)
+
+### Bug Fixes
+
+* **deps:** bump minimum typing-extensions version ([46fe600](https://github.com/terminaldotshop/terminal-sdk-python/commit/46fe600e101059eb4a9624fb8c8389e68e12cd25))
+* **pydantic:** do not pass `by_alias` unless set ([ffa8fe8](https://github.com/terminaldotshop/terminal-sdk-python/commit/ffa8fe82573a67ef14c4be71ed93ae16eee54131))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([d2edced](https://github.com/terminaldotshop/terminal-sdk-python/commit/d2edceda22738b0cc93175d4c3613b4609f81415))
+* format all `api.md` files ([c02ea64](https://github.com/terminaldotshop/terminal-sdk-python/commit/c02ea64f5d4e96e6a9b3c5c9703094438daecb08))
+* **internal:** add request options to SSE classes ([44bd7aa](https://github.com/terminaldotshop/terminal-sdk-python/commit/44bd7aa3e8ed8d5b0824ea11e94ef7df86ef032a))
+* **internal:** bump dependencies ([3482fbe](https://github.com/terminaldotshop/terminal-sdk-python/commit/3482fbe142cbd90e2fdd299d579517e70701185d))
+* **internal:** fix lint error on Python 3.14 ([e4d9ffd](https://github.com/terminaldotshop/terminal-sdk-python/commit/e4d9ffdff5994446c765e858d18a9c43b9472bdd))
+* **internal:** make `test_proxy_environment_variables` more resilient ([1479092](https://github.com/terminaldotshop/terminal-sdk-python/commit/1479092166472286333835cbc0f909b1a90cd69e))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([9d554e7](https://github.com/terminaldotshop/terminal-sdk-python/commit/9d554e7f2b2c8e18d4f2d7b01bd402c731ab9eb5))
+* **internal:** tweak CI branches ([b387fa5](https://github.com/terminaldotshop/terminal-sdk-python/commit/b387fa567b852fe9f8ec1bb3e9b270fd6ea84bec))
+* **test:** do not count install time for mock server timeout ([338b3de](https://github.com/terminaldotshop/terminal-sdk-python/commit/338b3de86b93ca1549df70e68e93e9411bfe652c))
+* update mock server docs ([825319e](https://github.com/terminaldotshop/terminal-sdk-python/commit/825319e13b76b63e021a375ce710b242551e93c1))
+
 ## 1.15.0 (2026-01-30)
 
 Full Changelog: [v1.14.1...v1.15.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.14.1...v1.15.0)
