@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.15.2 (2026-03-20)
+
+Full Changelog: [v1.15.1...v1.15.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.1...v1.15.2)
+
+### Bug Fixes
+
+* sanitize endpoint path params ([9788b5d](https://github.com/terminaldotshop/terminal-sdk-python/commit/9788b5d0483fe534f59b687b7c2a05ccedf3f4ea))
+
+
+### Refactors
+
+* **tests:** switch from prism to steady ([19fdc67](https://github.com/terminaldotshop/terminal-sdk-python/commit/19fdc6705d21408f2816bb4ece68d6115c350571))
+
 ## 1.15.1 (2026-03-17)
 
 Full Changelog: [v1.15.0...v1.15.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.0...v1.15.1)
