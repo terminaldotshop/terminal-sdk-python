@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.15.3 (2026-03-21)
+
+Full Changelog: [v1.15.2...v1.15.3](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.2...v1.15.3)
+
+### Chores
+
+* **tests:** bump steady to v0.19.4 ([21ef783](https://github.com/terminaldotshop/terminal-sdk-python/commit/21ef783eb0c728c29af519548b6b08573bfbd7ba))
+* **tests:** bump steady to v0.19.5 ([dde3e5a](https://github.com/terminaldotshop/terminal-sdk-python/commit/dde3e5ae776ed23afaeb54d96bcb638f3981b27c))
+
 ## 1.15.2 (2026-03-20)
 
 Full Changelog: [v1.15.1...v1.15.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.1...v1.15.2)
