@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.16.0 (2026-03-27)
+
+Full Changelog: [v1.15.2...v1.16.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.2...v1.16.0)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([8ea8d6d](https://github.com/terminaldotshop/terminal-sdk-python/commit/8ea8d6dd940a2ac3d563d788fb450061d397ba03))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([33fed7b](https://github.com/terminaldotshop/terminal-sdk-python/commit/33fed7b3f68600a16d3bc8b102b6b1cc987f540e))
+* **internal:** update gitignore ([56b0e8b](https://github.com/terminaldotshop/terminal-sdk-python/commit/56b0e8b07ae87f169bf95c4511a16a371dec8b99))
+* **tests:** bump steady to v0.19.4 ([21ef783](https://github.com/terminaldotshop/terminal-sdk-python/commit/21ef783eb0c728c29af519548b6b08573bfbd7ba))
+* **tests:** bump steady to v0.19.5 ([dde3e5a](https://github.com/terminaldotshop/terminal-sdk-python/commit/dde3e5ae776ed23afaeb54d96bcb638f3981b27c))
+* **tests:** bump steady to v0.19.6 ([fb07f93](https://github.com/terminaldotshop/terminal-sdk-python/commit/fb07f934f7ad342de716fc49e334655d77c05a86))
+* **tests:** bump steady to v0.19.7 ([8096b7d](https://github.com/terminaldotshop/terminal-sdk-python/commit/8096b7d28f7cfec98276eef809a871d3b7db28af))
+
 ## 1.15.2 (2026-03-20)
 
 Full Changelog: [v1.15.1...v1.15.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.1...v1.15.2)
