@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.16.1 (2026-04-08)
+
+Full Changelog: [v1.16.0...v1.16.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.0...v1.16.1)
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([3616e01](https://github.com/terminaldotshop/terminal-sdk-python/commit/3616e015bc0f80f353fdacbe409aa6bec1921c27))
+
+
+### Chores
+
+* **tests:** bump steady to v0.20.1 ([e875979](https://github.com/terminaldotshop/terminal-sdk-python/commit/e875979be7bf033843de22360cc8a8dea999558c))
+* **tests:** bump steady to v0.20.2 ([f9716cb](https://github.com/terminaldotshop/terminal-sdk-python/commit/f9716cbd588f558009f3c4f65f431e8e3ad85ca4))
+
 ## 1.16.0 (2026-03-27)
 
 Full Changelog: [v1.15.2...v1.16.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.15.2...v1.16.0)
