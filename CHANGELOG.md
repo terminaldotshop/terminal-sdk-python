@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.16.2 (2026-04-11)
+
+Full Changelog: [v1.16.1...v1.16.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.1...v1.16.2)
+
+### Bug Fixes
+
+* ensure file data are only sent as 1 parameter ([149d8ea](https://github.com/terminaldotshop/terminal-sdk-python/commit/149d8ea22c40a7b1067d335ff573a43e70c14657))
+
 ## 1.16.1 (2026-04-08)
 
 Full Changelog: [v1.16.0...v1.16.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.0...v1.16.1)
