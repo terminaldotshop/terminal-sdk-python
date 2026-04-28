@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.17.0 (2026-04-28)
+
+Full Changelog: [v1.16.2...v1.17.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.2...v1.17.0)
+
+### Features
+
+* support setting headers via env ([aeccd43](https://github.com/terminaldotshop/terminal-sdk-python/commit/aeccd43a9f42cefd8ad076ca02b18251cb92d823))
+
+
+### Bug Fixes
+
+* use correct field name format for multipart file arrays ([3862795](https://github.com/terminaldotshop/terminal-sdk-python/commit/38627951004bff42a6a52328cd864efd4a4c7137))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([896f480](https://github.com/terminaldotshop/terminal-sdk-python/commit/896f4801439191f61cf5ee05feef8c7a93490879))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([0c0fa7a](https://github.com/terminaldotshop/terminal-sdk-python/commit/0c0fa7ae9ff41a238a075a9e0cc382e249ffdef0))
+* **tests:** bump steady to v0.22.1 ([56013d3](https://github.com/terminaldotshop/terminal-sdk-python/commit/56013d3c1e0f766325d68016c8efaef54e8015fa))
+
 ## 1.16.2 (2026-04-11)
 
 Full Changelog: [v1.16.1...v1.16.2](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.1...v1.16.2)
