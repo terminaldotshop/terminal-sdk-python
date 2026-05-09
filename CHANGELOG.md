@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.17.1 (2026-05-09)
+
+Full Changelog: [v1.17.0...v1.17.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.17.0...v1.17.1)
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([7b46ab0](https://github.com/terminaldotshop/terminal-sdk-python/commit/7b46ab0a5699357ef50b14da9c6af6f68614c5cb))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([d5c1386](https://github.com/terminaldotshop/terminal-sdk-python/commit/d5c1386f41acce63586a9389b703167bb1fb2cb3))
+
 ## 1.17.0 (2026-04-28)
 
 Full Changelog: [v1.16.2...v1.17.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.16.2...v1.17.0)
