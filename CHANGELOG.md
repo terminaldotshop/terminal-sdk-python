@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.18.0 (2026-05-12)
+
+Full Changelog: [v1.17.1...v1.18.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.17.1...v1.18.0)
+
+### Features
+
+* **internal/types:** support eagerly validating pydantic iterators ([801ef23](https://github.com/terminaldotshop/terminal-sdk-python/commit/801ef237c0bcb97979a76fc7d498828929f38bc1))
+
 ## 1.17.1 (2026-05-09)
 
 Full Changelog: [v1.17.0...v1.17.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.17.0...v1.17.1)
