@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.19.1 (2026-08-20)
+
+Full Changelog: [v1.19.0...v1.19.1](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.19.0...v1.19.1)
+
+### Chores
+
+* **internal:** allow the mock server port to be set with STAINLESS_MOCK_PORT ([3f2bff9](https://github.com/terminaldotshop/terminal-sdk-python/commit/3f2bff9706ad73b7287a91c9f82ec5b720e20ef3))
+
 ## 1.19.0 (2026-07-18)
 
 Full Changelog: [v1.18.0...v1.19.0](https://github.com/terminaldotshop/terminal-sdk-python/compare/v1.18.0...v1.19.0)
